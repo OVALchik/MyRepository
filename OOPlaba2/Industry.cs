@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOPlaba2
 {
-    public class Industry
+    public sealed class Industry
     {
         public string NameIndusry { get; private set; }
         public List<Department> Departaments { get; private set; }

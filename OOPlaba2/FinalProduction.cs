@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOPlaba2
 {
-    public class FinalProduction : Production
+    public sealed class FinalProduction : Production
     {
         public FinalProduction(string name, double length, double width, double hight, double weight, int count, decimal price)
             : base(name, length, width, hight, weight, count, price)

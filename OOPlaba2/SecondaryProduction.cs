@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace OOPlaba2
 {
-    public class SecondaryProduction : Production
-    {
+    public sealed class SecondaryProduction : PrimaryProduction
+    {/*
         public enum TypeMaterial
         {
             Aluminum,
@@ -18,11 +18,11 @@ namespace OOPlaba2
         }
 
         public TypeMaterial Material { get; set; }
-
-        public SecondaryProduction(TypeMaterial type, string name, double length, double width, double hight, double weight, int count, decimal price)
-            : base(name, length, width, hight, weight, count, price)
+        */
+        public SecondaryProduction(TypeMaterial typeMaterial, TypeProduction typeProduction, string name, double length, double width, double hight, double weight, int count, decimal price)
+            : base(typeMaterial, typeProduction,name, length, width, hight, weight, count, price)
         {
-            Material = type;
+           // Material = type;
         }
 
         public override void ShowInfoProduction()

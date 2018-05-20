@@ -10,7 +10,7 @@ namespace OOPlaba2
     {         
         public static List<StorageDepartment.RobotMachine> CreateRobotMachine()
         {
-            List<StorageDepartment.RobotMachine> machineList = new List<StorageDepartment.RobotMachine>();
+            var machineList = new List<StorageDepartment.RobotMachine>();
             machineList.Add(new StorageDepartment.RobotMachine("Станочный резчик по металлу",10));
             machineList.Add(new StorageDepartment.RobotMachine("Автоматизированный станок резьбы по дереву",5));
             machineList.Add(new StorageDepartment.RobotMachine("Прессовочный аппарат",10));
@@ -20,7 +20,7 @@ namespace OOPlaba2
 
         public static List<PrimaryProduction> CreatePrimaryProduction()
         {
-            List<PrimaryProduction> productionList = new List<PrimaryProduction>();
+            var productionList = new List<PrimaryProduction>();
 
             productionList.Add(new PrimaryProduction(PrimaryProduction.TypeMaterial.Aluminum, PrimaryProduction.TypeProduction.Plate,"Лист AL-4",50,70,5,3,1000,250m));
             productionList.Add(new PrimaryProduction(PrimaryProduction.TypeMaterial.Steel, PrimaryProduction.TypeProduction.Rod, "Прут ST-5", 0.5, 0.5, 5, 7, 500, 1500m));
@@ -32,7 +32,7 @@ namespace OOPlaba2
 
         public static List<string> CreatePipleListForStorageDepartment()
         {
-            List<string> pipleList = new List<string>();
+            var pipleList = new List<string>();
 
             pipleList.Add("Захарова Е.Ф.");
             pipleList.Add("Лубинин П.Я.");
@@ -43,18 +43,18 @@ namespace OOPlaba2
 
         public static List<SecondaryProduction> CreateSecondaryProduction()
         {
-            List<SecondaryProduction> productionList = new List<SecondaryProduction>();
+            var productionList = new List<SecondaryProduction>();
 
-            productionList.Add(new SecondaryProduction(SecondaryProduction.TypeMaterial.Aluminum, "Заготовка-AL5", 50, 50, 12, 5, 500, 350m));
-            productionList.Add(new SecondaryProduction(SecondaryProduction.TypeMaterial.Titanium, "Заготовка-ТТ3", 150, 50, 7, 40, 200, 1500m));
-            productionList.Add(new SecondaryProduction(SecondaryProduction.TypeMaterial.Wood, "Заготовка-W11", 50, 50, 100, 45, 1500, 450m));
+            productionList.Add(new SecondaryProduction(PrimaryProduction.TypeMaterial.Aluminum, PrimaryProduction.TypeProduction.Plate, "Заготовка-AL5", 50, 50, 12, 5, 500, 350m));
+            productionList.Add(new SecondaryProduction(PrimaryProduction.TypeMaterial.Titanium, PrimaryProduction.TypeProduction.Ingot, "Заготовка-ТТ3", 150, 50, 7, 40, 200, 1500m));
+            productionList.Add(new SecondaryProduction(PrimaryProduction.TypeMaterial.Wood, PrimaryProduction.TypeProduction.Rod, "Заготовка-W11", 50, 50, 100, 45, 1500, 450m));
 
             return productionList;
         }
 
         public static List<string> CreatePipleListForProcessingDepartment()
         {
-            List<string> pipleList = new List<string>();
+            var pipleList = new List<string>();
 
             pipleList.Add("Зимин Е.М.");
             pipleList.Add("Лясова А.А.");
@@ -67,7 +67,7 @@ namespace OOPlaba2
 
         public static List<FinalProduction> CreateFinalProduction()
         {
-            List<FinalProduction> productionList = new List<FinalProduction>();
+            var productionList = new List<FinalProduction>();
 
             productionList.Add(new FinalProduction("Станок измерительный", 100, 200, 160, 15, 1100, 5000m));
             productionList.Add(new FinalProduction("Станок автоматизированный", 200, 50, 50, 17, 2100, 6000m));
@@ -78,7 +78,7 @@ namespace OOPlaba2
 
         public static List<string> CreatePipleListForAssembluDepartment()
         {
-            List<string> pipleList = new List<string>();
+            var pipleList = new List<string>();
 
             pipleList.Add("Зимин Е.М.");
             pipleList.Add("Лясова А.А.");
@@ -138,7 +138,7 @@ namespace OOPlaba2
                                         Console.WriteLine("3.Сборочно-монтажный цех");
                                         int itemDep = Convert.ToInt32(Console.ReadLine());
 
-                                        List<string> pipleList = new List<string>();
+                                        var pipleList = new List<string>();
                                         pipleList.Add("Зощенко Е.Ф.");
                                         pipleList.Add("Клубина П.Я.");
                                         pipleList.Add("Носов Н.П.");
@@ -147,36 +147,36 @@ namespace OOPlaba2
                                         {
                                             case 1:
                                                 {
-                                                    List<StorageDepartment.RobotMachine> machineList = new List<StorageDepartment.RobotMachine>();
+                                                    var machineList = new List<StorageDepartment.RobotMachine>();
                                                     machineList.Add(new StorageDepartment.RobotMachine("Станочный резчик по дереву", 15));
                                                     machineList.Add(new StorageDepartment.RobotMachine("Автоматизированный станок резьбы по дереву", 10));
 
-                                                    List<PrimaryProduction> productionList = new List<PrimaryProduction>();
+                                                    var productionList = new List<PrimaryProduction>();
                                                     productionList.Add(new PrimaryProduction(PrimaryProduction.TypeMaterial.Wood, PrimaryProduction.TypeProduction.Plate, "Лист W-4", 50, 70, 5, 3, 10000, 250m));
                                                     productionList.Add(new PrimaryProduction(PrimaryProduction.TypeMaterial.Wood, PrimaryProduction.TypeProduction.Rod, "Прут W-5", 0.5, 0.5, 5, 7, 5000, 150m));
 
-                                                    StorageDepartment newSt = new StorageDepartment(machineList, "Заготовительный цех№2", pipleList, new List<Production>(productionList));
+                                                    var newSt = new StorageDepartment(machineList, "Заготовительный цех№2", pipleList, new List<Production>(productionList));
                                                     industry.Departaments.Add(newSt);
                                                 }
                                                 break;
                                             case 2:
                                                 {
-                                                    List<SecondaryProduction> productionList = new List<SecondaryProduction>();
-                                                    productionList.Add(new SecondaryProduction(SecondaryProduction.TypeMaterial.Iron, "Заготовка-I5", 50, 50, 12, 5, 5000, 350m));
-                                                    productionList.Add(new SecondaryProduction(SecondaryProduction.TypeMaterial.Iron, "Заготовка-I3", 150, 50, 7, 40, 2000, 1500m));
+                                                    var productionList = new List<SecondaryProduction>();
+                                                    productionList.Add(new SecondaryProduction(PrimaryProduction.TypeMaterial.Iron, PrimaryProduction.TypeProduction.Rod, "Заготовка-I5", 50, 50, 12, 5, 5000, 350m));
+                                                    productionList.Add(new SecondaryProduction(PrimaryProduction.TypeMaterial.Iron, PrimaryProduction.TypeProduction.Plate, "Заготовка-I3", 150, 50, 7, 40, 2000, 1500m));
 
-                                                    ProcessingDepartment newPd = new ProcessingDepartment("Обрабатывающий цех№2", pipleList, new List<Production>(productionList));
+                                                    var newPd = new ProcessingDepartment("Обрабатывающий цех№2", pipleList, new List<Production>(productionList));
                                                     industry.Departaments.Add(newPd);
                                                 }
                                                 break;
                                             case 3:
                                                 {
-                                                    List<FinalProduction> productionList = new List<FinalProduction>();
+                                                    var productionList = new List<FinalProduction>();
                                                     productionList.Add(new FinalProduction("Станок A09", 100, 200, 160, 15, 100, 5000m));
                                                     productionList.Add(new FinalProduction("Станок автоматизированный B-8", 200, 50, 50, 17, 100, 6000m));
                                                     productionList.Add(new FinalProduction("Измеритель ЭТМ", 50, 50, 30, 1.2, 100, 300m));
 
-                                                    AssemblyDepartment newAd = new AssemblyDepartment("Сборочно-монтажный цех№2", pipleList, new List<Production>(productionList));
+                                                    var newAd = new AssemblyDepartment("Сборочно-монтажный цех№2", pipleList, new List<Production>(productionList));
                                                     industry.Departaments.Add(newAd);
                                                 }
                                                 break;
@@ -236,13 +236,13 @@ namespace OOPlaba2
                                                 break;
                                             case 3:
                                                 {
-                                                    List<string> pipleList = new List<string>();
+                                                    var pipleList = new List<string>();
                                                     pipleList.Add("Зощин Е.Ф.");
                                                     pipleList.Add("Кубина П.Я.");
-                                                    List<FinalProduction> productionList = new List<FinalProduction>();
+                                                    var productionList = new List<FinalProduction>();
                                                     productionList.Add(new FinalProduction("Станок автоматизированный B-8", 200, 50, 50, 17, 100, 6000m));
                                                     productionList.Add(new FinalProduction("Измеритель ЭТМ", 50, 50, 30, 1.2, 100, 300m));
-                                                    AssemblyDepartment newAd = new AssemblyDepartment("Сборочно-монтажный цех№3", pipleList, new List<Production>(productionList));
+                                                    var newAd = new AssemblyDepartment("Сборочно-монтажный цех№3", pipleList, new List<Production>(productionList));
 
                                                     industry.EditDepartment((item1 - 1), newAd);
                                                 }
@@ -284,16 +284,16 @@ namespace OOPlaba2
 
         static void Main(string[] args)
         {
-            StorageDepartment st = new StorageDepartment(CreateRobotMachine(), "Заготовительный цех№1", CreatePipleListForStorageDepartment(), new List<Production>(CreatePrimaryProduction()));
-            ProcessingDepartment pd = new ProcessingDepartment("Обрабатывающий цех№1", CreatePipleListForProcessingDepartment(), new List<Production>(CreateSecondaryProduction()));
-            AssemblyDepartment ad = new AssemblyDepartment("Сборочно-монтажный цех№1", CreatePipleListForAssembluDepartment(), new List<Production>(CreateFinalProduction()));
+            var st = new StorageDepartment(CreateRobotMachine(), "Заготовительный цех№1", CreatePipleListForStorageDepartment(), new List<Production>(CreatePrimaryProduction()));
+            var pd = new ProcessingDepartment("Обрабатывающий цех№1", CreatePipleListForProcessingDepartment(), new List<Production>(CreateSecondaryProduction()));
+            var ad = new AssemblyDepartment("Сборочно-монтажный цех№1", CreatePipleListForAssembluDepartment(), new List<Production>(CreateFinalProduction()));
 
-            List<Department> department = new List<Department>();
+            var department = new List<Department>();
             department.Add(st);
             department.Add(pd);
             department.Add(ad);
 
-            Industry industry = new Industry("Инастриз", department);
+            var industry = new Industry("Инастриз", department);
             ShowClassWork(industry);
 
         }

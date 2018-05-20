@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOPlaba2
 {
-    public class StorageDepartment : Department
+    public sealed class StorageDepartment : Department
     {
         public struct RobotMachine
         {

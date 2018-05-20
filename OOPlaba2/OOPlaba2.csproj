@@ -52,7 +52,7 @@
     <Compile Include="Production.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SeconddaryProduction.cs" />
+    <Compile Include="SecondaryProduction.cs" />
     <Compile Include="StorageDepartment.cs" />
   </ItemGroup>
   <ItemGroup>
