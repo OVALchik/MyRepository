@@ -7,22 +7,11 @@ using System.Threading.Tasks;
 namespace OOPlaba2
 {
     public sealed class SecondaryProduction : PrimaryProduction
-    {/*
-        public enum TypeMaterial
-        {
-            Aluminum,
-            Iron,
-            Steel,
-            Titanium,
-            Wood
-        }
-
-        public TypeMaterial Material { get; set; }
-        */
+    {
         public SecondaryProduction(TypeMaterial typeMaterial, TypeProduction typeProduction, string name, double length, double width, double hight, double weight, int count, decimal price)
             : base(typeMaterial, typeProduction,name, length, width, hight, weight, count, price)
         {
-           // Material = type;
+          
         }
 
         public override void ShowInfoProduction()

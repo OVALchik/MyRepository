@@ -7,19 +7,7 @@ using System.Threading.Tasks;
 namespace OOPlaba2
 {
     public sealed class StorageDepartment : Department
-    {
-        public struct RobotMachine
-        {
-            public string NameMachine { get; private set; }
-            public int CountMachine { get; private set; }
-
-            public RobotMachine(string nameMachine, int count)
-            {
-                NameMachine = nameMachine;
-                CountMachine = count;
-            }
-        }
-
+    {      
         public List<RobotMachine> MachineList { get; private set; } = new List<RobotMachine>();
 
         public StorageDepartment(List<RobotMachine> machinelList, string name, List<string> pipleList, List<Production> productionList)

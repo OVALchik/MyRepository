@@ -8,12 +8,12 @@ namespace OOPlaba2
 {  
     class Program
     {         
-        public static List<StorageDepartment.RobotMachine> CreateRobotMachine()
+        public static List<RobotMachine> CreateRobotMachine()
         {
-            var machineList = new List<StorageDepartment.RobotMachine>();
-            machineList.Add(new StorageDepartment.RobotMachine("Станочный резчик по металлу",10));
-            machineList.Add(new StorageDepartment.RobotMachine("Автоматизированный станок резьбы по дереву",5));
-            machineList.Add(new StorageDepartment.RobotMachine("Прессовочный аппарат",10));
+            var machineList = new List<RobotMachine>();
+            machineList.Add(new RobotMachine("Станочный резчик по металлу",10));
+            machineList.Add(new RobotMachine("Автоматизированный станок резьбы по дереву",5));
+            machineList.Add(new RobotMachine("Прессовочный аппарат",10));
             
             return machineList;
         }       
@@ -22,10 +22,10 @@ namespace OOPlaba2
         {
             var productionList = new List<PrimaryProduction>();
 
-            productionList.Add(new PrimaryProduction(PrimaryProduction.TypeMaterial.Aluminum, PrimaryProduction.TypeProduction.Plate,"Лист AL-4",50,70,5,3,1000,250m));
-            productionList.Add(new PrimaryProduction(PrimaryProduction.TypeMaterial.Steel, PrimaryProduction.TypeProduction.Rod, "Прут ST-5", 0.5, 0.5, 5, 7, 500, 1500m));
-            productionList.Add(new PrimaryProduction(PrimaryProduction.TypeMaterial.Wood, PrimaryProduction.TypeProduction.Beam, "Брус W-10", 10, 10, 200, 15, 400, 500m));
-            productionList.Add(new PrimaryProduction(PrimaryProduction.TypeMaterial.Iron, PrimaryProduction.TypeProduction.Rod, "Прут IR-5", 0.5, 0.5, 5, 7, 200, 1000m));
+            productionList.Add(new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate,"Лист AL-4",50,70,5,3,1000,250m));
+            productionList.Add(new PrimaryProduction(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5", 0.5, 0.5, 5, 7, 500, 1500m));
+            productionList.Add(new PrimaryProduction(TypeMaterial.Wood, TypeProduction.Beam, "Брус W-10", 10, 10, 200, 15, 400, 500m));
+            productionList.Add(new PrimaryProduction(TypeMaterial.Iron, TypeProduction.Rod, "Прут IR-5", 0.5, 0.5, 5, 7, 200, 1000m));
 
             return productionList;
         }
@@ -45,9 +45,9 @@ namespace OOPlaba2
         {
             var productionList = new List<SecondaryProduction>();
 
-            productionList.Add(new SecondaryProduction(PrimaryProduction.TypeMaterial.Aluminum, PrimaryProduction.TypeProduction.Plate, "Заготовка-AL5", 50, 50, 12, 5, 500, 350m));
-            productionList.Add(new SecondaryProduction(PrimaryProduction.TypeMaterial.Titanium, PrimaryProduction.TypeProduction.Ingot, "Заготовка-ТТ3", 150, 50, 7, 40, 200, 1500m));
-            productionList.Add(new SecondaryProduction(PrimaryProduction.TypeMaterial.Wood, PrimaryProduction.TypeProduction.Rod, "Заготовка-W11", 50, 50, 100, 45, 1500, 450m));
+            productionList.Add(new SecondaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Заготовка-AL5", 50, 50, 12, 5, 500, 350m));
+            productionList.Add(new SecondaryProduction(TypeMaterial.Titanium, TypeProduction.Ingot, "Заготовка-ТТ3", 150, 50, 7, 40, 200, 1500m));
+            productionList.Add(new SecondaryProduction(TypeMaterial.Wood, TypeProduction.Rod, "Заготовка-W11", 50, 50, 100, 45, 1500, 450m));
 
             return productionList;
         }
@@ -147,13 +147,13 @@ namespace OOPlaba2
                                         {
                                             case 1:
                                                 {
-                                                    var machineList = new List<StorageDepartment.RobotMachine>();
-                                                    machineList.Add(new StorageDepartment.RobotMachine("Станочный резчик по дереву", 15));
-                                                    machineList.Add(new StorageDepartment.RobotMachine("Автоматизированный станок резьбы по дереву", 10));
+                                                    var machineList = new List<RobotMachine>();
+                                                    machineList.Add(new RobotMachine("Станочный резчик по дереву", 15));
+                                                    machineList.Add(new RobotMachine("Автоматизированный станок резьбы по дереву", 10));
 
                                                     var productionList = new List<PrimaryProduction>();
-                                                    productionList.Add(new PrimaryProduction(PrimaryProduction.TypeMaterial.Wood, PrimaryProduction.TypeProduction.Plate, "Лист W-4", 50, 70, 5, 3, 10000, 250m));
-                                                    productionList.Add(new PrimaryProduction(PrimaryProduction.TypeMaterial.Wood, PrimaryProduction.TypeProduction.Rod, "Прут W-5", 0.5, 0.5, 5, 7, 5000, 150m));
+                                                    productionList.Add(new PrimaryProduction(TypeMaterial.Wood, TypeProduction.Plate, "Лист W-4", 50, 70, 5, 3, 10000, 250m));
+                                                    productionList.Add(new PrimaryProduction(TypeMaterial.Wood, TypeProduction.Rod, "Прут W-5", 0.5, 0.5, 5, 7, 5000, 150m));
 
                                                     var newSt = new StorageDepartment(machineList, "Заготовительный цех№2", pipleList, new List<Production>(productionList));
                                                     industry.Departaments.Add(newSt);
@@ -162,8 +162,8 @@ namespace OOPlaba2
                                             case 2:
                                                 {
                                                     var productionList = new List<SecondaryProduction>();
-                                                    productionList.Add(new SecondaryProduction(PrimaryProduction.TypeMaterial.Iron, PrimaryProduction.TypeProduction.Rod, "Заготовка-I5", 50, 50, 12, 5, 5000, 350m));
-                                                    productionList.Add(new SecondaryProduction(PrimaryProduction.TypeMaterial.Iron, PrimaryProduction.TypeProduction.Plate, "Заготовка-I3", 150, 50, 7, 40, 2000, 1500m));
+                                                    productionList.Add(new SecondaryProduction(TypeMaterial.Iron, TypeProduction.Rod, "Заготовка-I5", 50, 50, 12, 5, 5000, 350m));
+                                                    productionList.Add(new SecondaryProduction(TypeMaterial.Iron, TypeProduction.Plate, "Заготовка-I3", 150, 50, 7, 40, 2000, 1500m));
 
                                                     var newPd = new ProcessingDepartment("Обрабатывающий цех№2", pipleList, new List<Production>(productionList));
                                                     industry.Departaments.Add(newPd);

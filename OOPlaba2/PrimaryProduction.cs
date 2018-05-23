@@ -8,23 +8,6 @@ namespace OOPlaba2
 {
     public class PrimaryProduction : Production
     {
-        public enum TypeMaterial
-        {
-            Aluminum,
-            Iron,
-            Steel,
-            Titanium,
-            Wood
-        }
-
-        public enum TypeProduction
-        {
-            Plate, //Пластина, лист
-            Ingot, //Слиток, болванка
-            Rod, //Прут
-            Beam //Брус, балка
-        }
-
         public TypeMaterial Material { get; private set; }
         public TypeProduction Type { get; private set; }
 
