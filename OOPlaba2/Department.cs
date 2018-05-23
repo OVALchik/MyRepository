@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace OOPlaba2
@@ -10,13 +7,13 @@ namespace OOPlaba2
     public abstract class Department:IComparable
     {
         public string NameDepartment { get; private set; }
-        public List<string> PipleList { get; private set; } = new List<string>();
+        public List<string> PipleList { get; private set; }
         public int CountPiples { get; private set; }
-        public List<Production> Productions { get; private set; } = new List<Production>();
+        public List<Production> Productions { get; private set; }
         public int CountNameProductions { get; private set; }
         public double Productivity { get; private set; }
 
-        public Department(string name, List<string> pipleList, List<Production> productionList)
+        protected Department(string name, List<string> pipleList, List<Production> productionList)
         {
             NameDepartment = name;
             PipleList = pipleList;
@@ -29,18 +26,17 @@ namespace OOPlaba2
         private double GetProductivity()
         {
             int generalProduction = 0;
-            for (int i = 0; i < Productions.Count; i++)
-                generalProduction += Productions[i].CountProduction;
+            foreach (var production in Productions)
+                generalProduction += production.CountProduction;
 
-            return generalProduction / CountPiples;
+            return (double)generalProduction / CountPiples;
         }
 
         int IComparable.CompareTo(object obj)
         {
-            Department d = (Department)obj;
+            var d = (Department)obj;
             double t = d.Productivity;
             return Productivity.CompareTo(t);
-
         }
 
         public virtual void ShowInfoDepartment()

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OOPlaba2
 {
@@ -28,37 +26,29 @@ namespace OOPlaba2
             RefreshArrayPiple(PipleArray, Departaments);
         }
 
-        private static int GetCountPiples(List<Department> Departaments)
+        private static int GetCountPiples(IEnumerable<Department> departaments)
         {
-            int count = 0;
-            for (int i = 0; i < Departaments.Count; i++)
-                count += Departaments[i].CountPiples;
-
-            return count;
+            return departaments.Sum(t => t.CountPiples);
         }
 
-        private static int GetCountProduction(List<Department> Departaments)
+        private static int GetCountProduction(IEnumerable<Department> departaments)
         {
-            int count = 0;
-            for (int i = 0; i < Departaments.Count; i++)
-                count += Departaments[i].CountNameProductions;
-
-            return count;
+            return departaments.Sum(t => t.CountNameProductions);
         }
 
-        private static void RefreshArrayProduction(List<Production>[] ProductionArray, List<Department> Departaments)
+        private static void RefreshArrayProduction(IList<List<Production>> productionArray, IReadOnlyList<Department> departaments)
         {
-            for (int i = 0; i < Departaments.Count; i++)
+            for (int i = 0; i < departaments.Count; i++)
             {
-                ProductionArray[i] = Departaments[i].Productions;
+                productionArray[i] = departaments[i].Productions;
             }
         }
 
-        private static void RefreshArrayPiple(List<string>[] PipleArray, List<Department> Departaments)
+        private static void RefreshArrayPiple(IList<List<string>> pipleArray, IReadOnlyList<Department> departaments)
         {
-            for (int i = 0; i < Departaments.Count; i++)
+            for (int i = 0; i < departaments.Count; i++)
             {
-                PipleArray[i] = Departaments[i].PipleList;
+                pipleArray[i] = departaments[i].PipleList;
             }
         }
 
@@ -84,9 +74,9 @@ namespace OOPlaba2
         public void ShowListProduction()
         {
             Console.WriteLine("Лист продукции:");
-            foreach (List<Production> products in ProductionArray)
+            foreach (var products in ProductionArray)
             {
-                foreach (Production product in products)
+                foreach (var product in products)
                 {
                     product.ShowInfoProduction();
                 }
@@ -97,7 +87,7 @@ namespace OOPlaba2
         public void ShowListPiples()
         {
             Console.WriteLine("Список рабочих, занятых в производсте:");
-            foreach (List<string> piples in PipleArray)
+            foreach (var piples in PipleArray)
             {
                 foreach (string piple in piples)
                 {
@@ -123,7 +113,7 @@ namespace OOPlaba2
         public void ShowInfoProductivity()
         {
             Departaments.Sort();
-            foreach (Department department in Departaments)
+            foreach (var department in Departaments)
             {
                 Console.WriteLine($"{department.NameDepartment} Производительность:{department.Productivity}");
             }

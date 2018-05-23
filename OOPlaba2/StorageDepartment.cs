@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OOPlaba2
 {
     public sealed class StorageDepartment : Department
     {      
-        public List<RobotMachine> MachineList { get; private set; } = new List<RobotMachine>();
+        public List<RobotMachine> MachineList { get; private set; }
 
         public StorageDepartment(List<RobotMachine> machinelList, string name, List<string> pipleList, List<Production> productionList)
             : base(name, pipleList, productionList)
@@ -18,13 +15,14 @@ namespace OOPlaba2
 
         public void ShowInfoMachine()
         {
-            foreach (RobotMachine machine in MachineList)
+            foreach (var machine in MachineList)
             {
                 Console.WriteLine($"Наименование:{machine.NameMachine} Кол-во ед. техники:{machine.CountMachine}");
             }
             int count = 0;
-            for (int i = 0; i < MachineList.Count; i++)
-                count += MachineList[i].CountMachine;
+            foreach (var machine in MachineList)
+                count += machine.CountMachine;
+
             Console.WriteLine($"Общее число ед. техники:{count}");
         }
 
