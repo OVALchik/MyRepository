@@ -20,10 +20,7 @@ namespace OOPlaba2
             CountPiples = GetCountPiples(Departaments);
             CountNameProduction = GetCountProduction(Departaments);
             ProductionArray = new List<Production>[Departaments.Count];
-            PipleArray = new List<string>[Departaments.Count];
-
-            RefreshArrayProduction(ProductionArray, Departaments);
-            RefreshArrayPiple(PipleArray, Departaments);
+            PipleArray = new List<string>[Departaments.Count];           
         }
 
         private static int GetCountPiples(IEnumerable<Department> departaments)
@@ -34,15 +31,7 @@ namespace OOPlaba2
         private static int GetCountProduction(IEnumerable<Department> departaments)
         {
             return departaments.Sum(t => t.CountNameProductions);
-        }
-
-        private static void RefreshArrayProduction(IList<List<Production>> productionArray, IReadOnlyList<Department> departaments)
-        {
-            for (int i = 0; i < departaments.Count; i++)
-            {
-                productionArray[i] = departaments[i].Productions;
-            }
-        }
+        }        
 
         private static void RefreshArrayPiple(IList<List<string>> pipleArray, IReadOnlyList<Department> departaments)
         {
@@ -54,15 +43,12 @@ namespace OOPlaba2
 
         public void AddDepartment(Department departaments)
         {
-            Departaments.Add(departaments);
-            RefreshArrayProduction(ProductionArray, Departaments);
-            RefreshArrayPiple(PipleArray, Departaments);
+            Departaments.Add(departaments);          
         }
 
         public void RemoveDepartment(int index)
         {
-            Departaments.RemoveAt(index);
-            RefreshArrayProduction(ProductionArray, Departaments);
+            Departaments.RemoveAt(index);            
             RefreshArrayPiple(PipleArray, Departaments);
         }
 

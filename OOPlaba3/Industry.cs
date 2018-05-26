@@ -81,7 +81,7 @@ namespace OOPlaba2
                     product.ShowInfoProduction();
                 }
             }
-            Console.WriteLine($"Всего наименований:{CountNameProduction} человек(а)");
+            Console.WriteLine($"Всего наименований:{CountNameProduction}");
         }
 
         public void ShowListPiples()

@@ -93,7 +93,7 @@ namespace OOPlaba2
             industry.Departaments[item - 1].ShowInfoDepartment();
         }
 
-        public static void AddDepartment(Industry industry)
+        public static void AddDepartmentFromIndustry(Industry industry)
         {
             Console.WriteLine("Выбор типа цеха:");
             Console.WriteLine("1.Заготавливающий цех");
@@ -120,7 +120,7 @@ namespace OOPlaba2
                        };
 
                         var newSt = new StorageDepartment(machineList, "Заготовительный цех№2", pipleList, new List<Production>(productionList));
-                        industry.Departaments.Add(newSt);
+                        industry.AddDepartment(newSt);
                     }
                     break;
                 case 2:
@@ -132,7 +132,7 @@ namespace OOPlaba2
                         };
 
                         var newPd = new ProcessingDepartment("Обрабатывающий цех№2", pipleList, new List<Production>(productionList));
-                        industry.Departaments.Add(newPd);
+                        industry.AddDepartment(newPd);
                     }
                     break;
                 case 3:
@@ -145,7 +145,7 @@ namespace OOPlaba2
                         };
 
                         var newAd = new AssemblyDepartment("Сборочно-монтажный цех№2", pipleList, new List<Production>(productionList));
-                        industry.Departaments.Add(newAd);
+                        industry.AddDepartment(newAd);
                     }
                     break;
                 default:
@@ -154,7 +154,7 @@ namespace OOPlaba2
             }
         }
 
-        public static void RemoveDepartment(Industry industry)
+        public static void RemoveDepartmentFromIndustry(Industry industry)
         {
             Console.WriteLine("Выбор цеха:");
             for (int i = 0; i < industry.Departaments.Count; i++)
@@ -162,10 +162,10 @@ namespace OOPlaba2
                 Console.WriteLine($"{i + 1}.{industry.Departaments[i].NameDepartment}");
             }
             var itemDep = Convert.ToInt32(Console.ReadLine());
-            industry.Departaments.RemoveAt(itemDep - 1);
+            industry.RemoveDepartment(itemDep - 1);
         }
 
-        public static void EditDepartment(Industry industry)
+        public static void EditDepartmentFromIndustry(Industry industry)
         {
             Console.WriteLine("Выбор пункта:");
             Console.WriteLine("1.Изменить продукцию цеха");
@@ -236,13 +236,13 @@ namespace OOPlaba2
             switch (item)
             {
                 case 1:
-                    AddDepartment(industry);
+                    AddDepartmentFromIndustry(industry);
                     break;
                 case 2:
-                    RemoveDepartment(industry);
+                    RemoveDepartmentFromIndustry(industry);
                     break;
                 case 3:
-                    EditDepartment(industry);
+                    EditDepartmentFromIndustry(industry);
                     break;
                 default:
                     Console.WriteLine("Введено неверное значение");
@@ -295,16 +295,24 @@ namespace OOPlaba2
     }
 
         private static void Main()
-        {
-            var st = new StorageDepartment(CreateRobotMachine(), "Заготовительный цех№1", CreatePipleListForStorageDepartment(), new List<Production>(CreatePrimaryProduction()));
-            var pd = new ProcessingDepartment("Обрабатывающий цех№1", CreatePipleListForProcessingDepartment(), new List<Production>(CreateSecondaryProduction()));
-            var ad = new AssemblyDepartment("Сборочно-монтажный цех№1", CreatePipleListForAssembluDepartment(), new List<Production>(CreateFinalProduction()));
+        {           
+            try
+            {
+                var st = new StorageDepartment(CreateRobotMachine(), "Заготовительный цех№1", CreatePipleListForStorageDepartment(), new List<Production>(CreatePrimaryProduction()));
+                var pd = new ProcessingDepartment("Обрабатывающий цех№1", CreatePipleListForProcessingDepartment(), new List<Production>(CreateSecondaryProduction()));
+                var ad = new AssemblyDepartment("Сборочно-монтажный цех№1", CreatePipleListForAssembluDepartment(), new List<Production>(CreateFinalProduction()));
 
-            var department = new List<Department> {st, pd, ad};
+                var department = new List<Department> { st, pd, ad };
 
-            var industry = new Industry("Инастриз", department);
-            ShowClassWork(industry);
-          
+                var industry = new Industry("Инастриз", department);
+              
+                ShowClassWork(industry);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);             
+            }
+
         }
     }
 }

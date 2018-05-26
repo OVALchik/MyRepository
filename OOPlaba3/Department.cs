@@ -16,20 +16,20 @@ namespace OOPlaba2
         protected Department(string name, List<string> pipleList, List<Production> productionList)
         {
             NameDepartment = name;
-            PipleList = pipleList;
+            PipleList = pipleList;           
             CountPiples = PipleList.Count;
             Productions = productionList;
             CountNameProductions = Productions.Count;
-            Productivity = GetProductivity();
+            Productivity = GetProductivity();              
         }
 
         private double GetProductivity()
         {
-            int generalProduction = 0;
-            foreach (var production in Productions)
-                generalProduction += production.CountProduction;
+           int generalProduction = 0;
+           foreach (var production in Productions)
+               generalProduction += production.CountProduction;
 
-            return (double)generalProduction / CountPiples;
+           return (double)generalProduction / CountPiples;           
         }
 
         int IComparable.CompareTo(object obj)
