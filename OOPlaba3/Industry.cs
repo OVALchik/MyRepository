@@ -15,6 +15,9 @@ namespace OOPlaba2
 
         public Industry(string name, List<Department> departmentList)
         {
+            if(departmentList==null)
+                throw new ArgumentException("На производстве должен быть хотя бы один цех");
+            
             NameIndusry = name;
             Departaments = departmentList;
             CountPiples = GetCountPiples(Departaments);
@@ -22,8 +25,8 @@ namespace OOPlaba2
             ProductionArray = new List<Production>[Departaments.Count];
             PipleArray = new List<string>[Departaments.Count];
 
-            RefreshArrayProduction(ProductionArray, Departaments);
-            RefreshArrayPiple(PipleArray, Departaments);
+            UnionArrayProduction(ProductionArray, Departaments);
+            UnionArrayPiple(PipleArray, Departaments);
         }
 
         private static int GetCountPiples(IEnumerable<Department> departaments)
@@ -36,7 +39,7 @@ namespace OOPlaba2
             return departaments.Sum(t => t.CountNameProductions);
         }
 
-        private static void RefreshArrayProduction(IList<List<Production>> productionArray, IReadOnlyList<Department> departaments)
+        private static void UnionArrayProduction(IList<List<Production>> productionArray, IReadOnlyList<Department> departaments)
         {
             for (int i = 0; i < departaments.Count; i++)
             {
@@ -44,7 +47,7 @@ namespace OOPlaba2
             }
         }
 
-        private static void RefreshArrayPiple(IList<List<string>> pipleArray, IReadOnlyList<Department> departaments)
+        private static void UnionArrayPiple(IList<List<string>> pipleArray, IReadOnlyList<Department> departaments)
         {
             for (int i = 0; i < departaments.Count; i++)
             {
@@ -55,15 +58,11 @@ namespace OOPlaba2
         public void AddDepartment(Department departaments)
         {
             Departaments.Add(departaments);
-            RefreshArrayProduction(ProductionArray, Departaments);
-            RefreshArrayPiple(PipleArray, Departaments);
         }
 
         public void RemoveDepartment(int index)
         {
             Departaments.RemoveAt(index);
-            RefreshArrayProduction(ProductionArray, Departaments);
-            RefreshArrayPiple(PipleArray, Departaments);
         }
 
         public void EditDepartment(int index, Department departaments)
