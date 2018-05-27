@@ -27,9 +27,9 @@ namespace OOPlaba2
         {
            int generalProduction = 0;
            foreach (var production in Productions)
-               generalProduction += production.CountProduction;
-
-           return (double)generalProduction / CountPiples;           
+           generalProduction += production.CountProduction;
+          
+           return generalProduction / CountPiples;           
         }
 
         int IComparable.CompareTo(object obj)
@@ -69,12 +69,26 @@ namespace OOPlaba2
 
         public void RemoveProduction(int index)
         {
-            Productions.RemoveAt(index);
+            try
+            {
+                Productions.RemoveAt(index);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }           
         }
 
         public void EditProduction(int index, Production production)
         {
-            Productions[index] = production;
+            try
+            {
+                Productions[index] = production;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }          
         }
 
         public void AddPiple(string piple)
@@ -84,12 +98,26 @@ namespace OOPlaba2
 
         public void RemovePiple(int index)
         {
-            PipleList.RemoveAt(index);
+            try
+            {
+                PipleList.RemoveAt(index);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         public void EditPiple(int index, string piple)
         {
-            PipleList[index] = piple;
+            try
+            {
+                PipleList[index] = piple;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 }

@@ -5,7 +5,9 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OOPlaba2", "OOPlaba2.csproj", "{91738CCA-9D08-4FB0-B80D-408F3F9CD365}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OOPlaba2Test", "..\OOPlaba2Test\OOPlaba2Test.csproj", "{E68C387E-52DF-47F7-8715-0229DD245448}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndustryTest", "..\OOPlaba2Test\IndustryTest.csproj", "{E68C387E-52DF-47F7-8715-0229DD245448}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DepartmentTest", "..\DepartmentTest\DepartmentTest.csproj", "{C65D3F78-F55A-4561-98E6-7A2BA23875C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{E68C387E-52DF-47F7-8715-0229DD245448}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E68C387E-52DF-47F7-8715-0229DD245448}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E68C387E-52DF-47F7-8715-0229DD245448}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C65D3F78-F55A-4561-98E6-7A2BA23875C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C65D3F78-F55A-4561-98E6-7A2BA23875C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C65D3F78-F55A-4561-98E6-7A2BA23875C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C65D3F78-F55A-4561-98E6-7A2BA23875C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
