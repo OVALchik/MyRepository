@@ -14,13 +14,16 @@ namespace OOPlaba2
         public int CountNameProduction { get; private set; }
 
         public Industry(string name, List<Department> departmentList)
-        {
+        {        
             NameIndusry = name;
             Departaments = departmentList;
             CountPiples = GetCountPiples(Departaments);
             CountNameProduction = GetCountProduction(Departaments);
             ProductionArray = new List<Production>[Departaments.Count];
-            PipleArray = new List<string>[Departaments.Count];           
+            PipleArray = new List<string>[Departaments.Count];
+
+            UnionArrayProduction(ProductionArray, Departaments);
+            UnionArrayPiple(PipleArray, Departaments);
         }
 
         private static int GetCountPiples(IEnumerable<Department> departaments)
@@ -31,9 +34,17 @@ namespace OOPlaba2
         private static int GetCountProduction(IEnumerable<Department> departaments)
         {
             return departaments.Sum(t => t.CountNameProductions);
-        }        
+        }
 
-        private static void RefreshArrayPiple(IList<List<string>> pipleArray, IReadOnlyList<Department> departaments)
+        private static void UnionArrayProduction(IList<List<Production>> productionArray, IReadOnlyList<Department> departaments)
+        {
+            for (int i = 0; i < departaments.Count; i++)
+            {
+                productionArray[i] = departaments[i].Productions;
+            }
+        }
+
+        private static void UnionArrayPiple(IList<List<string>> pipleArray, IReadOnlyList<Department> departaments)
         {
             for (int i = 0; i < departaments.Count; i++)
             {
@@ -43,13 +54,12 @@ namespace OOPlaba2
 
         public void AddDepartment(Department departaments)
         {
-            Departaments.Add(departaments);          
+            Departaments.Add(departaments);
         }
 
         public void RemoveDepartment(int index)
         {
-            Departaments.RemoveAt(index);            
-            RefreshArrayPiple(PipleArray, Departaments);
+            Departaments.RemoveAt(index);
         }
 
         public void EditDepartment(int index, Department departaments)
@@ -67,7 +77,7 @@ namespace OOPlaba2
                     product.ShowInfoProduction();
                 }
             }
-            Console.WriteLine($"Всего наименований:{CountNameProduction} человек(а)");
+            Console.WriteLine($"Всего наименований:{CountNameProduction}");
         }
 
         public void ShowListPiples()
