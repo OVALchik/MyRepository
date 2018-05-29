@@ -62,12 +62,27 @@ namespace OOPlaba2
 
         public void RemoveDepartment(int index)
         {
-            Departaments.RemoveAt(index);
+            try
+            {
+                Departaments.RemoveAt(index);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public void EditDepartment(int index, Department departaments)
         {
-            Departaments[index] = departaments;
+            try
+            {
+                Departaments[index] = departaments;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
         }
 
         public void ShowListProduction()

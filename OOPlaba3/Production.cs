@@ -1,4 +1,6 @@
-﻿namespace OOPlaba2
+﻿using System;
+
+namespace OOPlaba2
 {
     public abstract class Production
     {       
@@ -9,6 +11,9 @@
 
         protected Production(string name, double length, double width, double hight, double weight, int count, decimal price)
         {
+            if(length<=0 || width<=0 || hight<=0 || weight<=0)
+                throw new ArgumentException("Габариты продукции введены неверно");
+
             NameProduction = name;
             SizeProduction = new Size(length, width, hight, weight);
             CountProduction = count;

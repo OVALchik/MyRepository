@@ -30,7 +30,7 @@ namespace DepartmentTest
                 Assert.AreEqual("Список авт. систем не должен быть пустым",e.Message);
             }         
         }
-        /*
+        
         [TestMethod]
         public void StorageDepartmentConstructor_ErrorPipleList()
         {
@@ -70,7 +70,7 @@ namespace DepartmentTest
             {
                 Assert.AreEqual("Список продукции не должен быть пустым", e.Message);
             }
-        }*/
+        }
 
         [TestMethod]
         public void GetProductivity()

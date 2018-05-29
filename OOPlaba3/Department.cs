@@ -15,6 +15,12 @@ namespace OOPlaba2
 
         protected Department(string name, List<string> pipleList, List<Production> productionList)
         {
+            if (pipleList == null)
+                throw new ArgumentException("Список рабочих не должен быть пустым");
+
+            if (productionList == null)
+                throw new ArgumentException("Список продукции не должен быть пустым");
+
             NameDepartment = name;
             PipleList = pipleList;           
             CountPiples = PipleList.Count;
