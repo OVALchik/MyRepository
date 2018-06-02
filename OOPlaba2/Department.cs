@@ -11,7 +11,7 @@ namespace OOPlaba2
         public int CountPiples { get; private set; }
         public List<Production> Productions { get; private set; }
         public int CountNameProductions { get; private set; }
-        public double Productivity { get; private set; }
+        public int Productivity { get; private set; }
 
         protected Department(string name, List<string> pipleList, List<Production> productionList)
         {
@@ -23,7 +23,7 @@ namespace OOPlaba2
             Productivity = GetProductivity();
         }
 
-        private double GetProductivity()
+        private int GetProductivity()
         {
             int generalProduction = 0;
             foreach (var production in Productions)
