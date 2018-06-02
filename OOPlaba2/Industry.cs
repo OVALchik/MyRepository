@@ -8,9 +8,9 @@ namespace OOPlaba2
     {
         public string NameIndusry { get; private set; }
         public List<Department> Departaments { get; private set; }
-        public List<string>[] PipleArray { get; private set; }
+        public List<string> PipleList { get; private set; }= new List<string>();
         public int CountPiples { get; private set; }
-        public List<Production>[] ProductionArray { get; private set; }
+        public List<Production>ProductionList { get; private set; }= new List<Production>();
         public int CountNameProduction { get; private set; }
 
         public Industry(string name, List<Department> departmentList)
@@ -18,12 +18,10 @@ namespace OOPlaba2
             NameIndusry = name;
             Departaments = departmentList;
             CountPiples = GetCountPiples(Departaments);
-            CountNameProduction = GetCountProduction(Departaments);
-            ProductionArray = new List<Production>[Departaments.Count];
-            PipleArray = new List<string>[Departaments.Count];
+            CountNameProduction = GetCountProduction(Departaments);           
 
-            UnionArrayProduction(ProductionArray, Departaments);
-            UnionArrayPiple(PipleArray, Departaments);
+            UnionArrayProduction(ProductionList, Departaments);
+            UnionArrayPiple(PipleList, Departaments);
         }
 
         private static int GetCountPiples(IEnumerable<Department> departaments)
@@ -36,19 +34,19 @@ namespace OOPlaba2
             return departaments.Sum(t => t.CountNameProductions);
         }
 
-        private static void UnionArrayProduction(IList<List<Production>> productionArray, IReadOnlyList<Department> departaments)
+        private static void UnionArrayProduction(List<Production> productionList, IReadOnlyList<Department> departments)
         {
-            for (int i = 0; i < departaments.Count; i++)
+            foreach (var department in departments)
             {
-                productionArray[i] = departaments[i].Productions;
+                productionList.AddRange(department.Productions);
             }
         }
 
-        private static void UnionArrayPiple(IList<List<string>> pipleArray, IReadOnlyList<Department> departaments)
+        private static void UnionArrayPiple(List<string> pipleList, IReadOnlyList<Department> departments)
         {
-            for (int i = 0; i < departaments.Count; i++)
+            foreach (var department in departments)
             {
-                pipleArray[i] = departaments[i].PipleList;
+                pipleList.AddRange(department.PipleList);
             }
         }
 
@@ -65,54 +63,6 @@ namespace OOPlaba2
         public void EditDepartment(int index, Department departaments)
         {
             Departaments[index] = departaments;
-        }
-
-        public void ShowListProduction()
-        {
-            Console.WriteLine("Лист продукции:");
-            foreach (var products in ProductionArray)
-            {
-                foreach (var product in products)
-                {
-                    product.ShowInfoProduction();
-                }
-            }
-            Console.WriteLine($"Всего наименований:{CountNameProduction}");
-        }
-
-        public void ShowListPiples()
-        {
-            Console.WriteLine("Список рабочих, занятых в производсте:");
-            foreach (var piples in PipleArray)
-            {
-                foreach (string piple in piples)
-                {
-                    Console.WriteLine($"{piple}");
-                }
-            }
-            Console.WriteLine($"Всего:{CountPiples} человек(а)");
-        }
-
-        public void ShowInfoIndustry()
-        {
-            Console.WriteLine($"Название производства:{NameIndusry}");
-            Console.WriteLine($"Кол-во рабочих:{CountPiples} Кол-во наименований продукции:{CountNameProduction}");
-            Console.WriteLine($"Кол-во цехов:{Departaments.Count}");
-            Console.WriteLine($"Подробная информация по цехам:");
-            for (int i = 0; i < Departaments.Count; i++)
-            {
-                Console.Write($"{i + 1}.");
-                Departaments[i].ShowInfoDepartment();
-            }
-        }
-
-        public void ShowInfoProductivity()
-        {
-            Departaments.Sort();
-            foreach (var department in Departaments)
-            {
-                Console.WriteLine($"{department.NameDepartment} Производительность:{department.Productivity}");
-            }
-        }
+        }                 
     }
 }

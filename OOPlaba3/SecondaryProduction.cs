@@ -2,8 +2,12 @@
 
 namespace OOPlaba2
 {
+    [Serializable]
     public sealed class SecondaryProduction : PrimaryProduction
     {
+        public SecondaryProduction()
+        { }
+
         public SecondaryProduction(TypeMaterial typeMaterial, TypeProduction typeProduction, string name, double length, double width, double hight, double weight, int count, decimal price)
             : base(typeMaterial, typeProduction,name, length, width, hight, weight, count, price)
         {

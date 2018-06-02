@@ -4,14 +4,18 @@ using System.Linq;
 
 namespace OOPlaba2
 {
+    [Serializable]
     public sealed class Industry
     {
-        public string NameIndusry { get; private set; }
-        public List<Department> Departaments { get; private set; }
-        public List<string>[] PipleArray { get; private set; }
-        public int CountPiples { get; private set; }
-        public List<Production>[] ProductionArray { get; private set; }
-        public int CountNameProduction { get; private set; }
+        public string NameIndusry { get; set; }
+        public List<Department> Departaments { get; set; }
+        public List<string>[] PipleArray { get; set; }
+        public int CountPiples { get; set; }
+        public List<Production>[] ProductionArray { get; set; }
+        public int CountNameProduction { get; set; }
+
+        public Industry()
+        { }
 
         public Industry(string name, List<Department> departmentList)
         {

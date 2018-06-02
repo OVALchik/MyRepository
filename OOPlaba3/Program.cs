@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace OOPlaba2
 {  
@@ -296,22 +298,66 @@ namespace OOPlaba2
 
         private static void Main()
         {           
-            try
-            {
-                var st = new StorageDepartment(CreateRobotMachine(), "Заготовительный цех№1", CreatePipleListForStorageDepartment(), new List<Production>(CreatePrimaryProduction()));
-                var pd = new ProcessingDepartment("Обрабатывающий цех№1", CreatePipleListForProcessingDepartment(), new List<Production>(CreateSecondaryProduction()));
-                var ad = new AssemblyDepartment("Сборочно-монтажный цех№1", CreatePipleListForAssembluDepartment(), new List<Production>(CreateFinalProduction()));
+            //try
+           // {
+                var st = new StorageDepartment(CreateRobotMachine(), "Заготовительный цех№1", CreatePipleListForStorageDepartment(), new List<Production>(CreatePrimaryProduction()));              
+                XmlSerializer formatterSt = new XmlSerializer(typeof(StorageDepartment));
+                using (FileStream fs = new FileStream(@"C:\Users\Алина\Documents\Visual Studio 2015\Projects\OOPlaba3\StorageDepartment.xml", FileMode.OpenOrCreate))
+                {
+                    formatterSt.Serialize(fs, st);
+                    Console.WriteLine("Объект сериализован");
+                }
+                using (FileStream fs = new FileStream(@"C:\Users\Алина\Documents\Visual Studio 2015\Projects\OOPlaba3\StorageDepartment.xml", FileMode.OpenOrCreate))
+                {
+                    StorageDepartment newStorageDepartment = (StorageDepartment)formatterSt.Deserialize(fs);
+                    Console.WriteLine("Объект десериализован");                   
+                    newStorageDepartment.ShowInfoDepartment();                
+                
+                }
 
-                var department = new List<Department> { st, pd, ad };
+                var pd = new ProcessingDepartment("Обрабатывающий цех№1", CreatePipleListForProcessingDepartment(), new List<Production>(CreateSecondaryProduction()));
+                XmlSerializer formatterPd = new XmlSerializer(typeof(ProcessingDepartment));
+                using (FileStream fs = new FileStream(@"C:\Users\Алина\Documents\Visual Studio 2015\Projects\OOPlaba3\ProcessingDepartment.xml", FileMode.OpenOrCreate))
+                {
+                    formatterPd.Serialize(fs, pd);
+                    Console.WriteLine("Объект сериализован");
+                }
+                using (FileStream fs = new FileStream(@"C:\Users\Алина\Documents\Visual Studio 2015\Projects\OOPlaba3\ProcessingDepartment.xml", FileMode.OpenOrCreate))
+                {
+                    ProcessingDepartment newProcessingDepartment = (ProcessingDepartment)formatterPd.Deserialize(fs);
+                    Console.WriteLine("Объект десериализован");
+                    newProcessingDepartment.ShowInfoDepartment();
+                }
+
+                var ad = new AssemblyDepartment("Сборочно-монтажный цех№1", CreatePipleListForAssembluDepartment(), new List<Production>(CreateFinalProduction()));
+                XmlSerializer formatterAd = new XmlSerializer(typeof(AssemblyDepartment));
+                using (FileStream fs = new FileStream(@"C:\Users\Алина\Documents\Visual Studio 2015\Projects\OOPlaba3\AssemblygDepartment.xml", FileMode.OpenOrCreate))
+                {
+                    formatterAd.Serialize(fs, ad);
+                    Console.WriteLine("Объект сериализован");
+                }
+                using (FileStream fs = new FileStream(@"C:\Users\Алина\Documents\Visual Studio 2015\Projects\OOPlaba3\AssemblygDepartment.xml", FileMode.OpenOrCreate))
+                {
+                    AssemblyDepartment newAssemblyDepartment = (AssemblyDepartment)formatterAd.Deserialize(fs);
+                    Console.WriteLine("Объект десериализован");
+                    newAssemblyDepartment.ShowInfoDepartment();
+                }
+
+                var department = new List<Department> { st, pd, ad};
 
                 var industry = new Industry("Инастриз", department);
-              
+                XmlSerializer formatterInd = new XmlSerializer(typeof(Industry));
+                using (FileStream fs = new FileStream(@"C:\Users\Алина\Documents\Visual Studio 2015\Projects\OOPlaba3\Industry.xml", FileMode.OpenOrCreate))
+                {
+                    formatterInd.Serialize(fs, industry);
+                    Console.WriteLine("Объект сериализован");
+                }
                 ShowClassWork(industry);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);             
-            }
+          //  }
+           // catch (Exception e)
+          //  {
+            //    Console.WriteLine(e.Message);             
+           // }
 
         }
     }

@@ -7,10 +7,10 @@
         public int CountProduction { get; private set; }
         public decimal PriceProduction { get; private set; }
 
-        protected Production(string name, double length, double width, double hight, double weight, int count, decimal price)
+        protected Production(string name, Size size, int count, decimal price)
         {
             NameProduction = name;
-            SizeProduction = new Size(length, width, hight, weight);
+            SizeProduction = size;
             CountProduction = count;
             PriceProduction = price;
         }

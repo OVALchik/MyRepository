@@ -20,11 +20,11 @@ namespace OOPlaba2
         {
             var productionList = new List<PrimaryProduction>
             {
-                new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", 50, 70, 5, 3, 1000,
+                new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
                     250m),
-                new PrimaryProduction(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5", 0.5, 0.5, 5, 7, 500, 1500m),
-                new PrimaryProduction(TypeMaterial.Wood, TypeProduction.Beam, "Брус W-10", 10, 10, 200, 15, 400, 500m),
-                new PrimaryProduction(TypeMaterial.Iron, TypeProduction.Rod, "Прут IR-5", 0.5, 0.5, 5, 7, 200, 1000m)
+                new PrimaryProduction(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500, 1500m),
+                new PrimaryProduction(TypeMaterial.Wood, TypeProduction.Beam, "Брус W-10", new Size(10, 10, 200, 15), 400, 500m),
+                new PrimaryProduction(TypeMaterial.Iron, TypeProduction.Rod, "Прут IR-5",new Size( 0.5, 0.5, 5, 7), 200, 1000m)
             };
             return productionList;
         }
@@ -39,12 +39,18 @@ namespace OOPlaba2
         {
             var productionList = new List<SecondaryProduction>
             {
-                new SecondaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Заготовка-AL5", 50, 50, 12, 5,
-                    500, 350m),
-                new SecondaryProduction(TypeMaterial.Titanium, TypeProduction.Ingot, "Заготовка-ТТ3", 150, 50, 7, 40,
-                    200, 1500m),
-                new SecondaryProduction(TypeMaterial.Wood, TypeProduction.Rod, "Заготовка-W11", 50, 50, 100, 45, 1500,
-                    450m)
+                new SecondaryProduction("Заготовка-AL5", new Size(50, 50, 12, 5),
+                    new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
+                    250m)),
+                new SecondaryProduction("Заготовка-ТТ3", new Size(150, 7, 7, 40),
+                    new PrimaryProduction(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
+                        1500m)),
+                new SecondaryProduction("Заготовка-W11", new Size(100, 50,50, 45),
+                    new PrimaryProduction(TypeMaterial.Wood, TypeProduction.Beam, "Брус W-10", new Size(10, 10, 200, 15), 400,
+                        500m)),
+                new SecondaryProduction("Заготовка-I95", new Size(10, 2, 2, 10),
+                    new PrimaryProduction(TypeMaterial.Iron, TypeProduction.Rod, "Прут IR-5",new Size( 0.5, 0.5, 5, 7), 200,
+                        1000m))
             };
             return productionList;
         }
@@ -60,9 +66,36 @@ namespace OOPlaba2
         {
             var productionList = new List<FinalProduction>
             {
-                new FinalProduction("Станок измерительный", 100, 200, 160, 15, 1100, 5000m),
-                new FinalProduction("Станок автоматизированный", 200, 50, 50, 17, 2100, 6000m),
-                new FinalProduction("Измеритель", 50, 50, 30, 1.2, 1500, 300m)
+                new FinalProduction("Станок измерительный",new Size( 100, 200, 160, 15), 1100, 
+                    new List<SecondaryProduction>
+                    {
+                        new SecondaryProduction("Заготовка-AL5", new Size(50, 50, 12, 5),
+                            new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
+                                250m)),
+                        new SecondaryProduction("Заготовка-ТТ3", new Size(150, 7, 7, 40),
+                            new PrimaryProduction(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
+                                1500m))
+                        }),
+                new FinalProduction("Станок автоматизированный", new Size(200, 50, 50, 17), 2100,
+                    new List<SecondaryProduction>
+                    {
+                        new SecondaryProduction("Заготовка-W11", new Size(100, 50,50, 45),
+                            new PrimaryProduction(TypeMaterial.Wood, TypeProduction.Beam, "Брус W-10", new Size(10, 10, 200, 15), 400,
+                                500m)),
+                        new SecondaryProduction("Заготовка-I95", new Size(10, 2, 2, 10),
+                            new PrimaryProduction(TypeMaterial.Iron, TypeProduction.Rod, "Прут IR-5",new Size( 0.5, 0.5, 5, 7), 200,
+                                1000m))
+                    }),
+                new FinalProduction("Измеритель", new Size(50, 50, 30, 1.2), 1500,
+                    new List<SecondaryProduction>
+                    {
+                        new SecondaryProduction("Заготовка-AL5", new Size(50, 50, 12, 5),
+                            new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
+                                250m)),
+                        new SecondaryProduction("Заготовка-I95", new Size(10, 2, 2, 10),
+                            new PrimaryProduction(TypeMaterial.Iron, TypeProduction.Rod, "Прут IR-5",new Size( 0.5, 0.5, 5, 7), 200,
+                                1000m))
+                    })
             };
             return productionList;
         }
@@ -80,18 +113,7 @@ namespace OOPlaba2
                 "Захарова Ю.Ф."
             };
             return pipleList;
-        }
-
-        public static void ShowInfoDepartment(Industry industry)
-        {
-            Console.WriteLine("Выбор цеха:");
-            for (int i = 0; i < industry.Departaments.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}.{industry.Departaments[i].NameDepartment}");
-            }
-            int item = Convert.ToInt32(Console.ReadLine());
-            industry.Departaments[item - 1].ShowInfoDepartment();
-        }
+        }        
 
         public static void AddDepartmentFromIndusty(Industry industry)
         {
@@ -115,8 +137,8 @@ namespace OOPlaba2
 
                         var productionList = new List<PrimaryProduction>
                        {
-                          new PrimaryProduction(TypeMaterial.Wood, TypeProduction.Plate,"Лист W-4", 50, 70, 5, 3, 10000, 250m),
-                          new PrimaryProduction(TypeMaterial.Wood, TypeProduction.Rod,"Прут W-5", 0.5, 0.5, 5, 7, 5000, 150m)
+                          new PrimaryProduction(TypeMaterial.Wood, TypeProduction.Plate,"Лист W-4",new Size( 50, 70, 5, 3), 10000, 250m),
+                          new PrimaryProduction(TypeMaterial.Wood, TypeProduction.Rod,"Прут W-5",new Size( 0.5, 0.5, 5, 7), 5000, 150m)
                        };
 
                         var newSt = new StorageDepartment(machineList, "Заготовительный цех№2", pipleList, new List<Production>(productionList));
@@ -127,8 +149,10 @@ namespace OOPlaba2
                     {
                         var productionList = new List<SecondaryProduction>
                         {
-                            new SecondaryProduction(TypeMaterial.Iron, TypeProduction.Rod,"Заготовка-I5", 50, 50, 12, 5, 5000, 350m),
-                            new SecondaryProduction(TypeMaterial.Iron, TypeProduction.Plate,"Заготовка-I3", 150, 50, 7, 40, 2000, 1500m)
+                            new SecondaryProduction("Заготовка-I5",new Size( 50, 50, 12, 5),
+                                new PrimaryProduction(TypeMaterial.Iron, TypeProduction.Rod, "Прут IR-5",new Size( 0.5, 0.5, 5, 7), 200, 1000m)),
+                            new SecondaryProduction("Заготовка-P3",new Size( 150, 50, 7, 40),
+                                new PrimaryProduction(TypeMaterial.Iron, TypeProduction.Plate, "Лист IR-3",new Size( 5, 5, 1, 9), 250, 1500m))
                         };
 
                         var newPd = new ProcessingDepartment("Обрабатывающий цех№2", pipleList, new List<Production>(productionList));
@@ -139,9 +163,33 @@ namespace OOPlaba2
                     {
                         var productionList = new List<FinalProduction>
                         {
-                            new FinalProduction("Станок A09", 100, 200, 160, 15, 100, 5000m),
-                            new FinalProduction("Станок автоматизированный B-8", 200, 50, 50, 17, 100, 6000m),
-                            new FinalProduction("Измеритель ЭТМ", 50, 50, 30, 1.2, 100, 300m)
+                            new FinalProduction("Станок A09", new Size(100, 200, 160, 15), 100,
+                                new List<SecondaryProduction>
+                                {
+                                    new SecondaryProduction("Заготовка-AL5", new Size(50, 50, 12, 5),
+                                        new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
+                                            250m)),
+                                    new SecondaryProduction("Заготовка-ТТ3", new Size(150, 7, 7, 40),
+                                        new PrimaryProduction(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
+                                            1500m))
+                                }),
+                            new FinalProduction("Станок автоматизированный B-8", new Size(200, 50, 50, 17), 100,
+                                new List<SecondaryProduction>
+                                {
+                                    new SecondaryProduction("Заготовка-AL5", new Size(50, 50, 12, 5),
+                                        new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
+                                            250m)),
+                                    new SecondaryProduction("Заготовка-ТТ3", new Size(150, 7, 7, 40),
+                                        new PrimaryProduction(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
+                                            1500m))
+                                }),
+                            new FinalProduction("Измеритель ЭТМ", new Size(50, 50, 30, 1.2), 100,
+                                new List<SecondaryProduction>
+                                {
+                                    new SecondaryProduction("Заготовка-AL5", new Size(50, 50, 12, 5),
+                                        new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
+                                            250m))                                    
+                                }),
                         };
 
                         var newAd = new AssemblyDepartment("Сборочно-монтажный цех№2", pipleList, new List<Production>(productionList));
@@ -195,7 +243,16 @@ namespace OOPlaba2
                         }
                         if (industry.Departaments[itemDep - 1] is AssemblyDepartment)
                         {
-                            industry.Departaments[itemDep - 1].AddProduction(new FinalProduction("Станок автоматизированный PT-8", 200, 50, 50, 17, 100, 6000m));
+                            industry.Departaments[itemDep - 1].AddProduction(new FinalProduction("Станок автоматизированный PT-8", new Size(200, 50, 50, 17), 100,
+                                new List<SecondaryProduction>
+                                {
+                                    new SecondaryProduction("Заготовка-AL5", new Size(50, 50, 12, 5),
+                                        new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
+                                            250m)),
+                                    new SecondaryProduction("Заготовка-ТТ3", new Size(150, 7, 7, 40),
+                                        new PrimaryProduction(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
+                                            1500m))
+                                }));
                         }
                     }
                     break;
@@ -211,8 +268,27 @@ namespace OOPlaba2
                         var pipleList = new List<string> { "Зощин Е.Ф.", "Кубина П.Я." };
                         var productionList = new List<FinalProduction>
                         {
-                            new FinalProduction("Станок автоматизированный B-8", 200, 50, 50, 17, 100, 6000m),
-                            new FinalProduction("Измеритель ЭТМ", 50, 50, 30, 1.2, 100, 300m)
+                            new FinalProduction("Станок автоматизированный B-8",new Size( 200, 50, 50, 17), 100,
+                                new List<SecondaryProduction>
+                                {
+                                    new SecondaryProduction("Заготовка-AL5", new Size(50, 50, 12, 5),
+                                        new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
+                                            250m)),
+                                    new SecondaryProduction("Заготовка-ТТ3", new Size(150, 7, 7, 40),
+                                        new PrimaryProduction(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
+                                            1500m))
+                                }),
+                            new FinalProduction("Измеритель ЭТМ", new Size(50, 50, 30, 1.2), 100,  
+                                new List<SecondaryProduction>
+                                {
+                                    new SecondaryProduction("Заготовка-AL5", new Size(50, 50, 12, 5),
+                                        new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
+                                            250m)),
+                                    new SecondaryProduction("Заготовка-ТТ3", new Size(150, 7, 7, 40),
+                                        new PrimaryProduction(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
+                                            1500m))
+                                })
+
                     };
                         var newAd = new AssemblyDepartment("Сборочно-монтажный цех№3", pipleList, new List<Production>(productionList));
 
@@ -250,42 +326,81 @@ namespace OOPlaba2
             }
         }
 
+        public static void ShowInfoReport(Industry industry)
+        {
+            Report report = new Report();
+            object objectIndustry = industry;
+            ShowInfo showInfo;
+
+            Console.WriteLine("Выбор пункта:");
+            Console.WriteLine("1.Просмотр полной информации производства");
+            Console.WriteLine("2.Просмотр полного листа продукции");
+            Console.WriteLine("3.Просмотр полного списка рабочих");
+            Console.WriteLine("4.Просмотр информации о цехе");                                   
+            Console.WriteLine("5.Просмотр информации производительности по цехам");
+            Console.WriteLine("6.Просмотр информации об автоматизированных систеиах");
+
+            int input = Convert.ToInt32(Console.ReadLine());
+            switch (input)
+            {
+                case 1:                  
+                    showInfo = report.ShowInfoIndustry;
+                    showInfo(objectIndustry);
+                    break;
+                case 2:
+                    showInfo = report.ShowListProduction;
+                    showInfo(objectIndustry);
+                    break;
+                case 3:
+                    showInfo = report.ShowListPiples;
+                    showInfo(objectIndustry);
+                    break;
+                case 4:
+                    Console.WriteLine("Выбор цеха:");
+                    for (int i = 0; i < industry.Departaments.Count; i++)
+                    {
+                        Console.WriteLine($"{i + 1}.{industry.Departaments[i].NameDepartment}");
+                    }
+                    int item = Convert.ToInt32(Console.ReadLine());
+
+                    object objectDepartment = industry.Departaments[item - 1];                   
+                    showInfo = report.ShowInfoDepartment;
+                    showInfo(objectDepartment);
+                    break;
+                case 5:
+                    showInfo = report.ShowInfoProductivity;
+                    showInfo(objectIndustry);
+                    break;
+                case 6:
+                    showInfo = report.ShowInfoMachine;
+                    showInfo(objectIndustry);
+                    break;
+                default:
+                    Console.WriteLine("Введено неверное значение");
+                    break;
+            }           
+        }
+
         public static void ShowClassWork(Industry industry)
         {
             bool flag = true;
             while (flag)
             {
                 Console.WriteLine("Выбор пункта:");
-                Console.WriteLine("1.Просмотр информации о цехе");
-                Console.WriteLine("2.Добавить, удалить, изменить цех");
-                Console.WriteLine("3.Просмотр информации о производстве");
-                Console.WriteLine("4.Просмотр полного списка продукции производства");
-                Console.WriteLine("5.Просмотр полного списка рабочих производства");
-                Console.WriteLine("6.Просмотр информации производительности по цехам");
-                Console.WriteLine("7.Выход");
+                Console.WriteLine("1.Просмотр информации");
+                Console.WriteLine("2.Добавить, удалить, изменить цех");                
+                Console.WriteLine("3.Выход");
 
                 int input = Convert.ToInt32(Console.ReadLine());
                 switch (input)
                 {
                     case 1:
-                        ShowInfoDepartment(industry);
+                        ShowInfoReport(industry);
                         break;
                     case 2:
                         ChangeDepartment(industry);
-                        break;
+                        break;                   
                     case 3:
-                        industry.ShowInfoIndustry();
-                        break;
-                    case 4:
-                        industry.ShowListProduction();
-                        break;
-                    case 5:
-                        industry.ShowListPiples();
-                        break;
-                    case 6:
-                        industry.ShowInfoProductivity();
-                        break;
-                    case 7:
                         flag = false;
                         break;
                     default:
@@ -294,6 +409,8 @@ namespace OOPlaba2
                 }
             }
         }
+
+        delegate void ShowInfo(object obj);
 
         private static void Main()
         {
@@ -305,7 +422,6 @@ namespace OOPlaba2
 
             var industry = new Industry("Инастриз", department);
             ShowClassWork(industry);
-
         }
     }
 }

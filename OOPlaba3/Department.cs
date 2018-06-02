@@ -1,17 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 
 namespace OOPlaba2
 {
+    [XmlInclude(typeof(StorageDepartment))]
+    [XmlInclude(typeof(ProcessingDepartment))]
+    [XmlInclude(typeof(AssemblyDepartment))]
+    [Serializable]
     public abstract class Department:IComparable
     {
-        public string NameDepartment { get; private set; }
-        public List<string> PipleList { get; private set; }
-        public int CountPiples { get; private set; }
-        public List<Production> Productions { get; private set; }
-        public int CountNameProductions { get; private set; }
-        public double Productivity { get; private set; }
+        public string NameDepartment { get; set; }
+        public List<string> PipleList { get; set; }
+        public int CountPiples { get; set; }
+        public List<Production> Productions { get; set; }
+        public int CountNameProductions { get; set; }
+        public double Productivity { get; set; }
+
+        protected Department()
+        { }
 
         protected Department(string name, List<string> pipleList, List<Production> productionList)
         {

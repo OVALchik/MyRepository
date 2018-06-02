@@ -2,8 +2,8 @@
 {
     public struct RobotMachine
     {
-        public string NameMachine { get; private set; }
-        public int CountMachine { get; private set; }
+        public string NameMachine { get; set; }
+        public int CountMachine { get; set; }
 
         public RobotMachine(string nameMachine, int count)
         {

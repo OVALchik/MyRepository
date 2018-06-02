@@ -1,4 +1,6 @@
-﻿namespace OOPlaba2
+﻿using System;
+
+namespace OOPlaba2
 {
     public struct Size
     {
@@ -13,6 +15,11 @@
             Width = width;
             Hight = hight;
             Weigth = weight;
+        }
+
+        public void ShowSize()
+        {
+            Console.WriteLine($"Габариты:{Length}x{Width}x{Hight}(m) Вес:{Weigth}(kg)");
         }
     }
 

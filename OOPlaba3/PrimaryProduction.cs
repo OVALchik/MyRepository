@@ -1,11 +1,17 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace OOPlaba2
 {
+    [XmlInclude(typeof(SecondaryProduction))]
+    [Serializable]
     public class PrimaryProduction : Production
     {
-        public TypeMaterial Material { get; private set; }
-        public TypeProduction Type { get; private set; }
+        public TypeMaterial Material { get; set; }
+        public TypeProduction Type { get; set; }
+
+        public PrimaryProduction()
+        { }
 
         public PrimaryProduction(TypeMaterial typeMaterial, TypeProduction typeProduction, string name, double length, double width, double hight, double weight, int count, decimal price)
             : base(name, length, width, hight, weight, count, price)

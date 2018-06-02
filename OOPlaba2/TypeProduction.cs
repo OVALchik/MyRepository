@@ -2,9 +2,21 @@
 {
     public enum TypeProduction
     {
-        Plate, //Пластина, лист
-        Ingot, //Слиток, болванка
-        Rod, //Прут
-        Beam //Брус, балка
+        /// <summary>
+        /// Пластина, лист
+        /// </summary>
+        Plate,
+        /// <summary>
+        /// Слиток, болванка
+        /// </summary>
+        Ingot,
+        /// <summary>
+        /// Прут
+        /// </summary>
+        Rod,
+        /// <summary>
+        /// Брус, балка
+        /// </summary>
+        Beam 
     }
 }

@@ -1,19 +1,23 @@
 ﻿using System;
+using System.Dynamic;
 
 namespace OOPlaba2
 {
-    public sealed class SecondaryProduction : PrimaryProduction
+    public sealed class SecondaryProduction : Production
     {
-        public SecondaryProduction(TypeMaterial typeMaterial, TypeProduction typeProduction, string name, double length, double width, double hight, double weight, int count, decimal price)
-            : base(typeMaterial, typeProduction,name, length, width, hight, weight, count, price)
+        public TypeMaterial Material { get; private set; }
+        private const decimal Koef = 1.5m;
+
+        public SecondaryProduction(string name, Size size, PrimaryProduction production)
+            : base(name, size, production.CountProduction, production.PriceProduction * Koef)
         {
-          
+            Material = production.Material;
         }
 
         public override void ShowInfoProduction()
         {
             Console.WriteLine($"Наименование:{NameProduction} Типа материала:{Material}");
-            Console.WriteLine($"Габариты:{SizeProduction.Length}x{SizeProduction.Width}x{SizeProduction.Hight}(m) Вес:{SizeProduction.Weigth}(kg)");
+            SizeProduction.ShowSize();
             Console.WriteLine($"Кол-во:{CountProduction} Цена за ед.:{PriceProduction}");
         }
     }

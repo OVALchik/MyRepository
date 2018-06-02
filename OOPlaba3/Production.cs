@@ -1,13 +1,21 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace OOPlaba2
 {
+    [XmlInclude(typeof(PrimaryProduction))]
+    [XmlInclude(typeof(FinalProduction))]
+    //[XmlInclude(typeof(SecondaryProduction))]
+    [Serializable]
     public abstract class Production
     {       
-        public string NameProduction { get; private set; }
-        public Size SizeProduction { get; private set; }
-        public int CountProduction { get; private set; }
-        public decimal PriceProduction { get; private set; }
+        public string NameProduction { get; set; }
+        public Size SizeProduction { get; set; }
+        public int CountProduction { get; set; }
+        public decimal PriceProduction { get; set; }
+
+        protected Production()
+        { }
 
         protected Production(string name, double length, double width, double hight, double weight, int count, decimal price)
         {

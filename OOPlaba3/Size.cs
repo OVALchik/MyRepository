@@ -2,10 +2,10 @@
 {
     public struct Size
     {
-        public double Length { get; private set; }
-        public double Width { get; private set; }
-        public double Hight { get; private set; }
-        public double Weigth { get; private set; }
+        public double Length { get; set; }
+        public double Width { get; set; }
+        public double Hight { get; set; }
+        public double Weigth { get; set; }
 
         public Size(double length, double width, double hight, double weight)
         {

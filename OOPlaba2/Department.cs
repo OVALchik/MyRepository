@@ -29,7 +29,7 @@ namespace OOPlaba2
             foreach (var production in Productions)
                 generalProduction += production.CountProduction;
 
-            return (double)generalProduction / CountPiples;
+            return generalProduction / CountPiples;
         }
 
         int IComparable.CompareTo(object obj)
@@ -38,30 +38,7 @@ namespace OOPlaba2
             double t = d.Productivity;
             return Productivity.CompareTo(t);
         }
-
-        public virtual void ShowInfoDepartment()
-        {
-            Console.WriteLine($"Название цеха:{NameDepartment}");
-
-            Console.WriteLine("Список рабочих:");
-            for (int i = 0; i < PipleList.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}.{PipleList[i]}");
-            }
-            Console.WriteLine($"Общее число рабочих:{CountPiples}");
-
-            Console.WriteLine("Список продукции:");
-            for (int i = 0; i < Productions.Count; i++)
-            {
-                Console.Write($"{i + 1}.");
-                Productions[i].ShowInfoProduction();
-            }
-            Console.WriteLine($"Число наименований продукции:{CountNameProductions}");
-
-            Console.WriteLine($"Производительность цеха:{Productivity}");
-            Console.WriteLine("________________________________________");
-        }
-
+        
         public void AddProduction(Production production)
         {
             Productions.Add(production);
