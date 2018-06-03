@@ -1,20 +1,19 @@
-﻿using System;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
+using System;
 
 namespace OOPlaba2
 {
-    [XmlInclude(typeof(SecondaryProduction))]
-    [Serializable]
-    public class PrimaryProduction : Production
+    //[Serializable]
+    public class PrimaryProductionDTO : ProductionDTO
     {
         public TypeMaterial Material { get; set; }
         public TypeProduction Type { get; set; }
 
-        public PrimaryProduction()
+        public PrimaryProductionDTO()
         { }
 
-        public PrimaryProduction(TypeMaterial typeMaterial, TypeProduction typeProduction, string name, double length, double width, double hight, double weight, int count, decimal price)
-            : base(name, length, width, hight, weight, count, price)
+        public PrimaryProductionDTO(TypeMaterial typeMaterial, TypeProduction typeProduction, string name, Size size, int count, decimal price)
+            : base(name, size, count, price)
         {
             Material = typeMaterial;
             Type = typeProduction;
@@ -23,9 +22,10 @@ namespace OOPlaba2
         public override void ShowInfoProduction()
         {
             Console.WriteLine($"Наименование:{NameProduction} Тип:{Type} Тип материала:{Material}");
-            Console.WriteLine($"Габариты:{SizeProduction.Length}x{SizeProduction.Width}x{SizeProduction.Hight}(m) Вес:{SizeProduction.Weigth}(kg)");
+            SizeProduction.ShowSize();
             Console.WriteLine($"Кол-во:{CountProduction} Цена за ед.:{PriceProduction}");
         }
     }
 
 }
+

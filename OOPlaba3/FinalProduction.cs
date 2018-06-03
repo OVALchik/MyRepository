@@ -1,24 +1,43 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace OOPlaba2
 {
-    [Serializable]
-    public sealed class FinalProduction : Production
+   // [Serializable]
+    public sealed class FinalProductionDTO : ProductionDTO
     {
-        public FinalProduction()
+        public List<SecondaryProductionDTO> SecondaryProductionList { get; set; }
+
+        public FinalProductionDTO()
         { }
 
-        public FinalProduction(string name, double length, double width, double hight, double weight, int count, decimal price)
-            : base(name, length, width, hight, weight, count, price)
+        public FinalProductionDTO(string name, Size size, int count, List<SecondaryProductionDTO> list)
+            : base(name, size, count, GetPrice(list))
         {
+            SecondaryProductionList = list;
+        }
 
+        public static decimal GetPrice(List<SecondaryProductionDTO> secondaryProductionList)
+        {
+            const decimal koef = 1.5m;
+            decimal sumPrice = 0m;
+            foreach (var production in secondaryProductionList)
+                sumPrice += production.PriceProduction;
+
+            sumPrice *= koef;
+            return sumPrice;
         }
 
         public override void ShowInfoProduction()
         {
             Console.WriteLine($"Наименование:{NameProduction}");
-            Console.WriteLine($"Габариты:{SizeProduction.Length}x{SizeProduction.Width}x{SizeProduction.Hight}(m) Вес:{SizeProduction.Weigth}(kg)");
+            SizeProduction.ShowSize();
             Console.WriteLine($"Кол-во:{CountProduction} Цена за ед.:{PriceProduction}");
+            Console.WriteLine("Список сырья для изготовления:");
+            foreach (var production in SecondaryProductionList)
+            {
+                production.ShowInfoProduction();
+            }
         }
 
     }

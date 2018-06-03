@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace OOPlaba2
 {
-    [Serializable]
-    public sealed class AssemblyDepartment : Department
+    //[Serializable]
+    public sealed class AssemblyDepartmentDTO : DepartmentDTO
     {
-        public AssemblyDepartment()
+        public AssemblyDepartmentDTO()
         { }
 
-        public AssemblyDepartment(string name, List<string> pipleList, List<Production> productionList)
+        public AssemblyDepartmentDTO(string name, List<string> pipleList, List<ProductionDTO> productionList)
             : base(name, pipleList, productionList)
         {
 

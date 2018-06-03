@@ -1,65 +1,72 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace OOPlaba2
 {
-    [Serializable]
-    public sealed class Industry
+    public sealed class IndustryDTO: DTO
     {
-        public string NameIndusry { get; set; }
-        public List<Department> Departaments { get; set; }
-        public List<string>[] PipleArray { get; set; }
+        private string _nameIndustry;
+
+        [XmlElement()]
+        public string NameIndusry
+        {
+            get { return _nameIndustry;}
+            set { _nameIndustry = value;}
+        }
+
+        public List<DepartmentDTO> Departaments { get; set; }
+        public List<string> PipleList { get; set; } = new List<string>();
         public int CountPiples { get; set; }
-        public List<Production>[] ProductionArray { get; set; }
+        public List<ProductionDTO> ProductionList { get; set; } = new List<ProductionDTO>();
         public int CountNameProduction { get; set; }
 
-        public Industry()
+        public IndustryDTO()
         { }
 
-        public Industry(string name, List<Department> departmentList)
+        public IndustryDTO(string name, List<DepartmentDTO> departmentList)
         {
-            if(departmentList==null)
+            if(departmentList == null)
                 throw new ArgumentException("На производстве должен быть хотя бы один цех");
-            
+
             NameIndusry = name;
             Departaments = departmentList;
             CountPiples = GetCountPiples(Departaments);
             CountNameProduction = GetCountProduction(Departaments);
-            ProductionArray = new List<Production>[Departaments.Count];
-            PipleArray = new List<string>[Departaments.Count];
 
-            UnionArrayProduction(ProductionArray, Departaments);
-            UnionArrayPiple(PipleArray, Departaments);
-        }
+            UnionArrayProduction(ProductionList, Departaments);
+            UnionArrayPiple(PipleList, Departaments);
+        }      
 
-        private static int GetCountPiples(IEnumerable<Department> departaments)
+        private static int GetCountPiples(IEnumerable<DepartmentDTO> departaments)
         {
             return departaments.Sum(t => t.CountPiples);
         }
 
-        private static int GetCountProduction(IEnumerable<Department> departaments)
+        private static int GetCountProduction(IEnumerable<DepartmentDTO> departaments)
         {
             return departaments.Sum(t => t.CountNameProductions);
         }
 
-        private static void UnionArrayProduction(IList<List<Production>> productionArray, IReadOnlyList<Department> departaments)
+        private static void UnionArrayProduction(List<ProductionDTO> productionList, IReadOnlyList<DepartmentDTO> departments)
         {
-            for (int i = 0; i < departaments.Count; i++)
+            foreach (var department in departments)
             {
-                productionArray[i] = departaments[i].Productions;
+                productionList.AddRange(department.Productions);
             }
         }
 
-        private static void UnionArrayPiple(IList<List<string>> pipleArray, IReadOnlyList<Department> departaments)
+        private static void UnionArrayPiple(List<string> pipleList, IReadOnlyList<DepartmentDTO> departments)
         {
-            for (int i = 0; i < departaments.Count; i++)
+            foreach (var department in departments)
             {
-                pipleArray[i] = departaments[i].PipleList;
+                pipleList.AddRange(department.PipleList);
             }
         }
 
-        public void AddDepartment(Department departaments)
+        public void AddDepartment(DepartmentDTO departaments)
         {
             Departaments.Add(departaments);
         }
@@ -76,7 +83,7 @@ namespace OOPlaba2
             }
         }
 
-        public void EditDepartment(int index, Department departaments)
+        public void EditDepartment(int index, DepartmentDTO departaments)
         {
             try
             {
@@ -88,53 +95,6 @@ namespace OOPlaba2
             }
             
         }
-
-        public void ShowListProduction()
-        {
-            Console.WriteLine("Лист продукции:");
-            foreach (var products in ProductionArray)
-            {
-                foreach (var product in products)
-                {
-                    product.ShowInfoProduction();
-                }
-            }
-            Console.WriteLine($"Всего наименований:{CountNameProduction}");
-        }
-
-        public void ShowListPiples()
-        {
-            Console.WriteLine("Список рабочих, занятых в производсте:");
-            foreach (var piples in PipleArray)
-            {
-                foreach (string piple in piples)
-                {
-                    Console.WriteLine($"{piple}");
-                }
-            }
-            Console.WriteLine($"Всего:{CountPiples} человек(а)");
-        }
-
-        public void ShowInfoIndustry()
-        {
-            Console.WriteLine($"Название производства:{NameIndusry}");
-            Console.WriteLine($"Кол-во рабочих:{CountPiples} Кол-во наименований продукции:{CountNameProduction}");
-            Console.WriteLine($"Кол-во цехов:{Departaments.Count}");
-            Console.WriteLine($"Подробная информация по цехам:");
-            for (int i = 0; i < Departaments.Count; i++)
-            {
-                Console.Write($"{i + 1}.");
-                Departaments[i].ShowInfoDepartment();
-            }
-        }
-
-        public void ShowInfoProductivity()
-        {
-            Departaments.Sort();
-            foreach (var department in Departaments)
-            {
-                Console.WriteLine($"{department.NameDepartment} Производительность:{department.Productivity}");
-            }
-        }
+        
     }
 }

@@ -3,17 +3,18 @@ using System.Collections.Generic;
 
 namespace OOPlaba2
 {
-    [Serializable]
-    public sealed class ProcessingDepartment : Department
+    //[Serializable]
+    public sealed class ProcessingDepartmentDTO : DepartmentDTO
     {
-        public ProcessingDepartment()
+        public ProcessingDepartmentDTO()
         { }
 
-        public ProcessingDepartment(string name, List<string> pipleList, List<Production> productionList)
+        public ProcessingDepartmentDTO(string name, List<string> pipleList, List<ProductionDTO> productionList)
             : base(name, pipleList, productionList)
         {
 
         }
+
 
     }
 }

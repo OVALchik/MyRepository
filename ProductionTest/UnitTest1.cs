@@ -1,18 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OOPlaba2;
 
 namespace ProductionTest
 {
     [TestClass]
-    public class Production
+    public class ProductionDTO
     {
         [TestMethod]
         public void ProductionConstructor_Error()
         {
             try
             {
-                new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", 0, 70, 5, 0, 1000,
+                new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(0, 0, 0, 0), 1000,
                     250m);
                 Assert.Fail();
             }
@@ -21,6 +22,28 @@ namespace ProductionTest
                 Assert.AreEqual("Габариты продукции введены неверно", e.Message);
             }
            
+        }
+
+        [TestMethod]
+        public void GetPrice()
+        {
+            var secondaryProduction = new List<SecondaryProductionDTO>
+            {
+                new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
+                    new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4",
+                        new Size(50, 70, 5, 3), 1000,
+                        250m)),
+                new SecondaryProductionDTO("Заготовка-ТТ3", new Size(150, 7, 7, 40),
+                    new PrimaryProductionDTO(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",
+                        new Size(0.5, 0.5, 5, 7), 500,
+                        1500m))
+            };
+
+            FinalProductionDTO production = new FinalProductionDTO("Станок измерительный", new Size(100, 200, 160, 15),
+                1100, secondaryProduction);
+
+
+            Assert.AreEqual(3937.50m, production.PriceProduction);
         }
     }
 }

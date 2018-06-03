@@ -4,9 +4,9 @@ using System.IO;
 using System.Xml.Serialization;
 
 namespace OOPlaba2
-{  
+{
     internal class Program
-    {         
+    {
         public static List<RobotMachine> CreateRobotMachine()
         {
             var machineList = new List<RobotMachine>
@@ -16,37 +16,43 @@ namespace OOPlaba2
                 new RobotMachine("Прессовочный аппарат", 10)
             };
             return machineList;
-        }       
+        }
 
-        public static List<PrimaryProduction> CreatePrimaryProduction()
+        public static List<PrimaryProductionDTO> CreatePrimaryProduction()
         {
-            var productionList = new List<PrimaryProduction>
+            var productionList = new List<PrimaryProductionDTO>
             {
-                new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", 50, 70, 5, 3, 1000,
+                new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
                     250m),
-                new PrimaryProduction(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5", 0.5, 0.5, 5, 7, 500, 1500m),
-                new PrimaryProduction(TypeMaterial.Wood, TypeProduction.Beam, "Брус W-10", 10, 10, 200, 15, 400, 500m),
-                new PrimaryProduction(TypeMaterial.Iron, TypeProduction.Rod, "Прут IR-5", 0.5, 0.5, 5, 7, 200, 1000m)
+                new PrimaryProductionDTO(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500, 1500m),
+                new PrimaryProductionDTO(TypeMaterial.Wood, TypeProduction.Beam, "Брус W-10", new Size(10, 10, 200, 15), 400, 500m),
+                new PrimaryProductionDTO(TypeMaterial.Iron, TypeProduction.Rod, "Прут IR-5",new Size( 0.5, 0.5, 5, 7), 200, 1000m)
             };
             return productionList;
         }
 
         public static List<string> CreatePipleListForStorageDepartment()
         {
-            var pipleList = new List<string> {"Захарова Е.Ф.", "Лубинин П.Я.", "Нестеров Н.П."};
+            var pipleList = new List<string> { "Захарова Е.Ф.", "Лубинин П.Я.", "Нестеров Н.П." };
             return pipleList;
         }
 
-        public static List<SecondaryProduction> CreateSecondaryProduction()
+        public static List<SecondaryProductionDTO> CreateSecondaryProduction()
         {
-            var productionList = new List<SecondaryProduction>
+            var productionList = new List<SecondaryProductionDTO>
             {
-                new SecondaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Заготовка-AL5", 50, 50, 12, 5,
-                    500, 350m),
-                new SecondaryProduction(TypeMaterial.Titanium, TypeProduction.Ingot, "Заготовка-ТТ3", 150, 50, 7, 40,
-                    200, 1500m),
-                new SecondaryProduction(TypeMaterial.Wood, TypeProduction.Rod, "Заготовка-W11", 50, 50, 100, 45, 1500,
-                    450m)
+                new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
+                    new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
+                    250m)),
+                new SecondaryProductionDTO("Заготовка-ТТ3", new Size(150, 7, 7, 40),
+                    new PrimaryProductionDTO(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
+                        1500m)),
+                new SecondaryProductionDTO("Заготовка-W11", new Size(100, 50,50, 45),
+                    new PrimaryProductionDTO(TypeMaterial.Wood, TypeProduction.Beam, "Брус W-10", new Size(10, 10, 200, 15), 400,
+                        500m)),
+                new SecondaryProductionDTO("Заготовка-I95", new Size(10, 2, 2, 10),
+                    new PrimaryProductionDTO(TypeMaterial.Iron, TypeProduction.Rod, "Прут IR-5",new Size( 0.5, 0.5, 5, 7), 200,
+                        1000m))
             };
             return productionList;
         }
@@ -54,17 +60,44 @@ namespace OOPlaba2
         public static List<string> CreatePipleListForProcessingDepartment()
         {
             var pipleList =
-                new List<string> {"Зимин Е.М.", "Лясова А.А.", "Носов Н.П.", "Зинков В.В.", "Никитина В.З."};
+                new List<string> { "Зимин Е.М.", "Лясова А.А.", "Носов Н.П.", "Зинков В.В.", "Никитина В.З." };
             return pipleList;
         }
 
-        public static List<FinalProduction> CreateFinalProduction()
+        public static List<FinalProductionDTO> CreateFinalProduction()
         {
-            var productionList = new List<FinalProduction>
+            var productionList = new List<FinalProductionDTO>
             {
-                new FinalProduction("Станок измерительный", 100, 200, 160, 15, 1100, 5000m),
-                new FinalProduction("Станок автоматизированный", 200, 50, 50, 17, 2100, 6000m),
-                new FinalProduction("Измеритель", 50, 50, 30, 1.2, 1500, 300m)
+                new FinalProductionDTO("Станок измерительный",new Size( 100, 200, 160, 15), 1100,
+                    new List<SecondaryProductionDTO>
+                    {
+                        new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
+                            new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
+                                250m)),
+                        new SecondaryProductionDTO("Заготовка-ТТ3", new Size(150, 7, 7, 40),
+                            new PrimaryProductionDTO(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
+                                1500m))
+                        }),
+                new FinalProductionDTO("Станок автоматизированный", new Size(200, 50, 50, 17), 2100,
+                    new List<SecondaryProductionDTO>
+                    {
+                        new SecondaryProductionDTO("Заготовка-W11", new Size(100, 50,50, 45),
+                            new PrimaryProductionDTO(TypeMaterial.Wood, TypeProduction.Beam, "Брус W-10", new Size(10, 10, 200, 15), 400,
+                                500m)),
+                        new SecondaryProductionDTO("Заготовка-I95", new Size(10, 2, 2, 10),
+                            new PrimaryProductionDTO(TypeMaterial.Iron, TypeProduction.Rod, "Прут IR-5",new Size( 0.5, 0.5, 5, 7), 200,
+                                1000m))
+                    }),
+                new FinalProductionDTO("Измеритель", new Size(50, 50, 30, 1.2), 1500,
+                    new List<SecondaryProductionDTO>
+                    {
+                        new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
+                            new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
+                                250m)),
+                        new SecondaryProductionDTO("Заготовка-I95", new Size(10, 2, 2, 10),
+                            new PrimaryProductionDTO(TypeMaterial.Iron, TypeProduction.Rod, "Прут IR-5",new Size( 0.5, 0.5, 5, 7), 200,
+                                1000m))
+                    })
             };
             return productionList;
         }
@@ -84,18 +117,7 @@ namespace OOPlaba2
             return pipleList;
         }
 
-        public static void ShowInfoDepartment(Industry industry)
-        {
-            Console.WriteLine("Выбор цеха:");
-            for (int i = 0; i < industry.Departaments.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}.{industry.Departaments[i].NameDepartment}");
-            }
-            int item = Convert.ToInt32(Console.ReadLine());
-            industry.Departaments[item - 1].ShowInfoDepartment();
-        }
-
-        public static void AddDepartmentFromIndustry(Industry industry)
+        public static void AddDepartmentFromIndusty(IndustryDTO industry)
         {
             Console.WriteLine("Выбор типа цеха:");
             Console.WriteLine("1.Заготавливающий цех");
@@ -109,44 +131,70 @@ namespace OOPlaba2
             {
                 case 1:
                     {
-                       var machineList = new List<RobotMachine>
+                        var machineList = new List<RobotMachine>
                        {
                           new RobotMachine("Станочный резчик по дереву", 15),
                           new RobotMachine("Автоматизированный станок резьбы по дереву",10)
                        };
 
-                       var productionList = new List<PrimaryProduction>
+                        var productionList = new List<PrimaryProductionDTO>
                        {
-                          new PrimaryProduction(TypeMaterial.Wood, TypeProduction.Plate,"Лист W-4", 50, 70, 5, 3, 10000, 250m),
-                          new PrimaryProduction(TypeMaterial.Wood, TypeProduction.Rod,"Прут W-5", 0.5, 0.5, 5, 7, 5000, 150m)
+                          new PrimaryProductionDTO(TypeMaterial.Wood, TypeProduction.Plate,"Лист W-4",new Size( 50, 70, 5, 3), 10000, 250m),
+                          new PrimaryProductionDTO(TypeMaterial.Wood, TypeProduction.Rod,"Прут W-5",new Size( 0.5, 0.5, 5, 7), 5000, 150m)
                        };
 
-                        var newSt = new StorageDepartment(machineList, "Заготовительный цех№2", pipleList, new List<Production>(productionList));
+                        var newSt = new StorageDepartmentDTO(machineList, "Заготовительный цех№2", pipleList, new List<ProductionDTO>(productionList));
                         industry.AddDepartment(newSt);
                     }
                     break;
                 case 2:
                     {
-                        var productionList = new List<SecondaryProduction>
+                        var productionList = new List<SecondaryProductionDTO>
                         {
-                            new SecondaryProduction(TypeMaterial.Iron, TypeProduction.Rod,"Заготовка-I5", 50, 50, 12, 5, 5000, 350m),
-                            new SecondaryProduction(TypeMaterial.Iron, TypeProduction.Plate,"Заготовка-I3", 150, 50, 7, 40, 2000, 1500m)
+                            new SecondaryProductionDTO("Заготовка-I5",new Size( 50, 50, 12, 5),
+                                new PrimaryProductionDTO(TypeMaterial.Iron, TypeProduction.Rod, "Прут IR-5",new Size( 0.5, 0.5, 5, 7), 200, 1000m)),
+                            new SecondaryProductionDTO("Заготовка-P3",new Size( 150, 50, 7, 40),
+                                new PrimaryProductionDTO(TypeMaterial.Iron, TypeProduction.Plate, "Лист IR-3",new Size( 5, 5, 1, 9), 250, 1500m))
                         };
 
-                        var newPd = new ProcessingDepartment("Обрабатывающий цех№2", pipleList, new List<Production>(productionList));
+                        var newPd = new ProcessingDepartmentDTO("Обрабатывающий цех№2", pipleList, new List<ProductionDTO>(productionList));
                         industry.AddDepartment(newPd);
                     }
                     break;
                 case 3:
                     {
-                        var productionList = new List<FinalProduction>
+                        var productionList = new List<FinalProductionDTO>
                         {
-                            new FinalProduction("Станок A09", 100, 200, 160, 15, 100, 5000m),
-                            new FinalProduction("Станок автоматизированный B-8", 200, 50, 50, 17, 100, 6000m),
-                            new FinalProduction("Измеритель ЭТМ", 50, 50, 30, 1.2, 100, 300m)
+                            new FinalProductionDTO("Станок A09", new Size(100, 200, 160, 15), 100,
+                                new List<SecondaryProductionDTO>
+                                {
+                                    new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
+                                        new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
+                                            250m)),
+                                    new SecondaryProductionDTO("Заготовка-ТТ3", new Size(150, 7, 7, 40),
+                                        new PrimaryProductionDTO(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
+                                            1500m))
+                                }),
+                            new FinalProductionDTO("Станок автоматизированный B-8", new Size(200, 50, 50, 17), 100,
+                                new List<SecondaryProductionDTO>
+                                {
+                                    new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
+                                        new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
+                                            250m)),
+                                    new SecondaryProductionDTO("Заготовка-ТТ3", new Size(150, 7, 7, 40),
+                                        new PrimaryProductionDTO(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
+                                            1500m))
+                                }),
+                            new FinalProductionDTO("Измеритель ЭТМ", new Size(50, 50, 30, 1.2), 100,
+                                new List<SecondaryProductionDTO>
+                                {
+                                    new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
+                                        new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
+                                            250m))
+                                }),
                         };
 
-                        var newAd = new AssemblyDepartment("Сборочно-монтажный цех№2", pipleList, new List<Production>(productionList));
+                        var newAd = new AssemblyDepartmentDTO("Сборочно-монтажный цех№2", pipleList, new List<ProductionDTO>(productionList));
                         industry.AddDepartment(newAd);
                     }
                     break;
@@ -156,7 +204,7 @@ namespace OOPlaba2
             }
         }
 
-        public static void RemoveDepartmentFromIndustry(Industry industry)
+        public static void RemoveDepartmentFromIndustry(IndustryDTO industry)
         {
             Console.WriteLine("Выбор цеха:");
             for (int i = 0; i < industry.Departaments.Count; i++)
@@ -167,7 +215,7 @@ namespace OOPlaba2
             industry.RemoveDepartment(itemDep - 1);
         }
 
-        public static void EditDepartmentFromIndustry(Industry industry)
+        public static void EditDepartmentFromIndustry(IndustryDTO industry)
         {
             Console.WriteLine("Выбор пункта:");
             Console.WriteLine("1.Изменить продукцию цеха");
@@ -187,17 +235,26 @@ namespace OOPlaba2
             {
                 case 1:
                     {
-                        if (industry.Departaments[itemDep - 1] is StorageDepartment)
+                        if (industry.Departaments[itemDep - 1] is StorageDepartmentDTO)
                         {
                             industry.Departaments[itemDep - 1].RemoveProduction(0);
                         }
-                        if (industry.Departaments[itemDep - 1] is ProcessingDepartment)
+                        if (industry.Departaments[itemDep - 1] is ProcessingDepartmentDTO)
                         {
                             industry.Departaments[itemDep - 1].RemoveProduction(0);
                         }
-                        if (industry.Departaments[itemDep - 1] is AssemblyDepartment)
+                        if (industry.Departaments[itemDep - 1] is AssemblyDepartmentDTO)
                         {
-                            industry.Departaments[itemDep - 1].AddProduction(new FinalProduction("Станок автоматизированный PT-8", 200, 50, 50, 17, 100, 6000m));
+                            industry.Departaments[itemDep - 1].AddProduction(new FinalProductionDTO("Станок автоматизированный PT-8", new Size(200, 50, 50, 17), 100,
+                                new List<SecondaryProductionDTO>
+                                {
+                                    new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
+                                        new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
+                                            250m)),
+                                    new SecondaryProductionDTO("Заготовка-ТТ3", new Size(150, 7, 7, 40),
+                                        new PrimaryProductionDTO(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
+                                            1500m))
+                                }));
                         }
                     }
                     break;
@@ -211,12 +268,31 @@ namespace OOPlaba2
                 case 3:
                     {
                         var pipleList = new List<string> { "Зощин Е.Ф.", "Кубина П.Я." };
-                        var productionList = new List<FinalProduction>
+                        var productionList = new List<FinalProductionDTO>
                         {
-                            new FinalProduction("Станок автоматизированный B-8", 200, 50, 50, 17, 100, 6000m),
-                            new FinalProduction("Измеритель ЭТМ", 50, 50, 30, 1.2, 100, 300m)
+                            new FinalProductionDTO("Станок автоматизированный B-8",new Size( 200, 50, 50, 17), 100,
+                                new List<SecondaryProductionDTO>
+                                {
+                                    new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
+                                        new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
+                                            250m)),
+                                    new SecondaryProductionDTO("Заготовка-ТТ3", new Size(150, 7, 7, 40),
+                                        new PrimaryProductionDTO(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
+                                            1500m))
+                                }),
+                            new FinalProductionDTO("Измеритель ЭТМ", new Size(50, 50, 30, 1.2), 100,
+                                new List<SecondaryProductionDTO>
+                                {
+                                    new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
+                                        new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
+                                            250m)),
+                                    new SecondaryProductionDTO("Заготовка-ТТ3", new Size(150, 7, 7, 40),
+                                        new PrimaryProductionDTO(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
+                                            1500m))
+                                })
+
                     };
-                        var newAd = new AssemblyDepartment("Сборочно-монтажный цех№3", pipleList, new List<Production>(productionList));
+                        var newAd = new AssemblyDepartmentDTO("Сборочно-монтажный цех№3", pipleList, new List<ProductionDTO>(productionList));
 
                         industry.EditDepartment((item - 1), newAd);
                     }
@@ -227,7 +303,7 @@ namespace OOPlaba2
             }
         }
 
-        public static void ChangeDepartment(Industry industry)
+        public static void ChangeDepartment(IndustryDTO industry)
         {
             Console.WriteLine("Выбор пункта:");
             Console.WriteLine("1.Добавить цех");
@@ -238,7 +314,7 @@ namespace OOPlaba2
             switch (item)
             {
                 case 1:
-                    AddDepartmentFromIndustry(industry);
+                    AddDepartmentFromIndusty(industry);
                     break;
                 case 2:
                     RemoveDepartmentFromIndustry(industry);
@@ -252,113 +328,161 @@ namespace OOPlaba2
             }
         }
 
-        public static void ShowClassWork(Industry industry)
+        public static void ShowInfoReport(IndustryDTO industry)
+        {
+            Report report = new Report();
+            object objectIndustry = industry;
+            ShowInfo showInfo;
+
+            Console.WriteLine("Выбор пункта:");
+            Console.WriteLine("1.Просмотр полной информации производства");
+            Console.WriteLine("2.Просмотр полного листа продукции");
+            Console.WriteLine("3.Просмотр полного списка рабочих");
+            Console.WriteLine("4.Просмотр информации о цехе");
+            Console.WriteLine("5.Просмотр информации производительности по цехам");
+            Console.WriteLine("6.Просмотр информации об автоматизированных систеиах");
+
+            int input = Convert.ToInt32(Console.ReadLine());
+            switch (input)
+            {
+                case 1:
+                    showInfo = report.ShowInfoIndustry;
+                    showInfo(objectIndustry);
+                    break;
+                case 2:
+                    showInfo = report.ShowListProduction;
+                    showInfo(objectIndustry);
+                    break;
+                case 3:
+                    showInfo = report.ShowListPiples;
+                    showInfo(objectIndustry);
+                    break;
+                case 4:
+                    Console.WriteLine("Выбор цеха:");
+                    for (int i = 0; i < industry.Departaments.Count; i++)
+                    {
+                        Console.WriteLine($"{i + 1}.{industry.Departaments[i].NameDepartment}");
+                    }
+                    int item = Convert.ToInt32(Console.ReadLine());
+
+                    object objectDepartment = industry.Departaments[item - 1];
+                    showInfo = report.ShowInfoDepartment;
+                    showInfo(objectDepartment);
+                    break;
+                case 5:
+                    showInfo = report.ShowInfoProductivity;
+                    showInfo(objectIndustry);
+                    break;
+                case 6:
+                    showInfo = report.ShowInfoMachine;
+                    showInfo(objectIndustry);
+                    break;
+                default:
+                    Console.WriteLine("Введено неверное значение");
+                    break;
+            }
+        }
+
+        public static void ShowClassWork(IndustryDTO industry)
         {
             bool flag = true;
             while (flag)
             {
                 Console.WriteLine("Выбор пункта:");
-                Console.WriteLine("1.Просмотр информации о цехе");
+                Console.WriteLine("1.Просмотр информации");
                 Console.WriteLine("2.Добавить, удалить, изменить цех");
-                Console.WriteLine("3.Просмотр информации о производстве");
-                Console.WriteLine("4.Просмотр полного списка продукции производства");
-                Console.WriteLine("5.Просмотр полного списка рабочих производства");
-                Console.WriteLine("6.Просмотр информации производительности по цехам");
-                Console.WriteLine("7.Выход");
+                Console.WriteLine("3.Выход");
 
                 int input = Convert.ToInt32(Console.ReadLine());
                 switch (input)
                 {
                     case 1:
-                        ShowInfoDepartment(industry);                       
+                        ShowInfoReport(industry);
                         break;
                     case 2:
                         ChangeDepartment(industry);
                         break;
                     case 3:
-                        industry.ShowInfoIndustry();                        
-                        break;
-                    case 4:
-                        industry.ShowListProduction();
-                        break;
-                    case 5:
-                        industry.ShowListPiples();                       
-                        break;
-                    case 6:
-                        industry.ShowInfoProductivity();                        
-                        break;
-                    case 7:
                         flag = false;
                         break;
-                    default: Console.WriteLine("Введено неверное значение");
+                    default:
+                        Console.WriteLine("Введено неверное значение");
                         break;
-                }          
-          }
-    }
+                }
+            }
+        }
+
+        delegate void ShowInfo(object obj);
 
         private static void Main()
-        {           
-            //try
-           // {
-                var st = new StorageDepartment(CreateRobotMachine(), "Заготовительный цех№1", CreatePipleListForStorageDepartment(), new List<Production>(CreatePrimaryProduction()));              
-                XmlSerializer formatterSt = new XmlSerializer(typeof(StorageDepartment));
-                using (FileStream fs = new FileStream(@"C:\Users\Алина\Documents\Visual Studio 2015\Projects\OOPlaba3\StorageDepartment.xml", FileMode.OpenOrCreate))
-                {
-                    formatterSt.Serialize(fs, st);
-                    Console.WriteLine("Объект сериализован");
-                }
-                using (FileStream fs = new FileStream(@"C:\Users\Алина\Documents\Visual Studio 2015\Projects\OOPlaba3\StorageDepartment.xml", FileMode.OpenOrCreate))
-                {
-                    StorageDepartment newStorageDepartment = (StorageDepartment)formatterSt.Deserialize(fs);
-                    Console.WriteLine("Объект десериализован");                   
-                    newStorageDepartment.ShowInfoDepartment();                
-                
-                }
+        {
+            Report report = new Report();
 
-                var pd = new ProcessingDepartment("Обрабатывающий цех№1", CreatePipleListForProcessingDepartment(), new List<Production>(CreateSecondaryProduction()));
-                XmlSerializer formatterPd = new XmlSerializer(typeof(ProcessingDepartment));
-                using (FileStream fs = new FileStream(@"C:\Users\Алина\Documents\Visual Studio 2015\Projects\OOPlaba3\ProcessingDepartment.xml", FileMode.OpenOrCreate))
-                {
-                    formatterPd.Serialize(fs, pd);
-                    Console.WriteLine("Объект сериализован");
-                }
-                using (FileStream fs = new FileStream(@"C:\Users\Алина\Documents\Visual Studio 2015\Projects\OOPlaba3\ProcessingDepartment.xml", FileMode.OpenOrCreate))
-                {
-                    ProcessingDepartment newProcessingDepartment = (ProcessingDepartment)formatterPd.Deserialize(fs);
-                    Console.WriteLine("Объект десериализован");
-                    newProcessingDepartment.ShowInfoDepartment();
-                }
+            var st = new StorageDepartmentDTO(CreateRobotMachine(), "Заготовительный цех№1", CreatePipleListForStorageDepartment(), new List<ProductionDTO>(CreatePrimaryProduction()));
+            XmlSerializer formatterSt = new XmlSerializer(typeof(StorageDepartmentDTO));
+            using (FileStream fs = new FileStream(@"C:\Users\Алина\Documents\Visual Studio 2015\Projects\OOPlaba3\StorageDepartment.xml", FileMode.OpenOrCreate))
+            {
+                formatterSt.Serialize(fs, st);
+                Console.WriteLine("Объект сериализован");
+            }
+            using (FileStream fs = new FileStream(@"C:\Users\Алина\Documents\Visual Studio 2015\Projects\OOPlaba3\StorageDepartment.xml", FileMode.OpenOrCreate))
+            {
+                StorageDepartmentDTO newStorageDepartment = (StorageDepartmentDTO)formatterSt.Deserialize(fs);
+                Console.WriteLine("Объект десериализован");
+                report.ShowInfoDepartment(newStorageDepartment);
 
-                var ad = new AssemblyDepartment("Сборочно-монтажный цех№1", CreatePipleListForAssembluDepartment(), new List<Production>(CreateFinalProduction()));
-                XmlSerializer formatterAd = new XmlSerializer(typeof(AssemblyDepartment));
-                using (FileStream fs = new FileStream(@"C:\Users\Алина\Documents\Visual Studio 2015\Projects\OOPlaba3\AssemblygDepartment.xml", FileMode.OpenOrCreate))
-                {
-                    formatterAd.Serialize(fs, ad);
-                    Console.WriteLine("Объект сериализован");
-                }
-                using (FileStream fs = new FileStream(@"C:\Users\Алина\Documents\Visual Studio 2015\Projects\OOPlaba3\AssemblygDepartment.xml", FileMode.OpenOrCreate))
-                {
-                    AssemblyDepartment newAssemblyDepartment = (AssemblyDepartment)formatterAd.Deserialize(fs);
-                    Console.WriteLine("Объект десериализован");
-                    newAssemblyDepartment.ShowInfoDepartment();
-                }
+            }
 
-                var department = new List<Department> { st, pd, ad};
+            var pd = new ProcessingDepartmentDTO("Обрабатывающий цех№1", CreatePipleListForProcessingDepartment(), new List<ProductionDTO>(CreateSecondaryProduction()));
+            XmlSerializer formatterPd = new XmlSerializer(typeof(ProcessingDepartmentDTO));
+            using (FileStream fs = new FileStream(@"C:\Users\Алина\Documents\Visual Studio 2015\Projects\OOPlaba3\ProcessingDepartment.xml", FileMode.OpenOrCreate))
+            {
+                formatterPd.Serialize(fs, pd);
+                Console.WriteLine("Объект сериализован");
+            }
+            using (FileStream fs = new FileStream(@"C:\Users\Алина\Documents\Visual Studio 2015\Projects\OOPlaba3\ProcessingDepartment.xml", FileMode.OpenOrCreate))
+            {
+                ProcessingDepartmentDTO newProcessingDepartment = (ProcessingDepartmentDTO)formatterPd.Deserialize(fs);
+                Console.WriteLine("Объект десериализован");
+                report.ShowInfoDepartment(newProcessingDepartment);
+            }
 
-                var industry = new Industry("Инастриз", department);
-                XmlSerializer formatterInd = new XmlSerializer(typeof(Industry));
-                using (FileStream fs = new FileStream(@"C:\Users\Алина\Documents\Visual Studio 2015\Projects\OOPlaba3\Industry.xml", FileMode.OpenOrCreate))
-                {
-                    formatterInd.Serialize(fs, industry);
-                    Console.WriteLine("Объект сериализован");
-                }
-                ShowClassWork(industry);
-          //  }
-           // catch (Exception e)
-          //  {
-            //    Console.WriteLine(e.Message);             
-           // }
+            var ad = new AssemblyDepartmentDTO("Сборочно-монтажный цех№1", CreatePipleListForAssembluDepartment(), new List<ProductionDTO>(CreateFinalProduction()));
+            XmlSerializer formatterAd = new XmlSerializer(typeof(AssemblyDepartmentDTO));
+            using (FileStream fs = new FileStream(@"C:\Users\Алина\Documents\Visual Studio 2015\Projects\OOPlaba3\AssemblygDepartment.xml", FileMode.OpenOrCreate))
+            {
+                formatterAd.Serialize(fs, ad);
+                Console.WriteLine("Объект сериализован");
+            }
+            using (FileStream fs = new FileStream(@"C:\Users\Алина\Documents\Visual Studio 2015\Projects\OOPlaba3\AssemblygDepartment.xml", FileMode.OpenOrCreate))
+            {
+                AssemblyDepartmentDTO newAssemblyDepartment = (AssemblyDepartmentDTO)formatterAd.Deserialize(fs);
+                Console.WriteLine("Объект десериализован");
+                report.ShowInfoDepartment(newAssemblyDepartment);
+            }
 
+            var department = new List<DepartmentDTO> { st, pd, ad };
+
+            var industry = new IndustryDTO("Инастриз", department);
+            industry.NameIndusry = "gt";
+            
+            XmlSerializer formatterInd = new XmlSerializer(typeof(IndustryDTO));
+            using (FileStream fs = new FileStream(@"C:\Users\Алина\Documents\Visual Studio 2015\Projects\OOPlaba3\Industry.xml", FileMode.OpenOrCreate))
+            {
+                formatterInd.Serialize(fs, industry);
+                Console.WriteLine("Объект сериализован");
+            }
+            using (FileStream fs = new FileStream(@"C:\Users\Алина\Documents\Visual Studio 2015\Projects\OOPlaba3\Industry.xml", FileMode.OpenOrCreate))
+            {
+                IndustryDTO newIndustry = (IndustryDTO)formatterInd.Deserialize(fs);
+                Console.WriteLine("Объект десериализован");
+                report.ShowInfoIndustry(newIndustry);
+            }
+
+            var dep = new List<DepartmentDTO>();
+                //IndustryDTO ind = new IndustryDTO(dep);
+
+            ShowClassWork(industry);
         }
     }
 }
