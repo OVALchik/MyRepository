@@ -45,9 +45,8 @@
   <ItemGroup>
     <Compile Include="AssemblyDepartment.cs" />
     <Compile Include="Department.cs" />
-    <Compile Include="DTO.cs" />
-    <Compile Include="DTOSerializerHelper.cs" />
     <Compile Include="FinalProduction.cs" />
+    <Compile Include="GenericList.cs" />
     <Compile Include="Industry.cs" />
     <Compile Include="PrimaryProduction.cs" />
     <Compile Include="ProcessingDepartment.cs" />

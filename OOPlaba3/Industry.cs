@@ -1,32 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
-using System.Xml.Serialization;
 
 namespace OOPlaba2
 {
-    public sealed class IndustryDTO: DTO
-    {
-        private string _nameIndustry;
-
-        [XmlElement()]
-        public string NameIndusry
-        {
-            get { return _nameIndustry;}
-            set { _nameIndustry = value;}
-        }
-
-        public List<DepartmentDTO> Departaments { get; set; }
+    [Serializable]
+    public  class Industry
+    {      
+        public string NameIndusry { get; set; }
+        public List<Department> Departaments { get; set; }
         public List<string> PipleList { get; set; } = new List<string>();
         public int CountPiples { get; set; }
-        public List<ProductionDTO> ProductionList { get; set; } = new List<ProductionDTO>();
+        public List<Production> ProductionList { get; set; } = new List<Production>();
         public int CountNameProduction { get; set; }
 
-        public IndustryDTO()
+        public Industry()
         { }
 
-        public IndustryDTO(string name, List<DepartmentDTO> departmentList)
+        public Industry(string name, List<Department> departmentList)
         {
             if(departmentList == null)
                 throw new ArgumentException("На производстве должен быть хотя бы один цех");
@@ -40,17 +31,17 @@ namespace OOPlaba2
             UnionArrayPiple(PipleList, Departaments);
         }      
 
-        private static int GetCountPiples(IEnumerable<DepartmentDTO> departaments)
+        private static int GetCountPiples(IEnumerable<Department> departaments)
         {
             return departaments.Sum(t => t.CountPiples);
         }
 
-        private static int GetCountProduction(IEnumerable<DepartmentDTO> departaments)
+        private static int GetCountProduction(IEnumerable<Department> departaments)
         {
             return departaments.Sum(t => t.CountNameProductions);
         }
 
-        private static void UnionArrayProduction(List<ProductionDTO> productionList, IReadOnlyList<DepartmentDTO> departments)
+        private static void UnionArrayProduction(List<Production> productionList, IReadOnlyList<Department> departments)
         {
             foreach (var department in departments)
             {
@@ -58,7 +49,7 @@ namespace OOPlaba2
             }
         }
 
-        private static void UnionArrayPiple(List<string> pipleList, IReadOnlyList<DepartmentDTO> departments)
+        private static void UnionArrayPiple(List<string> pipleList, IReadOnlyList<Department> departments)
         {
             foreach (var department in departments)
             {
@@ -66,32 +57,32 @@ namespace OOPlaba2
             }
         }
 
-        public void AddDepartment(DepartmentDTO departaments)
+        public void AddDepartment(Department departaments)
         {
             Departaments.Add(departaments);
         }
 
         public void RemoveDepartment(int index)
-        {
+        {            
             try
-            {
+            {              
                 Departaments.RemoveAt(index);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine(ex.Message);
+                throw new ArgumentException("Неверный индекс");
             }
         }
 
-        public void EditDepartment(int index, DepartmentDTO departaments)
+        public void EditDepartment(int index, Department departaments)
         {
             try
             {
                 Departaments[index] = departaments;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e.Message);
+                throw new ArgumentException("Неверный индекс");
             }
             
         }

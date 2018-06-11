@@ -6,22 +6,49 @@ using OOPlaba2;
 namespace DepartmentTest
 {
     [TestClass]
-    public class DepartmentDTO
+    public class Department
     {
+
+        public static List<RobotMachine> CreateRobotMachine()
+        {
+            var machineList = new List<RobotMachine>
+            {
+                new RobotMachine("Станочный резчик по металлу", 10),
+                new RobotMachine("Автоматизированный станок резьбы по дереву", 5),
+                new RobotMachine("Прессовочный аппарат", 10)
+            };
+            return machineList;
+        }
+
+        public static List<PrimaryProduction> CreatePrimaryProduction()
+        {
+            var productionList = new List<PrimaryProduction>
+            {
+                new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 100,
+                    250m),
+                new PrimaryProduction(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 50, 1500m),
+                new PrimaryProduction(TypeMaterial.Wood, TypeProduction.Beam, "Брус W-10", new Size(10, 10, 200, 15), 40, 500m),
+                new PrimaryProduction(TypeMaterial.Iron, TypeProduction.Rod, "Прут IR-5",new Size( 0.5, 0.5, 5, 7), 20, 1000m)
+            };
+            return productionList;
+        }
+
+        public static List<string> CreatePipleList()
+        {
+            var pipleList = new List<string> { "Захарова Е.Ф.", "Лубинин П.Я.", "Нестеров Н.П." };
+            return pipleList;
+        }
+     
         [TestMethod]
         public void StorageDepartmentConstructor_ErrorMachineList()
         {
             try
             {
-                var pipleListSt = new List<string> { "Захарова Е.Ф.", "Лубинин П.Я.", "Нестеров Н.П." };
-                var productionListSt = new List<PrimaryProductionDTO>
-                {
-                    new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size( 50, 70, 5, 3), 1000,
-                        250m)
-                };
+                var pipleListSt = CreatePipleList();
+                var productionListSt = CreatePrimaryProduction();
 
-                var st = new StorageDepartmentDTO(null, "Заготовительный цех№1", pipleListSt,
-                    new List<ProductionDTO>(productionListSt));
+                var unused = new StorageDepartment(null, "Заготовительный цех№1", pipleListSt,
+                    new List<Production>(productionListSt));
 
                 Assert.Fail();
             }
@@ -36,15 +63,11 @@ namespace DepartmentTest
         {
             try
             {
-                var machineList = new List<RobotMachine> { new RobotMachine("Станочный резчик по металлу", 10) };
-                var productionListSt = new List<PrimaryProductionDTO>
-                {
-                    new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size( 50, 70, 5, 3), 1000,
-                        250m)
-                };
+                var machineList = CreateRobotMachine();             
+                var productionListSt = CreatePrimaryProduction();
 
-                var st = new StorageDepartmentDTO(machineList, "Заготовительный цех№1", null,
-                    new List<ProductionDTO>(productionListSt));
+                var unused = new StorageDepartment(machineList, "Заготовительный цех№1", null,
+                    new List<Production>(productionListSt));
 
                 Assert.Fail();
             }
@@ -59,10 +82,10 @@ namespace DepartmentTest
         {
             try
             {
-                var pipleListSt = new List<string> { "Захарова Е.Ф.", "Лубинин П.Я.", "Нестеров Н.П." };
-                var machineList = new List<RobotMachine> { new RobotMachine("Станочный резчик по металлу", 10) };                             
+                var machineList = CreateRobotMachine();
+                var pipleListSt = CreatePipleList();
 
-                var st = new StorageDepartmentDTO(machineList, "Заготовительный цех№1", pipleListSt,null);
+                var unused = new StorageDepartment(machineList, "Заготовительный цех№1", pipleListSt,null);
 
                 Assert.Fail();
             }
@@ -75,77 +98,127 @@ namespace DepartmentTest
         [TestMethod]
         public void GetProductivity()
         {
-            var pipleListSt = new List<string> { "Захарова Е.Ф.", "Лубинин П.Я.", "Лубинин П.Я." };
-            var machineList = new List<RobotMachine> { new RobotMachine("Станочный резчик по металлу", 10) };
-            var productionListSt = new List<PrimaryProductionDTO>
-            {
-                new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size( 50, 70, 5, 3), 1000,
-                250m)
-            };
-            var st = new StorageDepartmentDTO(machineList, "Заготовительный цех№1", pipleListSt, new List<ProductionDTO>(productionListSt));
+            var machineList = CreateRobotMachine();
+            var pipleListSt = CreatePipleList();
+            var productionListSt = CreatePrimaryProduction();
 
-            Assert.AreEqual(333,st.Productivity);  
+            var st = new StorageDepartment(machineList, "Заготовительный цех№1", pipleListSt, new List<Production>(productionListSt));
+
+            Assert.AreEqual(70,st.Productivity);  
         }
 
         [TestMethod]
         public void StorageDepartmentAddProduction()
         {
-            var machineList = new List<RobotMachine> { new RobotMachine("Станочный резчик по металлу", 10) };
-            var pipleListSt = new List<string> { "Захарова Е.Ф.", "Лубинин П.Я.", "Нестеров Н.П." };
-                var productionListSt = new List<PrimaryProductionDTO>
-                {
-                    new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size( 50, 70, 5, 3), 1000,
-                        250m)
-                };
+            var machineList = CreateRobotMachine();
+            var pipleListSt = CreatePipleList();
+            var productionListSt = CreatePrimaryProduction();
 
-                var st = new StorageDepartmentDTO(machineList, "Заготовительный цех№1", pipleListSt,
-                    new List<ProductionDTO>(productionListSt));
+            var st = new StorageDepartment(machineList, "Заготовительный цех№1", pipleListSt,
+                    new List<Production>(productionListSt));
 
-            ProductionDTO productionAdd = new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4",
+            Production productionAdd = new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4",
                 new Size(50, 70, 5, 3), 1000,
                 250m);
 
             st.AddProduction(productionAdd);
 
-            Assert.AreEqual(2, st.Productions.Count);
+            Assert.AreEqual(5, st.Productions.Count);
         }
 
         [TestMethod]
         public void StorageDepartmentRemoveProduction()
         {
-            var machineList = new List<RobotMachine> { new RobotMachine("Станочный резчик по металлу", 10) };
-            var pipleListSt = new List<string> { "Захарова Е.Ф.", "Лубинин П.Я.", "Нестеров Н.П." };
-            var productionListSt = new List<PrimaryProductionDTO>
-            {
-                new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size( 50, 70, 5, 3), 1000,
-                    250m),
-                new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4",
-                    new Size(50, 70, 5, 3), 1000,
-                    250m)
-        };
+            var machineList = CreateRobotMachine();
+            var pipleListSt = CreatePipleList();
+            var productionListSt = CreatePrimaryProduction();
 
-            var st = new StorageDepartmentDTO(machineList, "Заготовительный цех№1", pipleListSt,
-                new List<ProductionDTO>(productionListSt));
+            var st = new StorageDepartment(machineList, "Заготовительный цех№1", pipleListSt,
+                new List<Production>(productionListSt));
            
             st.RemoveProduction(0);
 
-            Assert.AreEqual(1, st.Productions.Count);
+            Assert.AreEqual(3, st.Productions.Count);
+        }
+
+        [TestMethod]
+        public void StorageDepartmentRemoveProduction_ERROR()
+        {
+            try
+            {
+                var machineList = CreateRobotMachine();
+                var pipleListSt = CreatePipleList();
+                var productionListSt = CreatePrimaryProduction();
+
+                var st = new StorageDepartment(machineList, "Заготовительный цех№1", pipleListSt,
+                    new List<Production>(productionListSt));
+
+                st.RemoveProduction(66);
+
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual("Неверный индекс", e.Message);
+            }
+        }
+
+        [TestMethod]
+        public void StorageDepartmentEditProduction()
+        {
+            var machineList = CreateRobotMachine();
+            var pipleListSt = CreatePipleList();
+            var productionListSt = CreatePrimaryProduction();
+
+            var st = new StorageDepartment(machineList, "Заготовительный цех№1", pipleListSt,
+                new List<Production>(productionListSt));
+
+            Production production = new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4",
+                new Size(50, 70, 5, 3), 1000,
+                250m);
+
+            st.EditProduction(0,production);
+
+            Assert.AreEqual(production, st.Productions[0]);
+        }
+
+        [TestMethod]
+        public void StorageDepartmentEditProduction_ERROR()
+        {
+            try
+            {
+                var machineList = CreateRobotMachine();
+                var pipleListSt = CreatePipleList();
+                var productionListSt = CreatePrimaryProduction();
+
+                var st = new StorageDepartment(machineList, "Заготовительный цех№1", pipleListSt,
+                    new List<Production>(productionListSt));
+
+                Production production = new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4",
+                    new Size(50, 70, 5, 3), 1000,
+                    250m);
+
+                st.EditProduction(66,production);
+
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual("Неверный индекс", e.Message);
+            }
         }
 
         [TestMethod]
         public void StorageDepartmentAddPiple()
         {
-            var machineList = new List<RobotMachine> { new RobotMachine("Станочный резчик по металлу", 10) };
-            var pipleListSt = new List<string> { "Захарова Е.Ф.", "Лубинин П.Я.", "Нестеров Н.П." };
-            var productionListSt = new List<PrimaryProductionDTO>
-            {
-                new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size( 50, 70, 5, 3), 1000,
-                    250m)
-            };
+            var machineList = CreateRobotMachine();
+            var pipleListSt = CreatePipleList();
+            var productionListSt = CreatePrimaryProduction();
 
             string piple = "Жууновский В.Я.";
-            var st = new StorageDepartmentDTO(machineList, "Заготовительный цех№1", pipleListSt,
-                new List<ProductionDTO>(productionListSt));
+
+            var st = new StorageDepartment(machineList, "Заготовительный цех№1", pipleListSt,
+                new List<Production>(productionListSt));
 
             st.AddPiple(piple);
 
@@ -155,20 +228,78 @@ namespace DepartmentTest
         [TestMethod]
         public void StorageDepartmentRemovePiple()
         {
-            var machineList = new List<RobotMachine> { new RobotMachine("Станочный резчик по металлу", 10) };
-            var pipleListSt = new List<string> { "Захарова Е.Ф.", "Лубинин П.Я.", "Нестеров Н.П." };
-            var productionListSt = new List<PrimaryProductionDTO>
-            {
-                new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size( 50, 70, 5, 3), 1000,
-                    250m)               
-            };
+            var machineList = CreateRobotMachine();
+            var pipleListSt = CreatePipleList();
+            var productionListSt = CreatePrimaryProduction();
 
-            var st = new StorageDepartmentDTO(machineList, "Заготовительный цех№1", pipleListSt,
-                new List<ProductionDTO>(productionListSt));
+            var st = new StorageDepartment(machineList, "Заготовительный цех№1", pipleListSt,
+                new List<Production>(productionListSt));
 
             st.RemovePiple(0);
 
             Assert.AreEqual(2, st.PipleList.Count);
+        }
+
+        [TestMethod]
+        public void StorageDepartmentRemovePiple_ERROR()
+        {
+            try
+            {
+                var machineList = CreateRobotMachine();
+                var pipleListSt = CreatePipleList();
+                var productionListSt = CreatePrimaryProduction();
+
+                var st = new StorageDepartment(machineList, "Заготовительный цех№1", pipleListSt,
+                    new List<Production>(productionListSt));
+
+                st.RemovePiple(66);
+
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual("Неверный индекс", e.Message);
+            }                      
+        }
+
+        [TestMethod]
+        public void StorageDepartmentEditPiple()
+        {
+            var machineList = CreateRobotMachine();
+            var pipleListSt = CreatePipleList();
+            var productionListSt = CreatePrimaryProduction();
+
+            var st = new StorageDepartment(machineList, "Заготовительный цех№1", pipleListSt,
+                new List<Production>(productionListSt));
+
+            string piple = "Жууновский В.Я.";
+
+            st.EditPiple(0,piple);
+
+            Assert.AreEqual(piple, st.PipleList[0]);
+        }
+
+        [TestMethod]
+        public void StorageDepartmentEditPiple_ERROR()
+        {
+            try
+            {
+                var machineList = CreateRobotMachine();
+                var pipleListSt = CreatePipleList();
+                var productionListSt = CreatePrimaryProduction();
+
+                var st = new StorageDepartment(machineList, "Заготовительный цех№1", pipleListSt,
+                    new List<Production>(productionListSt));
+
+                string piple = "Жууновский В.Я.";
+                st.EditPiple(66,piple);
+
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual("Неверный индекс", e.Message);
+            }
         }
     }
 }

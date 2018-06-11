@@ -5,23 +5,23 @@ using System.Xml.Serialization;
 
 namespace OOPlaba2
 {
-   [XmlInclude(typeof(StorageDepartmentDTO))]
-   [XmlInclude(typeof(ProcessingDepartmentDTO))]
-   [XmlInclude(typeof(AssemblyDepartmentDTO))]
-   //[Serializable]
-    public abstract class DepartmentDTO: DTO,IComparable
+   [XmlInclude(typeof(StorageDepartment))]
+   [XmlInclude(typeof(ProcessingDepartment))]
+   [XmlInclude(typeof(AssemblyDepartment))]
+   [Serializable]
+    public abstract class Department: IComparable
     {
         public string NameDepartment { get; set; }
         public List<string> PipleList { get; set; }
         public int CountPiples { get; set; }
-        public List<ProductionDTO> Productions { get; set; }
+        public List<Production> Productions { get; set; }
         public int CountNameProductions { get; set; }
         public int Productivity { get; set; }
 
-        protected DepartmentDTO()
+        protected Department()
         { }
 
-        protected DepartmentDTO(string name, List<string> pipleList, List<ProductionDTO> productionList)
+        protected Department(string name, List<string> pipleList, List<Production> productionList)
         {
             if (pipleList == null)
                 throw new ArgumentException("Список рабочих не должен быть пустым");
@@ -48,24 +48,39 @@ namespace OOPlaba2
 
         int IComparable.CompareTo(object obj)
         {
-            var d = (DepartmentDTO)obj;
+            var d = (Department)obj;
             double t = d.Productivity;
             return Productivity.CompareTo(t);
         }
 
-        public void AddProduction(ProductionDTO production)
+        public void AddProduction(Production production)
         {
             Productions.Add(production);
         }
 
         public void RemoveProduction(int index)
         {
-            Productions.RemoveAt(index);
+            try
+            {
+                Productions.RemoveAt(index);
+            }
+            catch (Exception)
+            {
+                throw new ArgumentException("Неверный индекс");
+            }            
         }
 
-        public void EditProduction(int index, ProductionDTO production)
+        public void EditProduction(int index, Production production)
         {
-            Productions[index] = production;
+            try
+            {
+                Productions[index] = production;
+            }
+            catch (Exception)
+            {
+                throw new ArgumentException("Неверный индекс");
+            }
+            
         }
 
         public void AddPiple(string piple)
@@ -75,12 +90,28 @@ namespace OOPlaba2
 
         public void RemovePiple(int index)
         {
-            PipleList.RemoveAt(index);
+            try
+            {
+                PipleList.RemoveAt(index);
+            }
+            catch (Exception)
+            {
+                throw new ArgumentException("Неверный индекс");
+            }
+            
         }
 
         public void EditPiple(int index, string piple)
         {
-            PipleList[index] = piple;
+            try
+            {
+                PipleList[index] = piple;
+            }
+            catch (Exception)
+            {
+                throw new ArgumentException("Неверный индекс");
+            }
+            
         }
     }
 }

@@ -2,16 +2,16 @@
 
 namespace OOPlaba2
 {
-    //[Serializable]
-    public sealed class SecondaryProductionDTO : ProductionDTO
+    [Serializable]
+    public sealed class SecondaryProduction : Production
     {
         public TypeMaterial Material { get; set; }
         private const decimal Koef = 1.5m;
 
-        public SecondaryProductionDTO()
+        public SecondaryProduction()
         { }
 
-        public SecondaryProductionDTO(string name, Size size, PrimaryProductionDTO production)
+        public SecondaryProduction(string name, Size size, PrimaryProduction production)
             : base(name, size, production.CountProduction, production.PriceProduction * Koef)
         {
             Material = production.Material;

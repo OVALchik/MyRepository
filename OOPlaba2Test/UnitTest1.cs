@@ -6,14 +6,102 @@ using OOPlaba2;
 namespace OOPlaba2Test
 {    
     [TestClass]
-    public class IdustryDTO
+    public class Idustry
     {
+        public static List<RobotMachine> CreateRobotMachine()
+        {
+            var machineList = new List<RobotMachine>
+            {
+                new RobotMachine("Станочный резчик по металлу", 10),
+                new RobotMachine("Автоматизированный станок резьбы по дереву", 5),
+                new RobotMachine("Прессовочный аппарат", 10)
+            };
+            return machineList;
+        }
+
+        public static List<PrimaryProduction> CreatePrimaryProduction()
+        {
+            var productionList = new List<PrimaryProduction>
+            {
+                new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
+                    250m),
+                new PrimaryProduction(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500, 1500m),
+                new PrimaryProduction(TypeMaterial.Wood, TypeProduction.Beam, "Брус W-10", new Size(10, 10, 200, 15), 400, 500m),
+                new PrimaryProduction(TypeMaterial.Iron, TypeProduction.Rod, "Прут IR-5",new Size( 0.5, 0.5, 5, 7), 200, 1000m)
+            };
+            return productionList;
+        }
+
+        public static List<string> CreatePipleList()
+        {
+            var pipleList = new List<string> { "Захарова Е.Ф.", "Лубинин П.Я.", "Нестеров Н.П." };
+            return pipleList;
+        }
+
+        public static List<SecondaryProduction> CreateSecondaryProduction()
+        {
+            var productionList = new List<SecondaryProduction>
+            {
+                new SecondaryProduction("Заготовка-AL5", new Size(50, 50, 12, 5),
+                    new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
+                    250m)),
+                new SecondaryProduction("Заготовка-ТТ3", new Size(150, 7, 7, 40),
+                    new PrimaryProduction(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
+                        1500m)),
+                new SecondaryProduction("Заготовка-W11", new Size(100, 50,50, 45),
+                    new PrimaryProduction(TypeMaterial.Wood, TypeProduction.Beam, "Брус W-10", new Size(10, 10, 200, 15), 400,
+                        500m)),
+                new SecondaryProduction("Заготовка-I95", new Size(10, 2, 2, 10),
+                    new PrimaryProduction(TypeMaterial.Iron, TypeProduction.Rod, "Прут IR-5",new Size( 0.5, 0.5, 5, 7), 200,
+                        1000m))
+            };
+            return productionList;
+        }
+      
+        public static List<FinalProduction> CreateFinalProduction()
+        {
+            var productionList = new List<FinalProduction>
+            {
+                new FinalProduction("Станок измерительный",new Size( 100, 200, 160, 15), 1100,
+                    new List<SecondaryProduction>
+                    {
+                        new SecondaryProduction("Заготовка-AL5", new Size(50, 50, 12, 5),
+                            new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
+                                250m)),
+                        new SecondaryProduction("Заготовка-ТТ3", new Size(150, 7, 7, 40),
+                            new PrimaryProduction(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
+                                1500m))
+                        }),
+                new FinalProduction("Станок автоматизированный", new Size(200, 50, 50, 17), 2100,
+                    new List<SecondaryProduction>
+                    {
+                        new SecondaryProduction("Заготовка-W11", new Size(100, 50,50, 45),
+                            new PrimaryProduction(TypeMaterial.Wood, TypeProduction.Beam, "Брус W-10", new Size(10, 10, 200, 15), 400,
+                                500m)),
+                        new SecondaryProduction("Заготовка-I95", new Size(10, 2, 2, 10),
+                            new PrimaryProduction(TypeMaterial.Iron, TypeProduction.Rod, "Прут IR-5",new Size( 0.5, 0.5, 5, 7), 200,
+                                1000m))
+                    }),
+                new FinalProduction("Измеритель", new Size(50, 50, 30, 1.2), 1500,
+                    new List<SecondaryProduction>
+                    {
+                        new SecondaryProduction("Заготовка-AL5", new Size(50, 50, 12, 5),
+                            new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
+                                250m)),
+                        new SecondaryProduction("Заготовка-I95", new Size(10, 2, 2, 10),
+                            new PrimaryProduction(TypeMaterial.Iron, TypeProduction.Rod, "Прут IR-5",new Size( 0.5, 0.5, 5, 7), 200,
+                                1000m))
+                    })
+            };
+            return productionList;
+        }
+
         [TestMethod]
         public void IndustryConstructor_Error()
         {
             try
             {
-                new IndustryDTO("TestInd", null);
+                var unused = new Industry("TestInd", null);
                 Assert.Fail();
             }
             catch (ArgumentException e)
@@ -25,308 +113,131 @@ namespace OOPlaba2Test
         [TestMethod]
         public void GetCountPiples()
         {
-            var machineList = new List<RobotMachine> {new RobotMachine("Станочный резчик по металлу", 10)};
-            var pipleListSt = new List<string> {"Захарова Е.Ф.", "Лубинин П.Я.", "Нестеров Н.П."};
-            var productionListSt = new List<PrimaryProductionDTO>
-            {
-                new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3),  1000,
-                    250m)
-            };
+            var machineList = CreateRobotMachine();
+            var pipleListSt = CreatePipleList();
+            var productionListSt = CreatePrimaryProduction();
 
-            var pipleListPr = new List<string>
-            {
-                "Захарова Е.Ф.",
-                "Лубинин П.Я.",
-                "Нестеров Н.П.",
-                "Захарова Е.Ф.",
-                "Лубинин П.Я.",
-                "Нестеров Н.П. "
-            };
-            var productionListPr = new List<SecondaryProductionDTO>
-            {            
-                new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
-                new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
-                    250m))
-            };
+            var pipleListPr = CreatePipleList();
+            var productionListPr = CreateSecondaryProduction();
 
-            var pipleListAs = new List<string> {"Захарова Е.Ф.", "Лубинин П.Я."};
-            var productionListAs = new List<FinalProductionDTO>
-            {               
-                new FinalProductionDTO("Станок измерительный",new Size( 100, 200, 160, 15), 1100,
-                new List<SecondaryProductionDTO>
-                {
-                    new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
-                        new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
-                            250m))                    
-                })               
-            };
+            var pipleListAs = CreatePipleList();
+            var productionListAs = CreateFinalProduction();
 
-            var st = new StorageDepartmentDTO(machineList, "Заготовительный цех№1", pipleListSt,
-                new List<ProductionDTO>(productionListSt));
-            var pd = new ProcessingDepartmentDTO("Обрабатывающий цех№1", pipleListPr,
-                new List<ProductionDTO>(productionListPr));
-            var ad = new AssemblyDepartmentDTO("Сборочно-монтажный цех№1", pipleListAs,
-                new List<ProductionDTO>(productionListAs));
+            var st = new StorageDepartment(machineList, "Заготовительный цех№1", pipleListSt,
+                new List<Production>(productionListSt));
+            var pd = new ProcessingDepartment("Обрабатывающий цех№1", pipleListPr,
+                new List<Production>(productionListPr));
+            var ad = new AssemblyDepartment("Сборочно-монтажный цех№1", pipleListAs,
+                new List<Production>(productionListAs));
 
-            var department = new List<DepartmentDTO> {st, pd, ad};
+            var department = new List<Department> {st, pd, ad};
 
-            var industry = new IndustryDTO("Инастриз", department);
+            var industry = new Industry("Инастриз", department);
 
-            Assert.AreEqual(11, industry.CountPiples);
+            Assert.AreEqual(9, industry.CountPiples);
         }
 
         [TestMethod]
         public void GetCountProductionName()
         {
-            var machineList = new List<RobotMachine> {new RobotMachine("Станочный резчик по металлу", 10)};
-            var pipleListSt = new List<string> {"Захарова Е.Ф.", "Лубинин П.Я.", "Нестеров Н.П."};
-            var productionListSt = new List<PrimaryProductionDTO>
-            {
-                new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3),  1000,
-                    250m),
-                new PrimaryProductionDTO(TypeMaterial.Iron, TypeProduction.Beam, "Лист V09", new Size(50, 100, 5, 5),  500,
-                250m)
-            };
+            var machineList = CreateRobotMachine();
+            var pipleListSt = CreatePipleList();
+            var productionListSt = CreatePrimaryProduction();
 
-            var pipleListPr = new List<string>
-            {
-                "Захарова Е.Ф.",
-                "Лубинин П.Я.",
-                "Нестеров Н.П.",
-                "Захарова Е.Ф.",
-                "Лубинин П.Я.",
-                "Нестеров Н.П. "
-            };
-            var productionListPr = new List<SecondaryProductionDTO>
-            {               
-                    new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
-                        new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
-                            250m)),
-                    new SecondaryProductionDTO("Заготовка-ТТ3", new Size(150, 7, 7, 40),
-                        new PrimaryProductionDTO(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
-                            1500m))                
-            };
+            var pipleListPr = CreatePipleList();
+            var productionListPr = CreateSecondaryProduction();
 
-            var pipleListAs = new List<string> {"Захарова Е.Ф.", "Лубинин П.Я."};
-            var productionListAs = new List<FinalProductionDTO>
-            {
-                new FinalProductionDTO("Станок измерительный",new Size( 100, 200, 160, 15), 1100,
-                    new List<SecondaryProductionDTO>
-                    {
-                        new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
-                            new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
-                                250m)),
-                        new SecondaryProductionDTO("Заготовка-ТТ3", new Size(150, 7, 7, 40),
-                            new PrimaryProductionDTO(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
-                                1500m))
-                    }),
-                new FinalProductionDTO("Станок измерительный",new Size( 100, 200, 160, 15), 1100,
-                    new List<SecondaryProductionDTO>
-                    {
-                        new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
-                            new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
-                                250m)),
-                        new SecondaryProductionDTO("Заготовка-ТТ3", new Size(150, 7, 7, 40),
-                            new PrimaryProductionDTO(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
-                                1500m))
-                    })
-            };
+            var pipleListAs = CreatePipleList();
+            var productionListAs = CreateFinalProduction();
 
-            var st = new StorageDepartmentDTO(machineList, "Заготовительный цех№1", pipleListSt,
-                new List<ProductionDTO>(productionListSt));
-            var pd = new ProcessingDepartmentDTO("Обрабатывающий цех№1", pipleListPr,
-                new List<ProductionDTO>(productionListPr));
-            var ad = new AssemblyDepartmentDTO("Сборочно-монтажный цех№1", pipleListAs,
-                new List<ProductionDTO>(productionListAs));
+            var st = new StorageDepartment(machineList, "Заготовительный цех№1", pipleListSt,
+                new List<Production>(productionListSt));
+            var pd = new ProcessingDepartment("Обрабатывающий цех№1", pipleListPr,
+                new List<Production>(productionListPr));
+            var ad = new AssemblyDepartment("Сборочно-монтажный цех№1", pipleListAs,
+                new List<Production>(productionListAs));
 
-            var department = new List<DepartmentDTO> {st, pd, ad};
+            var department = new List<Department> {st, pd, ad};
 
-            var industry = new IndustryDTO("Инастриз", department);
+            var industry = new Industry("Инастриз", department);
 
-            Assert.AreEqual(6, industry.CountNameProduction);
+            Assert.AreEqual(11, industry.CountNameProduction);
         }
 
         [TestMethod]
         public void UnionArrayProduction()
         {
-            var machineList = new List<RobotMachine> { new RobotMachine("Станочный резчик по металлу", 10) };
-            var pipleListSt = new List<string> { "Захарова Е.Ф.", "Лубинин П.Я.", "Нестеров Н.П." };
-            var productionListSt = new List<PrimaryProductionDTO>
-            {
-                new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3),  1000,
-                    250m),
-                new PrimaryProductionDTO(TypeMaterial.Iron, TypeProduction.Beam, "Лист V09", new Size(50, 100, 5, 5),  500,
-                250m)
-            };
+            var machineList = CreateRobotMachine();
+            var pipleListSt = CreatePipleList();
+            var productionListSt = CreatePrimaryProduction();
 
-            var pipleListPr = new List<string>
-            {
-                "Захарова Е.Ф.",
-                "Лубинин П.Я.",
-                "Нестеров Н.П.",
-                "Захарова Е.Ф.",
-                "Лубинин П.Я.",
-                "Нестеров Н.П. "
-            };
-            var productionListPr = new List<SecondaryProductionDTO>
-            {
-                    new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
-                        new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
-                            250m)),
-                    new SecondaryProductionDTO("Заготовка-ТТ3", new Size(150, 7, 7, 40),
-                        new PrimaryProductionDTO(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
-                            1500m))
-            };
+            var pipleListPr = CreatePipleList();
+            var productionListPr = CreateSecondaryProduction();
 
-            var pipleListAs = new List<string> { "Захарова Е.Ф.", "Лубинин П.Я." };
-            var productionListAs = new List<FinalProductionDTO>
-            {
-                new FinalProductionDTO("Станок измерительный",new Size( 100, 200, 160, 15), 1100,
-                    new List<SecondaryProductionDTO>
-                    {
-                        new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
-                            new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
-                                250m)),
-                        new SecondaryProductionDTO("Заготовка-ТТ3", new Size(150, 7, 7, 40),
-                            new PrimaryProductionDTO(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
-                                1500m))
-                    }),
-                new FinalProductionDTO("Станок измерительный",new Size( 100, 200, 160, 15), 1100,
-                    new List<SecondaryProductionDTO>
-                    {
-                        new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
-                            new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
-                                250m)),
-                        new SecondaryProductionDTO("Заготовка-ТТ3", new Size(150, 7, 7, 40),
-                            new PrimaryProductionDTO(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
-                                1500m))
-                    })
-            };
+            var pipleListAs = CreatePipleList();
+            var productionListAs = CreateFinalProduction();
 
-            var st = new StorageDepartmentDTO(machineList, "Заготовительный цех№1", pipleListSt,
-                new List<ProductionDTO>(productionListSt));
-            var pd = new ProcessingDepartmentDTO("Обрабатывающий цех№1", pipleListPr,
-                new List<ProductionDTO>(productionListPr));
-            var ad = new AssemblyDepartmentDTO("Сборочно-монтажный цех№1", pipleListAs,
-                new List<ProductionDTO>(productionListAs));
+            var st = new StorageDepartment(machineList, "Заготовительный цех№1", pipleListSt,
+                new List<Production>(productionListSt));
+            var pd = new ProcessingDepartment("Обрабатывающий цех№1", pipleListPr,
+                new List<Production>(productionListPr));
+            var ad = new AssemblyDepartment("Сборочно-монтажный цех№1", pipleListAs,
+                new List<Production>(productionListAs));
 
-            var department = new List<DepartmentDTO> { st, pd, ad };
+            var department = new List<Department> { st, pd, ad };
 
-            var industry = new IndustryDTO("Инастриз", department);
+            var industry = new Industry("Инастриз", department);
 
-            Assert.AreEqual(6, industry.ProductionList.Count);
+            Assert.AreEqual(11, industry.ProductionList.Count);
         }
 
         [TestMethod]
         public void UnionArrayPiple()
         {
-            var machineList = new List<RobotMachine> { new RobotMachine("Станочный резчик по металлу", 10) };
-            var pipleListSt = new List<string> { "Захарова Е.Ф.", "Лубинин П.Я.", "Нестеров Н.П." };
-            var productionListSt = new List<PrimaryProductionDTO>
-            {
-                new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3),  1000,
-                    250m),
-                new PrimaryProductionDTO(TypeMaterial.Iron, TypeProduction.Beam, "Лист V09", new Size(50, 100, 5, 5),  500,
-                250m)
-            };
+            var machineList = CreateRobotMachine();
+            var pipleListSt = CreatePipleList();
+            var productionListSt = CreatePrimaryProduction();
 
-            var pipleListPr = new List<string>
-            {
-                "Захарова Е.Ф.",
-                "Лубинин П.Я.",
-                "Нестеров Н.П.",
-                "Захарова Е.Ф.",
-                "Лубинин П.Я.",
-                "Нестеров Н.П. "
-            };
-            var productionListPr = new List<SecondaryProductionDTO>
-            {
-                    new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
-                        new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
-                            250m)),
-                    new SecondaryProductionDTO("Заготовка-ТТ3", new Size(150, 7, 7, 40),
-                        new PrimaryProductionDTO(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
-                            1500m))
-            };
+            var pipleListPr = CreatePipleList();
+            var productionListPr = CreateSecondaryProduction();
 
-            var pipleListAs = new List<string> { "Захарова Е.Ф.", "Лубинин П.Я." };
-            var productionListAs = new List<FinalProductionDTO>
-            {
-                new FinalProductionDTO("Станок измерительный",new Size( 100, 200, 160, 15), 1100,
-                    new List<SecondaryProductionDTO>
-                    {
-                        new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
-                            new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
-                                250m)),
-                        new SecondaryProductionDTO("Заготовка-ТТ3", new Size(150, 7, 7, 40),
-                            new PrimaryProductionDTO(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
-                                1500m))
-                    }),
-                new FinalProductionDTO("Станок измерительный",new Size( 100, 200, 160, 15), 1100,
-                    new List<SecondaryProductionDTO>
-                    {
-                        new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
-                            new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
-                                250m)),
-                        new SecondaryProductionDTO("Заготовка-ТТ3", new Size(150, 7, 7, 40),
-                            new PrimaryProductionDTO(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
-                                1500m))
-                    })
-            };
+            var pipleListAs = CreatePipleList();
+            var productionListAs = CreateFinalProduction();
 
-            var st = new StorageDepartmentDTO(machineList, "Заготовительный цех№1", pipleListSt,
-                new List<ProductionDTO>(productionListSt));
-            var pd = new ProcessingDepartmentDTO("Обрабатывающий цех№1", pipleListPr,
-                new List<ProductionDTO>(productionListPr));
-            var ad = new AssemblyDepartmentDTO("Сборочно-монтажный цех№1", pipleListAs,
-                new List<ProductionDTO>(productionListAs));
+            var st = new StorageDepartment(machineList, "Заготовительный цех№1", pipleListSt,
+                new List<Production>(productionListSt));
+            var pd = new ProcessingDepartment("Обрабатывающий цех№1", pipleListPr,
+                new List<Production>(productionListPr));
+            var ad = new AssemblyDepartment("Сборочно-монтажный цех№1", pipleListAs,
+                new List<Production>(productionListAs));
 
-            var department = new List<DepartmentDTO> { st, pd, ad };
+            var department = new List<Department> { st, pd, ad };
 
-            var industry = new IndustryDTO("Инастриз", department);
+            var industry = new Industry("Инастриз", department);
 
-            Assert.AreEqual(11, industry.PipleList.Count);
+            Assert.AreEqual(9, industry.PipleList.Count);
         }
 
         [TestMethod]
         public void AddDepartment()
         {
-            var machineList = new List<RobotMachine> { new RobotMachine("Станочный резчик по металлу", 10) };
-            var pipleListSt = new List<string> { "Захарова Е.Ф.", "Лубинин П.Я.", "Нестеров Н.П." };
-            var productionListSt = new List<PrimaryProductionDTO>
-            {
-                new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3),  1000,
-                    250m),
-                new PrimaryProductionDTO(TypeMaterial.Iron, TypeProduction.Beam, "Лист V09", new Size(50, 100, 5, 5),  500,
-                250m)
-            };
+            var machineList = CreateRobotMachine();
+            var pipleListSt = CreatePipleList();
+            var productionListSt = CreatePrimaryProduction();
 
-            var pipleListPr = new List<string>
-            {
-                "Захарова Е.Ф.",
-                "Лубинин П.Я.",
-                "Нестеров Н.П.",
-                "Захарова Е.Ф.",
-                "Лубинин П.Я.",
-                "Нестеров Н.П. "
-            };
-            var productionListPr = new List<SecondaryProductionDTO>
-            {
-                    new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
-                        new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
-                            250m)),
-                    new SecondaryProductionDTO("Заготовка-ТТ3", new Size(150, 7, 7, 40),
-                        new PrimaryProductionDTO(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
-                            1500m))
-            };
-          
-            var st = new StorageDepartmentDTO(machineList, "Заготовительный цех№1", pipleListSt,
-                new List<ProductionDTO>(productionListSt));
-            var department = new List<DepartmentDTO> { st };
-            var pd = new ProcessingDepartmentDTO("Обрабатывающий цех№1", pipleListPr,
-                new List<ProductionDTO>(productionListPr));
+            var st = new StorageDepartment(machineList, "Заготовительный цех№1", pipleListSt,
+                new List<Production>(productionListSt));
 
-            var industry = new IndustryDTO("Инастриз", department);
+            var department = new List<Department> { st };
+
+            var industry = new Industry("Инастриз", department);
+
+            var pipleListPr = CreatePipleList();
+            var productionListPr = CreateSecondaryProduction();
+
+            var pd = new ProcessingDepartment("Обрабатывающий цех№1", pipleListPr,
+                new List<Production>(productionListPr));
+           
             industry.AddDepartment(pd);
             Assert.AreEqual(2, industry.Departaments.Count);
         }
@@ -336,94 +247,49 @@ namespace OOPlaba2Test
         {
             try
             {
-                var machineList = new List<RobotMachine> { new RobotMachine("Станочный резчик по металлу", 10) };
-                var pipleListSt = new List<string> { "Захарова Е.Ф.", "Лубинин П.Я.", "Нестеров Н.П." };
-                var productionListSt = new List<PrimaryProductionDTO>
-                {
-                    new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3),  1000,
-                        250m),
-                    new PrimaryProductionDTO(TypeMaterial.Iron, TypeProduction.Beam, "Лист V09", new Size(50, 100, 5, 5),  500,
-                        250m)
-                };
+                var machineList = CreateRobotMachine();
+                var pipleListSt = CreatePipleList();
+                var productionListSt = CreatePrimaryProduction();
 
-                var pipleListPr = new List<string>
-                {
-                    "Захарова Е.Ф.",
-                    "Лубинин П.Я.",
-                    "Нестеров Н.П.",
-                    "Захарова Е.Ф.",
-                    "Лубинин П.Я.",
-                    "Нестеров Н.П. "
-                };
-                var productionListPr = new List<SecondaryProductionDTO>
-                {
-                    new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
-                        new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
-                            250m)),
-                    new SecondaryProductionDTO("Заготовка-ТТ3", new Size(150, 7, 7, 40),
-                        new PrimaryProductionDTO(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
-                            1500m))
-                };
+                var pipleListPr = CreatePipleList();
+                var productionListPr = CreateSecondaryProduction();
 
-                var st = new StorageDepartmentDTO(machineList, "Заготовительный цех№1", pipleListSt,
-                    new List<ProductionDTO>(productionListSt));
-                var pd = new ProcessingDepartmentDTO("Обрабатывающий цех№1", pipleListPr,
-                    new List<ProductionDTO>(productionListPr));
+                var st = new StorageDepartment(machineList, "Заготовительный цех№1", pipleListSt,
+                    new List<Production>(productionListSt));
+                var pd = new ProcessingDepartment("Обрабатывающий цех№1", pipleListPr,
+                    new List<Production>(productionListPr));
 
-                var department = new List<DepartmentDTO> { st, pd };
+                var department = new List<Department> { st, pd };
                 
-                var industry = new IndustryDTO("Инастриз", department);
+                var industry = new Industry("Инастриз", department);
                 industry.RemoveDepartment(5);
 
                 Assert.Fail();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Assert.AreEqual("Ошибка в Assert.Fail.", e.Message);
+                Assert.AreEqual("Неверный индекс", ex.Message);
             }           
         }
 
         [TestMethod]
         public void RemoveDepartment()
         {
-            var machineList = new List<RobotMachine> { new RobotMachine("Станочный резчик по металлу", 10) };
-            var pipleListSt = new List<string> { "Захарова Е.Ф.", "Лубинин П.Я.", "Нестеров Н.П." };
-            var productionListSt = new List<PrimaryProductionDTO>
-            {
-                new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3),  1000,
-                    250m),
-                new PrimaryProductionDTO(TypeMaterial.Iron, TypeProduction.Beam, "Лист V09", new Size(50, 100, 5, 5),  500,
-                250m)
-            };
+            var machineList = CreateRobotMachine();
+            var pipleListSt = CreatePipleList();
+            var productionListSt = CreatePrimaryProduction();
 
-            var pipleListPr = new List<string>
-            {
-                "Захарова Е.Ф.",
-                "Лубинин П.Я.",
-                "Нестеров Н.П.",
-                "Захарова Е.Ф.",
-                "Лубинин П.Я.",
-                "Нестеров Н.П. "
-            };
-            var productionListPr = new List<SecondaryProductionDTO>
-            {
-                    new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
-                        new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
-                            250m)),
-                    new SecondaryProductionDTO("Заготовка-ТТ3", new Size(150, 7, 7, 40),
-                        new PrimaryProductionDTO(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
-                            1500m))
-            };
+            var pipleListPr = CreatePipleList();
+            var productionListPr = CreateSecondaryProduction();
 
-            var st = new StorageDepartmentDTO(machineList, "Заготовительный цех№1", pipleListSt,
-                new List<ProductionDTO>(productionListSt));
-            var pd = new ProcessingDepartmentDTO("Обрабатывающий цех№1", pipleListPr,
-                new List<ProductionDTO>(productionListPr));
+            var st = new StorageDepartment(machineList, "Заготовительный цех№1", pipleListSt,
+                new List<Production>(productionListSt));
+            var pd = new ProcessingDepartment("Обрабатывающий цех№1", pipleListPr,
+                new List<Production>(productionListPr));
 
-            var department = new List<DepartmentDTO> { st , pd};
+            var department = new List<Department> { st , pd};
            
-
-            var industry = new IndustryDTO("Инастриз", department);
+            var industry = new Industry("Инастриз", department);
             industry.RemoveDepartment(1);
             Assert.AreEqual(1, industry.Departaments.Count);
         }
@@ -433,49 +299,28 @@ namespace OOPlaba2Test
         {
             try
             {
-                var machineList = new List<RobotMachine> { new RobotMachine("Станочный резчик по металлу", 10) };
-                var pipleListSt = new List<string> { "Захарова Е.Ф.", "Лубинин П.Я.", "Нестеров Н.П." };
-                var productionListSt = new List<PrimaryProductionDTO>
-                {
-                    new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3),  1000,
-                        250m),
-                    new PrimaryProductionDTO(TypeMaterial.Iron, TypeProduction.Beam, "Лист V09", new Size(50, 100, 5, 5),  500,
-                        250m)
-                };
+                var machineList = CreateRobotMachine();
+                var pipleListSt = CreatePipleList();
+                var productionListSt = CreatePrimaryProduction();
+                
+                var st = new StorageDepartment(machineList, "Заготовительный цех№1", pipleListSt,
+                    new List<Production>(productionListSt));
+                var department = new List<Department> { st };
 
-                var pipleListPr = new List<string>
-                {
-                    "Захарова Е.Ф.",
-                    "Лубинин П.Я.",
-                    "Нестеров Н.П.",
-                    "Захарова Е.Ф.",
-                    "Лубинин П.Я.",
-                    "Нестеров Н.П. "
-                };
-                var productionListPr = new List<SecondaryProductionDTO>
-                {
-                    new SecondaryProductionDTO("Заготовка-AL5", new Size(50, 50, 12, 5),
-                        new PrimaryProductionDTO(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000,
-                            250m)),
-                    new SecondaryProductionDTO("Заготовка-ТТ3", new Size(150, 7, 7, 40),
-                        new PrimaryProductionDTO(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500,
-                            1500m))
-                };
+                var pipleListPr = CreatePipleList();
+                var productionListPr = CreateSecondaryProduction();
 
-                var st = new StorageDepartmentDTO(machineList, "Заготовительный цех№1", pipleListSt,
-                    new List<ProductionDTO>(productionListSt));
-                var department = new List<DepartmentDTO> { st };
-                var pd = new ProcessingDepartmentDTO("Обрабатывающий цех№1", pipleListPr,
-                    new List<ProductionDTO>(productionListPr));
+                var pd = new ProcessingDepartment("Обрабатывающий цех№1", pipleListPr,
+                    new List<Production>(productionListPr));
 
-                var industry = new IndustryDTO("Инастриз", department);
+                var industry = new Industry("Инастриз", department);
                 industry.EditDepartment(5,pd);
 
                 Assert.Fail();
             }
             catch (Exception e)
             {
-                Assert.AreEqual("Ошибка в Assert.Fail.", e.Message);
+                Assert.AreEqual("Неверный индекс", e.Message);
             }
         }
     }

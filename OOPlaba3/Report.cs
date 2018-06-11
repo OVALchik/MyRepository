@@ -6,7 +6,7 @@ namespace OOPlaba2
     {
         public void ShowListProduction(object obj)
         {
-            IndustryDTO industry = (IndustryDTO)obj;
+            Industry industry = (Industry)obj;
             Console.WriteLine("Лист продукции:");
             foreach (var product in industry.ProductionList)
             {
@@ -18,7 +18,7 @@ namespace OOPlaba2
 
         public void ShowListPiples(object obj)
         {
-            IndustryDTO industry = (IndustryDTO)obj;
+            Industry industry = (Industry)obj;
             Console.WriteLine("Список рабочих, занятых в производсте:");
             foreach (var piple in industry.PipleList)
             {
@@ -30,7 +30,7 @@ namespace OOPlaba2
 
         public void ShowInfoIndustry(object obj)
         {
-            IndustryDTO industry = (IndustryDTO)obj;
+            Industry industry = (Industry)obj;
             Console.WriteLine($"Название производства:{industry.NameIndusry}");
             Console.WriteLine(
                 $"Кол-во рабочих:{industry.CountPiples} Кол-во наименований продукции:{industry.CountNameProduction}");
@@ -48,7 +48,7 @@ namespace OOPlaba2
 
         public void ShowInfoProductivity(object obj)
         {
-            IndustryDTO industry = (IndustryDTO)obj;
+            Industry industry = (Industry)obj;
             industry.Departaments.Sort();
             foreach (var department in industry.Departaments)
             {
@@ -58,7 +58,7 @@ namespace OOPlaba2
 
         public void ShowInfoDepartment(object obj)
         {
-            DepartmentDTO department = (DepartmentDTO)obj;
+            Department department = (Department)obj;
             Console.WriteLine($"Название цеха:{department.NameDepartment}");
 
             Console.WriteLine("Список рабочих:");
@@ -84,12 +84,12 @@ namespace OOPlaba2
 
         public void ShowInfoMachine(object obj)
         {
-            IndustryDTO industry = (IndustryDTO)obj;
+            Industry industry = (Industry)obj;
             for (int i = 0; i < industry.Departaments.Count; i++)
             {
-                if (industry.Departaments[i] is StorageDepartmentDTO)
+                if (industry.Departaments[i] is StorageDepartment)
                 {
-                    StorageDepartmentDTO temp = (StorageDepartmentDTO)industry.Departaments[i];
+                    StorageDepartment temp = (StorageDepartment)industry.Departaments[i];
                     foreach (var machine in temp.MachineList)
                     {
                         Console.WriteLine($"Наименование:{machine.NameMachine} Кол-во ед. техники:{machine.CountMachine}");

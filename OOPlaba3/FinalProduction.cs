@@ -3,21 +3,21 @@ using System.Collections.Generic;
 
 namespace OOPlaba2
 {
-   // [Serializable]
-    public sealed class FinalProductionDTO : ProductionDTO
+    [Serializable]
+    public sealed class FinalProduction : Production
     {
-        public List<SecondaryProductionDTO> SecondaryProductionList { get; set; }
+        public List<SecondaryProduction> SecondaryProductionList { get; set; }
 
-        public FinalProductionDTO()
+        public FinalProduction()
         { }
 
-        public FinalProductionDTO(string name, Size size, int count, List<SecondaryProductionDTO> list)
+        public FinalProduction(string name, Size size, int count, List<SecondaryProduction> list)
             : base(name, size, count, GetPrice(list))
         {
             SecondaryProductionList = list;
         }
 
-        public static decimal GetPrice(List<SecondaryProductionDTO> secondaryProductionList)
+        public static decimal GetPrice(List<SecondaryProduction> secondaryProductionList)
         {
             const decimal koef = 1.5m;
             decimal sumPrice = 0m;

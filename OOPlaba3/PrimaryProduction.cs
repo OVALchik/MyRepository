@@ -1,18 +1,17 @@
-﻿using System.Xml.Serialization;
-using System;
+﻿using System;
 
 namespace OOPlaba2
 {
-    //[Serializable]
-    public class PrimaryProductionDTO : ProductionDTO
+    [Serializable]
+    public class PrimaryProduction : Production
     {
         public TypeMaterial Material { get; set; }
         public TypeProduction Type { get; set; }
 
-        public PrimaryProductionDTO()
+        public PrimaryProduction()
         { }
 
-        public PrimaryProductionDTO(TypeMaterial typeMaterial, TypeProduction typeProduction, string name, Size size, int count, decimal price)
+        public PrimaryProduction(TypeMaterial typeMaterial, TypeProduction typeProduction, string name, Size size, int count, decimal price)
             : base(name, size, count, price)
         {
             Material = typeMaterial;

@@ -4,14 +4,14 @@ using System.Collections.Generic;
 namespace OOPlaba2
 {
     [Serializable]
-    public sealed class StorageDepartmentDTO : DepartmentDTO
+    public sealed class StorageDepartment : Department
     {
         public List<RobotMachine> MachineList { get; set; }
 
-        public StorageDepartmentDTO()
+        public StorageDepartment()
         { }
 
-        public StorageDepartmentDTO(List<RobotMachine> machinelList, string name, List<string> pipleList, List<ProductionDTO> productionList)
+        public StorageDepartment(List<RobotMachine> machinelList, string name, List<string> pipleList, List<Production> productionList)
             : base(name, pipleList, productionList)
         {
             if (machinelList == null)
