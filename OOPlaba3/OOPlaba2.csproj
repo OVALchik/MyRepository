@@ -46,8 +46,9 @@
     <Compile Include="AssemblyDepartment.cs" />
     <Compile Include="Department.cs" />
     <Compile Include="FinalProduction.cs" />
-    <Compile Include="GenericList.cs" />
     <Compile Include="Industry.cs" />
+    <Compile Include="Init.cs" />
+    <Compile Include="Menu.cs" />
     <Compile Include="PrimaryProduction.cs" />
     <Compile Include="ProcessingDepartment.cs" />
     <Compile Include="Production.cs" />

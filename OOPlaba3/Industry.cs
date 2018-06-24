@@ -5,8 +5,9 @@ using System.Linq;
 namespace OOPlaba2
 {
     [Serializable]
-    public  class Industry
-    {      
+    public class Industry
+    { 
+
         public string NameIndusry { get; set; }
         public List<Department> Departaments { get; set; }
         public List<string> PipleList { get; set; } = new List<string>();
@@ -19,17 +20,18 @@ namespace OOPlaba2
 
         public Industry(string name, List<Department> departmentList)
         {
-            if(departmentList == null)
+            if (departmentList == null)
                 throw new ArgumentException("На производстве должен быть хотя бы один цех");
 
             NameIndusry = name;
             Departaments = departmentList;
+            
             CountPiples = GetCountPiples(Departaments);
             CountNameProduction = GetCountProduction(Departaments);
 
             UnionArrayProduction(ProductionList, Departaments);
             UnionArrayPiple(PipleList, Departaments);
-        }      
+        }
 
         private static int GetCountPiples(IEnumerable<Department> departaments)
         {
@@ -49,6 +51,7 @@ namespace OOPlaba2
             }
         }
 
+
         private static void UnionArrayPiple(List<string> pipleList, IReadOnlyList<Department> departments)
         {
             foreach (var department in departments)
@@ -57,15 +60,16 @@ namespace OOPlaba2
             }
         }
 
+
         public void AddDepartment(Department departaments)
         {
             Departaments.Add(departaments);
         }
 
         public void RemoveDepartment(int index)
-        {            
+        {
             try
-            {              
+            {
                 Departaments.RemoveAt(index);
             }
             catch (Exception)
@@ -84,8 +88,8 @@ namespace OOPlaba2
             {
                 throw new ArgumentException("Неверный индекс");
             }
-            
+
         }
-        
+
     }
 }

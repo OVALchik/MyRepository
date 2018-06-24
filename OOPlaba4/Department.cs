@@ -5,18 +5,18 @@ using System.Xml.Serialization;
 
 namespace OOPlaba2
 {
-    [XmlInclude(typeof(StorageDepartment))]
-    [XmlInclude(typeof(ProcessingDepartment))]
-    [XmlInclude(typeof(AssemblyDepartment))]
-    [Serializable]
-    public abstract class Department : IComparable
+   [XmlInclude(typeof(StorageDepartment))]
+   [XmlInclude(typeof(ProcessingDepartment))]
+   [XmlInclude(typeof(AssemblyDepartment))]
+   [Serializable]
+    public abstract class Department: IComparable
     {
         public string NameDepartment { get; set; }
         public List<string> PipleList { get; set; }
-        public int CountPiples { get; set; }
+        public int CountPiples => PipleList.Count;
         public List<Production> Productions { get; set; }
-        public int CountNameProductions { get; set; }
-        public int Productivity { get; set; }
+        public int CountNameProductions => Productions.Count;
+        public int Productivity => GetProductivity();
 
         protected Department()
         { }
@@ -30,12 +30,8 @@ namespace OOPlaba2
                 throw new ArgumentException("Список продукции не должен быть пустым");
 
             NameDepartment = name;
-            PipleList = pipleList;
-            Productions = productionList;
-            CountPiples = PipleList.Count;
-            CountNameProductions = Productions.Count;
-            Productivity = GetProductivity();
-
+            PipleList = pipleList;           
+            Productions = productionList;                          
         }
 
         private int GetProductivity()
@@ -45,12 +41,12 @@ namespace OOPlaba2
                 generalProduction += production.CountProduction;
 
             return generalProduction / CountPiples;
-        }
+        }      
 
         int IComparable.CompareTo(object obj)
         {
             var d = (Department)obj;
-            int t = d.Productivity;
+            double t = d.Productivity;
             return Productivity.CompareTo(t);
         }
 
@@ -68,7 +64,7 @@ namespace OOPlaba2
             catch (Exception)
             {
                 throw new ArgumentException("Неверный индекс");
-            }
+            }            
         }
 
         public void EditProduction(int index, Production production)
@@ -81,7 +77,7 @@ namespace OOPlaba2
             {
                 throw new ArgumentException("Неверный индекс");
             }
-
+            
         }
 
         public void AddPiple(string piple)
@@ -99,7 +95,7 @@ namespace OOPlaba2
             {
                 throw new ArgumentException("Неверный индекс");
             }
-
+            
         }
 
         public void EditPiple(int index, string piple)
@@ -112,7 +108,7 @@ namespace OOPlaba2
             {
                 throw new ArgumentException("Неверный индекс");
             }
-
+            
         }
     }
 }

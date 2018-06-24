@@ -24,11 +24,10 @@ namespace DepartmentTest
         {
             var productionList = new List<PrimaryProduction>
             {
-                new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 100,
-                    250m),
-                new PrimaryProduction(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 50, 1500m),
-                new PrimaryProduction(TypeMaterial.Wood, TypeProduction.Beam, "Брус W-10", new Size(10, 10, 200, 15), 40, 500m),
-                new PrimaryProduction(TypeMaterial.Iron, TypeProduction.Rod, "Прут IR-5",new Size( 0.5, 0.5, 5, 7), 20, 1000m)
+                new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 100),
+                new PrimaryProduction(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 50),
+                new PrimaryProduction(TypeMaterial.Wood, TypeProduction.Beam, "Брус W-10", new Size(10, 10, 200, 15), 40),
+                new PrimaryProduction(TypeMaterial.Iron, TypeProduction.Rod, "Прут IR-5",new Size( 0.5, 0.5, 5, 7), 20)
             };
             return productionList;
         }
@@ -118,8 +117,7 @@ namespace DepartmentTest
                     new List<Production>(productionListSt));
 
             Production productionAdd = new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4",
-                new Size(50, 70, 5, 3), 1000,
-                250m);
+                new Size(50, 70, 5, 3), 1000);
 
             st.AddProduction(productionAdd);
 
@@ -174,8 +172,7 @@ namespace DepartmentTest
                 new List<Production>(productionListSt));
 
             Production production = new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4",
-                new Size(50, 70, 5, 3), 1000,
-                250m);
+                new Size(50, 70, 5, 3), 1000);
 
             st.EditProduction(0,production);
 
@@ -195,8 +192,7 @@ namespace DepartmentTest
                     new List<Production>(productionListSt));
 
                 Production production = new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4",
-                    new Size(50, 70, 5, 3), 1000,
-                    250m);
+                    new Size(50, 70, 5, 3), 1000);
 
                 st.EditProduction(66,production);
 
