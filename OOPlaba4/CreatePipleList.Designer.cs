@@ -35,8 +35,9 @@
             this.buttonMakePipleList = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.listBoxPiple = new System.Windows.Forms.ListBox();
-            this.buttonInit = new System.Windows.Forms.Button();
+            this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).BeginInit();
             this.SuspendLayout();
             // 
             // textBoxFIO
@@ -45,7 +46,6 @@
             this.textBoxFIO.Name = "textBoxFIO";
             this.textBoxFIO.Size = new System.Drawing.Size(193, 20);
             this.textBoxFIO.TabIndex = 1;
-            this.textBoxFIO.TextChanged += new System.EventHandler(this.textBoxFIO_TextChanged);
             // 
             // buttonAddPiple
             // 
@@ -96,15 +96,9 @@
             this.listBoxPiple.TabIndex = 6;
             this.listBoxPiple.SelectedIndexChanged += new System.EventHandler(this.listBoxPiple_SelectedIndexChanged);
             // 
-            // buttonInit
+            // errorProvider2
             // 
-            this.buttonInit.Location = new System.Drawing.Point(175, 51);
-            this.buttonInit.Name = "buttonInit";
-            this.buttonInit.Size = new System.Drawing.Size(97, 23);
-            this.buttonInit.TabIndex = 7;
-            this.buttonInit.Text = "Инициализация";
-            this.buttonInit.UseVisualStyleBackColor = true;
-            this.buttonInit.Click += new System.EventHandler(this.buttonInit_Click);
+            this.errorProvider2.ContainerControl = this;
             // 
             // CreatePipleList
             // 
@@ -112,15 +106,15 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(284, 270);
-            this.Controls.Add(this.buttonInit);
             this.Controls.Add(this.listBoxPiple);
             this.Controls.Add(this.buttonMakePipleList);
             this.Controls.Add(this.buttonRemovePiple);
             this.Controls.Add(this.buttonAddPiple);
             this.Controls.Add(this.textBoxFIO);
             this.Name = "CreatePipleList";
-            this.Text = "CreatePipleList";
+            this.Text = "Создание списка сотрудников";
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -133,6 +127,6 @@
         private System.Windows.Forms.Button buttonMakePipleList;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.ListBox listBoxPiple;
-        private System.Windows.Forms.Button buttonInit;
+        private System.Windows.Forms.ErrorProvider errorProvider2;
     }
 }

@@ -12,6 +12,7 @@ namespace OOPlaba2
 {
     public partial class CreateProduction : Form
     {
+              
         private readonly CreateProductionController _controller;
         public event EventHandler UpdateForm;
 
@@ -20,14 +21,11 @@ namespace OOPlaba2
             InitializeComponent();
             _controller = controller;
 
-            comboBoxTypeMaterial.Enabled = _controller.EnableTypeMaterial;
-            comboBoxTypeProduction.Enabled = _controller.EnableTypeProduction;         
-            buttonRemoveProduction.Enabled = _controller.CanRemoveProduction;
-            ShowTypeProduction();
             GetTypeMaterial();
             GetTypeProduction();
-            UpdateForm += OnUpdateForm;
-            _controller.PropertyChanged += _controller_PropertyChanged;
+            ShowProduction();
+
+            UpdateForm += OnUpdateForm;         
         }
 
         public void GetTypeMaterial()
@@ -42,160 +40,92 @@ namespace OOPlaba2
                 comboBoxTypeProduction.Items.Add(t);
         }
 
-        public void ShowProductionList()
+       
+        private void EnableRemoveProductionButton()
+        {
+            buttonRemoveProduct.Enabled = _controller.CanRemoveProduction;
+        }
+
+        private void EnableMakeProductionButton()
+        {
+            buttonCreateProducions.Enabled = _controller.CanMakeProduction;
+        }
+
+        public void ShowProduction()
         {
             if (_controller.ProductionList != null)
             {
+                listBoxNameProduct.Items.Clear();
                 foreach (var product in _controller.ProductionList)
-                    listBoxProduction.Items.Add(product);
+                    listBoxNameProduct.Items.Add(product.NameProduction);
             }
 
         }
-
         private void OnUpdateForm(object sender, EventArgs e)
         {
-            ShowProductionList();
             textBoxNameProduction.Clear();
+            comboBoxTypeMaterial.SelectedIndex = -1;
             textBoxLength.Clear();
             textBoxWidth.Clear();
             textBoxHight.Clear();
             textBoxWeight.Clear();
-            textBoxCount.Clear();                                            
+            textBoxCount.Clear();
+            ShowProduction();
+            EnableRemoveProductionButton();
+            EnableMakeProductionButton();
+            listBoxNameProduct.SelectedItem = null;
+            comboBoxTypeProduction.SelectedIndex = -1;
         }
-
-        private void ShowTypeProduction()
-        {
-            if (_controller.Department.GetType() == typeof(StorageDepartment))
-            {
-                textBoxTypeProduct.Text = "Первичная";
-            }
-            if (_controller.Department.GetType() == typeof(ProcessingDepartment))
-            {
-                textBoxTypeProduct.Text = "Вторичная";
-            }
-            if (_controller.Department.GetType() == typeof(AssemblyDepartment))
-            {
-                textBoxTypeProduct.Text = "Финальная";
-            }            
-        }
-
-        private void _controller_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(_controller.CanSave))
-                buttonSave.Enabled = _controller.CanSave;
-
-            if (e.PropertyName == nameof(_controller.CanRemoveProduction))
-                buttonRemoveProduction.Enabled = _controller.CanRemoveProduction;
-        }
-
-        public Production CreateProductions()
-        {            
-            if (_controller.Department.GetType() == typeof(StorageDepartment))
-            {
-                _controller.Production = new PrimaryProduction(
-                (TypeMaterial)Enum.Parse(typeof(TypeMaterial), comboBoxTypeMaterial.Text),
-                (TypeProduction)Enum.Parse(typeof(TypeProduction), comboBoxTypeProduction.Text),
-                textBoxNameProduction.Text,
-                new Size(Convert.ToDouble(textBoxLength.Text),
-                Convert.ToDouble(textBoxWidth.Text), Convert.ToDouble(textBoxHight.Text),
-                Convert.ToDouble(textBoxWeight.Text)),
-                Convert.ToInt32(textBoxCount.Text)
-                );
-            }
-
-            if (_controller.Department.GetType() == typeof(ProcessingDepartment))
-            {
-                _controller.Production = new SecondaryProduction(
-                textBoxNameProduction.Text,
-                new Size(Convert.ToDouble(textBoxLength.Text),
-                Convert.ToDouble(textBoxWidth.Text), Convert.ToDouble(textBoxHight.Text),
-                Convert.ToDouble(textBoxWeight.Text)),
-                (TypeMaterial)Enum.Parse(typeof(TypeMaterial), comboBoxTypeMaterial.Text),
-                Convert.ToInt32(textBoxCount.Text));
-            }
-
-            if (_controller.Department.GetType() == typeof(ProcessingDepartment))
-            {
-                _controller.Production = new FinalProduction(
-                textBoxNameProduction.Text,
-                new Size(Convert.ToDouble(textBoxLength.Text),
-                Convert.ToDouble(textBoxWidth.Text), Convert.ToDouble(textBoxHight.Text),
-                Convert.ToDouble(textBoxWeight.Text)),
-                Convert.ToInt32(textBoxCount.Text));
-            }
-
-            return _controller.Production;
-        }
-/*
-        public SecondaryProduction CreateSecondaryProduction()
-        {
-            _controller.SecondaryProduction = new SecondaryProduction(
-                textBoxNameProduction.Text, 
-                new Size(Convert.ToDouble(textBoxLength.Text),
-                Convert.ToDouble(textBoxWidth.Text), Convert.ToDouble(textBoxHight.Text),
-                Convert.ToDouble(textBoxWeight.Text)),
-                (TypeMaterial)Enum.Parse(typeof(TypeMaterial), comboBoxTypeMaterial.Text),
-                Convert.ToInt32(textBoxCount.Text));          
-
-            return _controller.SecondaryProduction;
-        }
-
-        public FinalProduction CreateFinalProduction()
-        {
-            _controller.FinalProduction = new FinalProduction(
-                textBoxNameProduction.Text,
-                new Size(Convert.ToDouble(textBoxLength.Text),
-                Convert.ToDouble(textBoxWidth.Text), Convert.ToDouble(textBoxHight.Text),
-                Convert.ToDouble(textBoxWeight.Text)),
-                Convert.ToInt32(textBoxCount.Text));
-
-            return _controller.FinalProduction;
-        }
-*/
+        
         private void buttonAddProduction_Click(object sender, EventArgs e)
         {
-            listBoxProduction.Items.Add(textBoxNameProduction.Text);
-            _controller.AddProduction(CreateProductions());
-            /*
-             if (_controller.Department.GetType() == typeof(StorageDepartment))
-             {             
-                 _controller.AddProduction(CreatePrimaryProduction());               
-             }
+            int numberInt = 0;
+            double numberDouble = 0;
+            errorProvider1.Clear();
+            
+            if (comboBoxTypeMaterial.SelectedIndex == -1 || comboBoxTypeProduction.SelectedIndex == -1)
+                errorProvider1.SetError(comboBoxTypeMaterial,"Не выбран материал или тип продукции");
+            else if(!Int32.TryParse(textBoxCount.Text,out numberInt) || !double.TryParse(textBoxHight.Text, out numberDouble) 
+                || !double.TryParse(textBoxLength.Text, out numberDouble) || !double.TryParse(textBoxWidth.Text, out numberDouble) 
+                || !double.TryParse(textBoxWeight.Text, out numberDouble))
+                errorProvider1.SetError(textBoxCount, "Не верно указано значение: габариты или количество продукции");
+            else if (string.IsNullOrEmpty(textBoxNameProduction.Text))
+                errorProvider1.SetError(textBoxNameProduction, "Не указано имя");
+            else
+            {
+                listBoxNameProduct.Items.Add(textBoxNameProduction.Text);
+                _controller.AddProduction(new Production((TypeMaterial)Enum.Parse(typeof(TypeMaterial), comboBoxTypeMaterial.Text),
+                     (TypeProduction)Enum.Parse(typeof(TypeProduction), comboBoxTypeProduction.Text),
+                     textBoxNameProduction.Text,
+                     new Size(Convert.ToDouble(textBoxLength.Text),
+                     Convert.ToDouble(textBoxWidth.Text),
+                     Convert.ToDouble(textBoxHight.Text),
+                     Convert.ToDouble(textBoxWeight.Text)),
+                     Convert.ToInt32(textBoxCount.Text)));
 
-             if (_controller.Department.GetType() == typeof( ProcessingDepartment))
-             {               
-                 _controller.AddProduction(CreateSecondaryProduction());
-             }
+                UpdateForm?.Invoke(this, e);
+            }                   
+        }             
 
-             if (_controller.Department.GetType() == typeof(AssemblyDepartment))
-             {
-                 _controller.AddProduction(CreateFinalProduction());
-             }
-             */
-            UpdateForm?.Invoke(this, e);
-
-        }            
-
-        private void buttonRemoveProduction_Click(object sender, EventArgs e)
+        private void buttonRemoveProduct_Click(object sender, EventArgs e)
         {
-            _controller.RemoveProduction(listBoxProduction.SelectedIndex);
-            listBoxProduction.Items.RemoveAt(listBoxProduction.SelectedIndex);
-           
-            UpdateForm?.Invoke(this, e);
+            errorProvider1.Clear();
+            if (listBoxNameProduct.Items.Count == 0)
+                errorProvider1.SetError(listBoxNameProduct, "Список пуст");
+            else
+            {
+                _controller.RemoveProduction(listBoxNameProduct.SelectedIndex);
+                listBoxNameProduct.Items.RemoveAt(listBoxNameProduct.SelectedIndex);
+                UpdateForm?.Invoke(this, e);
+            }
         }
 
-        
-
-        private void buttonSave_Click(object sender, EventArgs e)
-        {
+        private void buttonCreateProducions_Click(object sender, EventArgs e)
+        {                       
             DialogResult = DialogResult.OK;
             Close();
         }
-
-        private void buttonInit_Click(object sender, EventArgs e)
-        {
-            _controller.InitializeIndustry();
-            UpdateForm?.Invoke(this, e);
-        }
     }
+     
+    
 }

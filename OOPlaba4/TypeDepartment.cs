@@ -4,6 +4,7 @@
     {
         StorageDepartment,
         ProcessingDepartment,
-        AssemblyDepartment
+        AssemblyDepartment,
+        None
     }
 }

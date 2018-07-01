@@ -23,32 +23,32 @@ namespace OOPlaba2
             ShowTypeDepartment();
             panelRobot.Visible = _controller.VisibleRobotCreate;
            
-            //_controller.PropertyChanged += _controller_PropertyChanged;
             UpdateForm += OnUpdateForm;
         }
-
+       
         private void ShowTypeDepartment()
-        {           
-            if (_controller.Departament is StorageDepartment)
+        {
+            if (_controller.TypeDepartament == TypeDepartment.StorageDepartment)
             {
                 textBoxtypeDepartment.Text = "Заготовительный цех";
             }
-            if (_controller.Departament is ProcessingDepartment)
+            if (_controller.TypeDepartament == TypeDepartment.ProcessingDepartment)
             {
                 textBoxtypeDepartment.Text = "Обрабатывающий цех";
             }
-            if (_controller.Departament is AssemblyDepartment)
+            if (_controller.TypeDepartament == TypeDepartment.AssemblyDepartment)
             {
                 textBoxtypeDepartment.Text = "Сборочно-монтажный цех";
             }
-        }   
+        }
 
+       
         private void OnUpdateForm(object sender, EventArgs e)
-        {
-            textBoxNameDepartment.Text = _controller.NameDepartment;
+        {           
             ShowPiples();
             ShowProductions();
-            ShowRobot();
+            if(_controller.TypeDepartament == TypeDepartment.StorageDepartment)
+                ShowRobot();
         }
 
         private void ShowPiples()
@@ -60,8 +60,7 @@ namespace OOPlaba2
                 {
                     listBoxPiple.Items.Add(piple);
                 }
-            }
-                     
+            }                     
         }
 
         private void ShowRobot()
@@ -74,26 +73,30 @@ namespace OOPlaba2
                     listBoxRobot.Items.Add(robot.NameMachine);
                 }
             }
-
         }
         private void ShowProductions()
-        {/*
-            listBoxProduction.Items.Clear();
-            foreach (var production in _controller.Productions)
+        {
+            if (_controller.ProductionList!= null)
             {
-                listBoxPiple.Items.Add(production.NameProduction);
-            }*/
+                listBoxProduction.Items.Clear();
+                foreach (var product in _controller.ProductionList)
+                {
+                    listBoxProduction.Items.Add(product.NameProduction);
+                }
+            }
         }
 
         private void buttonChangeListPiple_Click(object sender, EventArgs e)
         {
+            if (_controller.PipleList == null)
+                _controller.PipleList = new List<string>();
+
             var newCreatePipleController= new CreatePipleListController(_controller.PipleList);
             CreatePipleList formPipleList = new CreatePipleList(newCreatePipleController);
             if (formPipleList.ShowDialog() == DialogResult.OK)
             {
                 var newPipleList= newCreatePipleController.PipleList;
-                _controller.PipleList = newPipleList;
-                //_controller.AddPiple(newPipleList);
+                _controller.PipleList = newPipleList;               
                 foreach (var piple in newPipleList)
                 {
                     listBoxPiple.Items.Add(piple);                   
@@ -104,36 +107,61 @@ namespace OOPlaba2
 
         private void buttonChangeProduction_Click(object sender, EventArgs e)
         {
-           var newCreateProductionController = new CreateProductionController(_controller.Departament);
-            CreateProduction formProduction = new CreateProduction(newCreateProductionController);
-            if (formProduction.ShowDialog() == DialogResult.OK)
-            {/*
-                var newProductionList = CreateProductionController.ProductList;
-                foreach (var production in newProductionList)
+            if (_controller.ProductionList == null)
+                _controller.ProductionList = new List<Production>();
+            var newCreateProductionController = new CreateProductionController(_controller.ProductionList);
+            CreateProduction formProductionList = new CreateProduction(newCreateProductionController);
+            if (formProductionList.ShowDialog() == DialogResult.OK)
+            {
+                var newProductionList = newCreateProductionController.ProductionList;
+                _controller.ProductionList = newProductionList;            
+                foreach (var product in newProductionList)
                 {
-                    listBoxPiple.Items.Add(production);
-                }*/
+                    listBoxProduction.Items.Add(product);
+                }
             }
             UpdateForm?.Invoke(this, e);
         }
 
         private void buttonMakeDepartment_Click(object sender, EventArgs e)
         {
-            try
+           errorProvider1.Clear();
+           if (textBoxNameDepartment.Text=="")
+              errorProvider1.SetError(textBoxNameDepartment, "Не указано имя");
+           else if(listBoxPiple.Items.Count==0)
+              errorProvider1.SetError(listBoxPiple, "Создайте список сотрудников");
+           else if(listBoxProduction.Items.Count == 0)
+              errorProvider1.SetError(listBoxProduction, "Создайте список продукции");
+           else if(listBoxRobot.Items.Count == 0 && _controller.TypeDepartament == TypeDepartment.StorageDepartment)
+              errorProvider1.SetError(listBoxRobot, "Создайте список систем");
+           else
             {
-                DialogResult = DialogResult.OK;
-                Close();
+                try
+                {
+                    _controller.NameDepartment = textBoxNameDepartment.Text;
+                    DialogResult = DialogResult.OK;
+                    Close();
+                }
+                catch (NullReferenceException)
+                {
+                    MessageBox.Show("Fill in all fields");
+                }
             }
-            catch (NullReferenceException)
-            {
-                MessageBox.Show("Fill in all fields");
-            }           
+           
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            if (textBoxRobot.Text != null && textBoxCountRobot.Text != null)
+           int numberInt = 0;
+            errorProvider1.Clear();
+
+            if (string.IsNullOrEmpty(textBoxRobot.Text) && !Int32.TryParse(textBoxCountRobot.Text, out numberInt))
+                errorProvider1.SetError(textBoxCountRobot, "Неверно введены данные");
+            else
             {
+                if (_controller.Robot == null)
+                    _controller.Robot = new List<RobotMachine>();
+
                 _controller.Robot.Add(new RobotMachine(textBoxNameDepartment.Text, Convert.ToInt32(textBoxCountRobot.Text)));
                 listBoxRobot.Items.Add(textBoxRobot.Text);
                 textBoxRobot.Clear();
@@ -143,8 +171,12 @@ namespace OOPlaba2
 
         private void buttonInit_Click(object sender, EventArgs e)
         {
-            _controller.InitializeRobot();
+            if (_controller.TypeDepartament == TypeDepartment.StorageDepartment)
+                _controller.InitializeRobot();
+
+            _controller.InitializeProductions();
+            _controller.InitializePiples();
             UpdateForm?.Invoke(this, e);
-        }
+        }        
     }
 }

@@ -30,13 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBoxTypeProduct = new System.Windows.Forms.TextBox();
-            this.buttonInit = new System.Windows.Forms.Button();
-            this.listBoxProduction = new System.Windows.Forms.ListBox();
+            this.listBoxNameProduct = new System.Windows.Forms.ListBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.buttonSave = new System.Windows.Forms.Button();
-            this.buttonRemoveProduction = new System.Windows.Forms.Button();
+            this.buttonCreateProducions = new System.Windows.Forms.Button();
+            this.buttonRemoveProduct = new System.Windows.Forms.Button();
             this.buttonAddProduction = new System.Windows.Forms.Button();
             this.textBoxCount = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -55,23 +52,20 @@
             this.storageDepartmentBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.storageDepartmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.industryBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.storageDepartmentBindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.storageDepartmentBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.industryBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.textBoxTypeProduct);
-            this.panel1.Controls.Add(this.buttonInit);
-            this.panel1.Controls.Add(this.listBoxProduction);
+            this.panel1.Controls.Add(this.listBoxNameProduct);
             this.panel1.Controls.Add(this.panel2);
-            this.panel1.Controls.Add(this.buttonRemoveProduction);
-            this.panel1.Controls.Add(this.buttonAddProduction);
             this.panel1.Controls.Add(this.textBoxCount);
             this.panel1.Controls.Add(this.label8);
             this.panel1.Controls.Add(this.textBoxWeight);
@@ -89,88 +83,55 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(628, 239);
+            this.panel1.Size = new System.Drawing.Size(567, 232);
             this.panel1.TabIndex = 8;
             // 
-            // label1
+            // listBoxNameProduct
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(82, 13);
-            this.label1.TabIndex = 29;
-            this.label1.Text = "Тип продукции";
-            // 
-            // textBoxTypeProduct
-            // 
-            this.textBoxTypeProduct.Enabled = false;
-            this.textBoxTypeProduct.Location = new System.Drawing.Point(114, 12);
-            this.textBoxTypeProduct.Name = "textBoxTypeProduct";
-            this.textBoxTypeProduct.Size = new System.Drawing.Size(133, 20);
-            this.textBoxTypeProduct.TabIndex = 28;
-            // 
-            // buttonInit
-            // 
-            this.buttonInit.Location = new System.Drawing.Point(276, 176);
-            this.buttonInit.Name = "buttonInit";
-            this.buttonInit.Size = new System.Drawing.Size(100, 26);
-            this.buttonInit.TabIndex = 27;
-            this.buttonInit.Text = "Инициализация";
-            this.buttonInit.UseVisualStyleBackColor = true;
-            this.buttonInit.Click += new System.EventHandler(this.buttonInit_Click);
-            // 
-            // listBoxProduction
-            // 
-            this.listBoxProduction.FormattingEnabled = true;
-            this.listBoxProduction.Location = new System.Drawing.Point(276, 75);
-            this.listBoxProduction.Name = "listBoxProduction";
-            this.listBoxProduction.Size = new System.Drawing.Size(342, 95);
-            this.listBoxProduction.TabIndex = 26;
+            this.listBoxNameProduct.FormattingEnabled = true;
+            this.listBoxNameProduct.Location = new System.Drawing.Point(276, 114);
+            this.listBoxNameProduct.Name = "listBoxNameProduct";
+            this.listBoxNameProduct.Size = new System.Drawing.Size(283, 56);
+            this.listBoxNameProduct.TabIndex = 30;
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.buttonSave);
+            this.panel2.Controls.Add(this.buttonCreateProducions);
+            this.panel2.Controls.Add(this.buttonRemoveProduct);
+            this.panel2.Controls.Add(this.buttonAddProduction);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 208);
+            this.panel2.Location = new System.Drawing.Point(0, 191);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(628, 31);
+            this.panel2.Size = new System.Drawing.Size(567, 41);
             this.panel2.TabIndex = 21;
             // 
-            // buttonSave
+            // buttonCreateProducions
             // 
-            this.buttonSave.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonSave.Dock = System.Windows.Forms.DockStyle.Left;
-            this.buttonSave.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.buttonSave.FlatAppearance.BorderSize = 2;
-            this.buttonSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.buttonSave.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.buttonSave.Location = new System.Drawing.Point(0, 0);
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(156, 31);
-            this.buttonSave.TabIndex = 18;
-            this.buttonSave.Text = "Применить";
-            this.buttonSave.UseVisualStyleBackColor = false;
-            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            this.buttonCreateProducions.Location = new System.Drawing.Point(12, 5);
+            this.buttonCreateProducions.Name = "buttonCreateProducions";
+            this.buttonCreateProducions.Size = new System.Drawing.Size(156, 23);
+            this.buttonCreateProducions.TabIndex = 18;
+            this.buttonCreateProducions.Text = "Применить";
+            this.buttonCreateProducions.UseVisualStyleBackColor = true;
+            this.buttonCreateProducions.Click += new System.EventHandler(this.buttonCreateProducions_Click);
             // 
-            // buttonRemoveProduction
+            // buttonRemoveProduct
             // 
-            this.buttonRemoveProduction.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonRemoveProduction.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.buttonRemoveProduction.Location = new System.Drawing.Point(503, 176);
-            this.buttonRemoveProduction.Name = "buttonRemoveProduction";
-            this.buttonRemoveProduction.Size = new System.Drawing.Size(115, 26);
-            this.buttonRemoveProduction.TabIndex = 19;
-            this.buttonRemoveProduction.Text = "Удалить";
-            this.buttonRemoveProduction.UseVisualStyleBackColor = false;
-            this.buttonRemoveProduction.Click += new System.EventHandler(this.buttonRemoveProduction_Click);
+            this.buttonRemoveProduct.Location = new System.Drawing.Point(461, 3);
+            this.buttonRemoveProduct.Name = "buttonRemoveProduct";
+            this.buttonRemoveProduct.Size = new System.Drawing.Size(103, 26);
+            this.buttonRemoveProduct.TabIndex = 17;
+            this.buttonRemoveProduct.Text = "Удалить";
+            this.buttonRemoveProduct.UseVisualStyleBackColor = true;
+            this.buttonRemoveProduct.Click += new System.EventHandler(this.buttonRemoveProduct_Click);
             // 
             // buttonAddProduction
             // 
             this.buttonAddProduction.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.buttonAddProduction.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.buttonAddProduction.Location = new System.Drawing.Point(382, 176);
+            this.buttonAddProduction.Location = new System.Drawing.Point(357, 3);
             this.buttonAddProduction.Name = "buttonAddProduction";
-            this.buttonAddProduction.Size = new System.Drawing.Size(115, 26);
+            this.buttonAddProduction.Size = new System.Drawing.Size(98, 26);
             this.buttonAddProduction.TabIndex = 16;
             this.buttonAddProduction.Text = "Добавить";
             this.buttonAddProduction.UseVisualStyleBackColor = false;
@@ -186,7 +147,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(444, 49);
+            this.label8.Location = new System.Drawing.Point(451, 52);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(41, 13);
             this.label8.TabIndex = 12;
@@ -202,7 +163,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(273, 49);
+            this.label7.Location = new System.Drawing.Point(303, 52);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(26, 13);
             this.label7.TabIndex = 10;
@@ -240,7 +201,7 @@
             // 
             // textBoxNameProduction
             // 
-            this.textBoxNameProduction.Location = new System.Drawing.Point(114, 102);
+            this.textBoxNameProduction.Location = new System.Drawing.Point(114, 86);
             this.textBoxNameProduction.Name = "textBoxNameProduction";
             this.textBoxNameProduction.Size = new System.Drawing.Size(133, 20);
             this.textBoxNameProduction.TabIndex = 5;
@@ -248,7 +209,7 @@
             // labelNameProduction
             // 
             this.labelNameProduction.AutoSize = true;
-            this.labelNameProduction.Location = new System.Drawing.Point(6, 102);
+            this.labelNameProduction.Location = new System.Drawing.Point(51, 89);
             this.labelNameProduction.Name = "labelNameProduction";
             this.labelNameProduction.Size = new System.Drawing.Size(57, 13);
             this.labelNameProduction.TabIndex = 4;
@@ -257,7 +218,7 @@
             // comboBoxTypeProduction
             // 
             this.comboBoxTypeProduction.FormattingEnabled = true;
-            this.comboBoxTypeProduction.Location = new System.Drawing.Point(114, 73);
+            this.comboBoxTypeProduction.Location = new System.Drawing.Point(114, 49);
             this.comboBoxTypeProduction.Name = "comboBoxTypeProduction";
             this.comboBoxTypeProduction.Size = new System.Drawing.Size(133, 21);
             this.comboBoxTypeProduction.TabIndex = 3;
@@ -265,7 +226,7 @@
             // labelTypeProduction
             // 
             this.labelTypeProduction.AutoSize = true;
-            this.labelTypeProduction.Location = new System.Drawing.Point(6, 73);
+            this.labelTypeProduction.Location = new System.Drawing.Point(26, 52);
             this.labelTypeProduction.Name = "labelTypeProduction";
             this.labelTypeProduction.Size = new System.Drawing.Size(82, 13);
             this.labelTypeProduction.TabIndex = 2;
@@ -274,7 +235,7 @@
             // labelTypeMaterial
             // 
             this.labelTypeMaterial.AutoSize = true;
-            this.labelTypeMaterial.Location = new System.Drawing.Point(9, 43);
+            this.labelTypeMaterial.Location = new System.Drawing.Point(24, 19);
             this.labelTypeMaterial.Name = "labelTypeMaterial";
             this.labelTypeMaterial.Size = new System.Drawing.Size(84, 13);
             this.labelTypeMaterial.TabIndex = 1;
@@ -283,7 +244,7 @@
             // comboBoxTypeMaterial
             // 
             this.comboBoxTypeMaterial.FormattingEnabled = true;
-            this.comboBoxTypeMaterial.Location = new System.Drawing.Point(114, 40);
+            this.comboBoxTypeMaterial.Location = new System.Drawing.Point(114, 15);
             this.comboBoxTypeMaterial.Name = "comboBoxTypeMaterial";
             this.comboBoxTypeMaterial.Size = new System.Drawing.Size(133, 21);
             this.comboBoxTypeMaterial.TabIndex = 0;
@@ -300,20 +261,25 @@
             // 
             this.industryBindingSource.DataSource = typeof(OOPlaba2.Industry);
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // CreateProduction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(628, 239);
+            this.ClientSize = new System.Drawing.Size(567, 229);
             this.Controls.Add(this.panel1);
             this.Name = "CreateProduction";
-            this.Text = "Form1";
+            this.Text = "Создание продукции";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.storageDepartmentBindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.storageDepartmentBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.industryBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -322,7 +288,6 @@
         private System.Windows.Forms.BindingSource storageDepartmentBindingSource;
         private System.Windows.Forms.BindingSource industryBindingSource;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button buttonAddProduction;
         private System.Windows.Forms.TextBox textBoxCount;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBoxWeight;
@@ -337,13 +302,12 @@
         private System.Windows.Forms.Label labelTypeProduction;
         private System.Windows.Forms.Label labelTypeMaterial;
         private System.Windows.Forms.ComboBox comboBoxTypeMaterial;
-        private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.BindingSource storageDepartmentBindingSource1;
-        private System.Windows.Forms.Button buttonRemoveProduction;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button buttonInit;
-        private System.Windows.Forms.ListBox listBoxProduction;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBoxTypeProduct;
+        private System.Windows.Forms.Button buttonAddProduction;
+        private System.Windows.Forms.ListBox listBoxNameProduct;
+        private System.Windows.Forms.Button buttonRemoveProduct;
+        private System.Windows.Forms.Button buttonCreateProducions;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

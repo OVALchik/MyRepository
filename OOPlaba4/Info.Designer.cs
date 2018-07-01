@@ -28,19 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBoxInfo = new System.Windows.Forms.TextBox();
             this.buttonExit = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.richTextBoxInfo = new System.Windows.Forms.RichTextBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // textBoxInfo
-            // 
-            this.textBoxInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxInfo.Location = new System.Drawing.Point(0, 0);
-            this.textBoxInfo.Name = "textBoxInfo";
-            this.textBoxInfo.Size = new System.Drawing.Size(387, 20);
-            this.textBoxInfo.TabIndex = 0;
             // 
             // buttonExit
             // 
@@ -56,12 +48,20 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.textBoxInfo);
+            this.panel1.Controls.Add(this.richTextBoxInfo);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(387, 324);
             this.panel1.TabIndex = 2;
+            // 
+            // richTextBoxInfo
+            // 
+            this.richTextBoxInfo.Location = new System.Drawing.Point(0, 3);
+            this.richTextBoxInfo.Name = "richTextBoxInfo";
+            this.richTextBoxInfo.Size = new System.Drawing.Size(384, 318);
+            this.richTextBoxInfo.TabIndex = 1;
+            this.richTextBoxInfo.Text = "";
             // 
             // Info
             // 
@@ -72,17 +72,15 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.buttonExit);
             this.Name = "Info";
-            this.Text = "Info";
+            this.Text = "Инфо";
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox textBoxInfo;
         private System.Windows.Forms.Button buttonExit;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.RichTextBox richTextBoxInfo;
     }
 }

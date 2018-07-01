@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxNameDepartment = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -40,17 +41,19 @@
             this.label4 = new System.Windows.Forms.Label();
             this.textBoxtypeDepartment = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panelRobot = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.listBoxRobot = new System.Windows.Forms.ListBox();
-            this.buttonAddRobot = new System.Windows.Forms.Button();
-            this.textBoxRobot = new System.Windows.Forms.TextBox();
-            this.textBoxCountRobot = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.buttonInit = new System.Windows.Forms.Button();
+            this.panelRobot = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBoxCountRobot = new System.Windows.Forms.TextBox();
+            this.textBoxRobot = new System.Windows.Forms.TextBox();
+            this.buttonAddRobot = new System.Windows.Forms.Button();
+            this.listBoxRobot = new System.Windows.Forms.ListBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.panel1.SuspendLayout();
             this.panelRobot.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -158,6 +161,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.buttonInit);
             this.panel1.Controls.Add(this.buttonMakeDepartment);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 288);
@@ -165,9 +169,18 @@
             this.panel1.Size = new System.Drawing.Size(480, 32);
             this.panel1.TabIndex = 14;
             // 
+            // buttonInit
+            // 
+            this.buttonInit.Location = new System.Drawing.Point(15, 4);
+            this.buttonInit.Name = "buttonInit";
+            this.buttonInit.Size = new System.Drawing.Size(125, 23);
+            this.buttonInit.TabIndex = 7;
+            this.buttonInit.Text = "Инициализация";
+            this.buttonInit.UseVisualStyleBackColor = true;
+            this.buttonInit.Click += new System.EventHandler(this.buttonInit_Click);
+            // 
             // panelRobot
             // 
-            this.panelRobot.Controls.Add(this.buttonInit);
             this.panelRobot.Controls.Add(this.label7);
             this.panelRobot.Controls.Add(this.label6);
             this.panelRobot.Controls.Add(this.textBoxCountRobot);
@@ -181,22 +194,37 @@
             this.panelRobot.Size = new System.Drawing.Size(480, 95);
             this.panelRobot.TabIndex = 15;
             // 
-            // label5
+            // label7
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 11);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(196, 13);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Список автоматизированных систем";
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(360, 12);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(66, 13);
+            this.label7.TabIndex = 6;
+            this.label7.Text = "Количество";
             // 
-            // listBoxRobot
+            // label6
             // 
-            this.listBoxRobot.FormattingEnabled = true;
-            this.listBoxRobot.Location = new System.Drawing.Point(15, 28);
-            this.listBoxRobot.Name = "listBoxRobot";
-            this.listBoxRobot.Size = new System.Drawing.Size(231, 56);
-            this.listBoxRobot.TabIndex = 1;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(249, 11);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(57, 13);
+            this.label6.TabIndex = 5;
+            this.label6.Text = "Название";
+            // 
+            // textBoxCountRobot
+            // 
+            this.textBoxCountRobot.Location = new System.Drawing.Point(358, 28);
+            this.textBoxCountRobot.Name = "textBoxCountRobot";
+            this.textBoxCountRobot.Size = new System.Drawing.Size(100, 20);
+            this.textBoxCountRobot.TabIndex = 4;
+            // 
+            // textBoxRobot
+            // 
+            this.textBoxRobot.Location = new System.Drawing.Point(252, 28);
+            this.textBoxRobot.Name = "textBoxRobot";
+            this.textBoxRobot.Size = new System.Drawing.Size(100, 20);
+            this.textBoxRobot.TabIndex = 3;
             // 
             // buttonAddRobot
             // 
@@ -208,47 +236,26 @@
             this.buttonAddRobot.UseVisualStyleBackColor = true;
             this.buttonAddRobot.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
-            // textBoxRobot
+            // listBoxRobot
             // 
-            this.textBoxRobot.Location = new System.Drawing.Point(252, 28);
-            this.textBoxRobot.Name = "textBoxRobot";
-            this.textBoxRobot.Size = new System.Drawing.Size(100, 20);
-            this.textBoxRobot.TabIndex = 3;
+            this.listBoxRobot.FormattingEnabled = true;
+            this.listBoxRobot.Location = new System.Drawing.Point(15, 28);
+            this.listBoxRobot.Name = "listBoxRobot";
+            this.listBoxRobot.Size = new System.Drawing.Size(231, 56);
+            this.listBoxRobot.TabIndex = 1;
             // 
-            // textBoxCountRobot
+            // label5
             // 
-            this.textBoxCountRobot.Location = new System.Drawing.Point(358, 28);
-            this.textBoxCountRobot.Name = "textBoxCountRobot";
-            this.textBoxCountRobot.Size = new System.Drawing.Size(100, 20);
-            this.textBoxCountRobot.TabIndex = 4;
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 11);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(196, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Список автоматизированных систем";
             // 
-            // label6
+            // errorProvider1
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(249, 11);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(57, 13);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "Название";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(360, 12);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(66, 13);
-            this.label7.TabIndex = 6;
-            this.label7.Text = "Количество";
-            // 
-            // buttonInit
-            // 
-            this.buttonInit.Location = new System.Drawing.Point(252, 54);
-            this.buttonInit.Name = "buttonInit";
-            this.buttonInit.Size = new System.Drawing.Size(125, 23);
-            this.buttonInit.TabIndex = 7;
-            this.buttonInit.Text = "Инициализация";
-            this.buttonInit.UseVisualStyleBackColor = true;
-            this.buttonInit.Click += new System.EventHandler(this.buttonInit_Click);
+            this.errorProvider1.ContainerControl = this;
             // 
             // CreateDepartment
             // 
@@ -269,10 +276,11 @@
             this.Controls.Add(this.textBoxNameDepartment);
             this.Controls.Add(this.label1);
             this.Name = "CreateDepartment";
-            this.Text = "CreateDepartment";
+            this.Text = "Создание цеха";
             this.panel1.ResumeLayout(false);
             this.panelRobot.ResumeLayout(false);
             this.panelRobot.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -301,5 +309,6 @@
         private System.Windows.Forms.TextBox textBoxCountRobot;
         private System.Windows.Forms.TextBox textBoxRobot;
         private System.Windows.Forms.Button buttonInit;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

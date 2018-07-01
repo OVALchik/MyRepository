@@ -14,24 +14,22 @@ namespace OOPlaba2
     public class CreateDepartmentController
     {
         private Department _department;
-        private Industry _industry;
 
+        private TypeDepartment _type;
         private List<RobotMachine> _robotMachines;
         private string _nameDepartment;
         private List<string> _pipleList;
         private List<Production> _productionList;
-
-       
-        /*
-        public Department Department => CanSave
-            ? (Departament is StorageDepartment ? new StorageDepartment(Robot, NameDepartment, PipleList,ProductionList) :
-                (Departament is ProcessingDepartment ? (Department) new ProcessingDepartment(NameDepartment, PipleList, ProductionList) : 
-                     new AssemblyDepartment(NameDepartment, PipleList, ProductionList))) :  null;*/
-        public Department Department => CanSave ? Departament: null;
-
-        public Industry Industry
+      
+        public Department Department => CanSave ? CreateDepartment (): null;
+      
+        public TypeDepartment TypeDepartament
         {
-            get { return _industry; }           
+            get { return _type; }
+            set
+            {
+                _type = value;
+            }
         }
 
         public Department Departament
@@ -40,7 +38,6 @@ namespace OOPlaba2
             set
             {
                 _department = value;
-                OnPropertyChanged(nameof(CanSave));
             }
         }     
 
@@ -50,7 +47,6 @@ namespace OOPlaba2
             set
             {
                 _robotMachines = value;
-                OnPropertyChanged(nameof(CanSave));
             }
         }
 
@@ -60,7 +56,6 @@ namespace OOPlaba2
             set
             {
                 _nameDepartment = value;
-                OnPropertyChanged(nameof(CanSave));
             }
         }
 
@@ -70,7 +65,6 @@ namespace OOPlaba2
             set
             {
                 _pipleList = value;
-                OnPropertyChanged(nameof(CanSave));
             }
         }
 
@@ -80,12 +74,27 @@ namespace OOPlaba2
             set
             {
                 _productionList = value;
-                OnPropertyChanged(nameof(CanSave));
             }
         }
+
+        public Department CreateDepartment()
+        {
+            if (TypeDepartament == TypeDepartment.StorageDepartment)
+                Departament = new StorageDepartment(Robot, NameDepartment, PipleList, ProductionList);
+            if (TypeDepartament == TypeDepartment.ProcessingDepartment)
+                Departament = new ProcessingDepartment(NameDepartment, PipleList, ProductionList);
+            if (TypeDepartament == TypeDepartment.AssemblyDepartment)
+                Departament = new AssemblyDepartment(NameDepartment, PipleList, ProductionList);
+            return Departament;        
+        }
+
+        public CreateDepartmentController(TypeDepartment type)
+        {
+            _type = type;          
+        }
         
-        public bool VisibleRobotCreate => Departament is StorageDepartment;
-        
+        public bool VisibleRobotCreate => TypeDepartament == TypeDepartment.StorageDepartment;
+
         public bool CanSave =>
             !string.IsNullOrWhiteSpace(NameDepartment)
             && PipleList != null
@@ -96,24 +105,20 @@ namespace OOPlaba2
             var robot = new List<RobotMachine>();
             robot = InitIndustry.CreateRobotMachine();
             _robotMachines = robot;
+        }
+
+        public void InitializeProductions()
+        {
+            var productions = new List<Production>();
+            productions = InitIndustry.CreateProduction();
+            _productionList = productions;
+        }
+
+        public void InitializePiples()
+        {
+            var pipleList = new List<string>();
+            pipleList = InitIndustry.CreatePipleListForStorageDepartment();
+            _pipleList = pipleList;
         }       
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        //  [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        
-        public CreateDepartmentController(Department department, Industry industry)
-        {
-            _department = department;
-            _industry = industry;
-        }
-
-
-
     }
 }

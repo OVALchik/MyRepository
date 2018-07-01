@@ -49,13 +49,7 @@ namespace OOPlaba2
 
         }
 
-        public void InitializeIndustry()
-        {
-            var pipleList = new List<string>();
-            pipleList = InitIndustry.CreatePipleListForStorageDepartment();
-            _fio = pipleList;
-        }
-
+        
         [SuppressMessage("ReSharper", "PossibleInvalidOperationException")]
         public List<string> PipleList => CanSave ? FIO : null;
 

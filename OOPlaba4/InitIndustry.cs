@@ -19,14 +19,14 @@ namespace OOPlaba2
             return machineList;
         }
 
-        public static List<PrimaryProduction> CreatePrimaryProduction()
+        public static List<Production> CreateProduction()
         {
-            var productionList = new List<PrimaryProduction>
+            var productionList = new List<Production>
             {
-                new PrimaryProduction(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000),
-                new PrimaryProduction(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500),
-                new PrimaryProduction(TypeMaterial.Wood, TypeProduction.Beam, "Брус W-10", new Size(10, 10, 200, 15), 400),
-                new PrimaryProduction(TypeMaterial.Iron, TypeProduction.Rod, "Прут IR-5",new Size( 0.5, 0.5, 5, 7), 200)
+                new Production(TypeMaterial.Aluminum, TypeProduction.Plate, "Лист AL-4", new Size(50, 70, 5, 3), 1000),
+                new Production(TypeMaterial.Steel, TypeProduction.Rod, "Прут ST-5",new Size( 0.5, 0.5, 5, 7), 500),
+                new Production(TypeMaterial.Wood, TypeProduction.Beam, "Брус W-10", new Size(10, 10, 200, 15), 400),
+                new Production(TypeMaterial.Iron, TypeProduction.Rod, "Прут IR-5",new Size( 0.5, 0.5, 5, 7), 200)
             };
             return productionList;
         }
@@ -37,18 +37,7 @@ namespace OOPlaba2
             return pipleList;
         }
 
-        public static List<SecondaryProduction> CreateSecondaryProduction()
-        {
-            var productionList = new List<SecondaryProduction>
-            {
-                new SecondaryProduction("Заготовка-AL5", new Size(50, 50, 12, 5), TypeMaterial.Aluminum, 500),              
-                new SecondaryProduction("Заготовка-ТТ3", new Size(150, 7, 7, 40), TypeMaterial.Titanium, 190),
-                new SecondaryProduction("Заготовка-W11", new Size(100, 50,50, 45), TypeMaterial.Wood, 130),                 
-                new SecondaryProduction("Заготовка-I95", new Size(10, 2, 2, 10),TypeMaterial.Iron, 300)
-            };
-            return productionList;
-        }
-
+        
         public static List<string> CreatePipleListForProcessingDepartment()
         {
             var pipleList =
@@ -56,17 +45,7 @@ namespace OOPlaba2
             return pipleList;
         }
 
-        public static List<FinalProduction> CreateFinalProduction()
-        {
-            var productionList = new List<FinalProduction>
-            {
-                new FinalProduction("Станок измерительный",new Size( 100, 200, 160, 15), 1100),                   
-                new FinalProduction("Станок автоматизированный", new Size(200, 50, 50, 17), 2100),                    
-                new FinalProduction("Измеритель", new Size(50, 50, 30, 1.2), 1500),                  
-            };
-            return productionList;
-        }
-
+       
         public static List<string> CreatePipleListForAssembluDepartment()
         {
             var pipleList = new List<string>
@@ -85,13 +64,13 @@ namespace OOPlaba2
         public static Industry InitializeOrganization(Industry industry)
         {
             var st = new StorageDepartment(CreateRobotMachine(), "Заготовительный цех№1",
-                CreatePipleListForStorageDepartment(), new List<Production>(CreatePrimaryProduction()));
+                CreatePipleListForStorageDepartment(), new List<Production>(CreateProduction()));
 
             var pd = new ProcessingDepartment("Обрабатывающий цех№1", CreatePipleListForProcessingDepartment(),
-                new List<Production>(CreateSecondaryProduction()));
+                new List<Production>(CreateProduction()));
 
             var ad = new AssemblyDepartment("Сборочно-монтажный цех№1", CreatePipleListForAssembluDepartment(),
-                new List<Production>(CreateFinalProduction()));
+                new List<Production>(CreateProduction()));
 
             var department = new List<Department> { st, pd, ad };
 

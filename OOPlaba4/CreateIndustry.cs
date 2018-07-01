@@ -25,35 +25,44 @@ namespace OOPlaba2
 
         private void OnUpdateForm(object sender, EventArgs e)
         {
-            textBoxNameIndustry.Text = _controller.NameIndustry;
+            textBoxNameIndustry.Text = _controller.Indusrty.NameIndusry;
+            listBoxDepartments.SelectedItem = null;
             ShowDepartments();          
-            EnableRemoveDepartmentButton();                
+            EnableRemoveDepartmentButton();
+            EnableReportDepartmentButton();
         }
 
         private void ShowDepartments()
         {
-            comboBoxDepartmentList.Items.Clear();
-            foreach (var dep in _controller.Departments)
+            if (_controller.Indusrty.Departaments!=null)
             {
-                comboBoxDepartmentList.Items.Add(dep.NameDepartment);
+                listBoxDepartments.Items.Clear();
+                foreach (var dep in _controller.Indusrty.Departaments)
+                    listBoxDepartments.Items.Add(dep.NameDepartment);             
             }
-        }      
+           
+        }
 
-        private Department GetDepartmen()
+        private TypeDepartment GetTypeDepartmen()
         {
             if (radioButtonStorage.Checked)
-                return new StorageDepartment();
+                return TypeDepartment.StorageDepartment;
             if (radioButtonProcessing.Checked)
-                return new ProcessingDepartment();
+                return TypeDepartment.ProcessingDepartment;
             if (radioButtonAssembly.Checked)
-                return new AssemblyDepartment();
-            return null;
+                return TypeDepartment.AssemblyDepartment;
+            return TypeDepartment.None;
         }
 
         private void EnableRemoveDepartmentButton()
         {
             buttonRemoveDepartment.Enabled = _controller.CanRemoveDepartament;
-        }      
+        }
+
+        private void EnableReportDepartmentButton()
+        {
+            buttonInfo.Enabled = _controller.CanReport;
+        }
 
         private void buttonInit_Click(object sender, EventArgs e)
         {
@@ -62,46 +71,64 @@ namespace OOPlaba2
         }
         
         private void buttonAddDepartment_Click(object sender, EventArgs e)
-        {                       
-            var newDepartmentController = new CreateDepartmentController(GetDepartmen(),_controller.Indusrty);
-            var formDepartment = new CreateDepartment(newDepartmentController);
-            if (formDepartment.ShowDialog() == DialogResult.OK)
-            {
-                var newDepartment = newDepartmentController.Department;
-                _controller.AddDepartment(newDepartment);
-            }
-            ShowDepartments();  
-        }
-
-        private void comboBoxDepartmentList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBoxDepartmentList.SelectionLength== 0)
-                return;
-            var item = comboBoxDepartmentList.SelectedIndex;
-            _controller.SelectDepartment(item);
+            errorProvider1.Clear();
+            if (GetTypeDepartmen()==TypeDepartment.None)
+                errorProvider1.SetError(groupBox1, "Не выбран тип цеха");
+            else
+            {
+                if (_controller.Indusrty.Departaments == null)
+                    _controller.Indusrty.Departaments = new List<Department>();
+
+                var newDepartmentController = new CreateDepartmentController(GetTypeDepartmen());
+                var formDepartment = new CreateDepartment(newDepartmentController);
+                if (formDepartment.ShowDialog() == DialogResult.OK)
+                {
+                    var newDepartment = newDepartmentController.Department;                 
+                    _controller.AddDepartment(newDepartment);                  
+                }            
+            }
             UpdateForm?.Invoke(this, e);
         }
+       
         private void buttonRemoveDepartment_Click(object sender, EventArgs e)
         {
-            var item = comboBoxDepartmentList.SelectedIndex;
-            _controller.RemoveDepartment(item);
-            comboBoxDepartmentList.SelectedIndex=-1;
-            UpdateForm?.Invoke(this, e);
+            errorProvider1.Clear();
+            if (listBoxDepartments.Items.Count==0)
+                errorProvider1.SetError(listBoxDepartments, "Список цехов пуст");
+            else
+            {
+                _controller.RemoveDepartment(listBoxDepartments.SelectedIndex);
+                listBoxDepartments.Items.RemoveAt(listBoxDepartments.SelectedIndex);
+                UpdateForm?.Invoke(this, e);
+            }
         }       
 
         private void buttonMakeIndustry_Click(object sender, EventArgs e)
         {
-            if (textBoxNameIndustry != null)
-                Close();
+            errorProvider1.Clear();
+            if (string.IsNullOrEmpty(textBoxNameIndustry.Text))
+                errorProvider1.SetError(textBoxNameIndustry, "Не указано имя");
+            else if (listBoxDepartments.Items.Count==0)
+                errorProvider1.SetError(listBoxDepartments, "Список цехов пуст");
+            else
+            {
+                _controller.Indusrty.NameIndusry = textBoxNameIndustry.Text;
+            }
+               
         }
 
-        
-        /*
-private void reportButton_Click(object sender, EventArgs e)
-{
-   reportTextBox.Text = _controller.Report;
-}
-
-*/
+        private void buttonInfo_Click(object sender, EventArgs e)
+        {
+            errorProvider1.Clear();
+            if (string.IsNullOrEmpty(textBoxNameIndustry.Text) || listBoxDepartments.Items.Count == 0)
+                errorProvider1.SetError(textBoxNameIndustry, "Производство не создано");
+            else
+            {
+                var newReportController = new CreateReportController(_controller.Report);
+                var formInfo = new Info(newReportController);
+                formInfo.ShowDialog();
+            }
+        }
     }
 }

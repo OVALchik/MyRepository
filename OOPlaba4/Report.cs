@@ -43,13 +43,7 @@ namespace OOPlaba2
 
             Console.WriteLine($"Общее число рабочих:{department.CountPiples}");
 
-            Console.WriteLine("Список продукции:");
-            for (int i = 0; i < department.Productions.Count; i++)
-            {
-                Console.Write($"{i + 1}.");
-                department.Productions[i].ShowInfoProduction();
-            }
-
+           
             Console.WriteLine($"Число наименований продукции:{department.CountNameProductions}");
 
             Console.WriteLine($"Производительность цеха:{department.Productivity}");

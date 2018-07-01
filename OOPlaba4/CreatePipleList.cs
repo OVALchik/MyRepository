@@ -19,9 +19,8 @@ namespace OOPlaba2
         {
             InitializeComponent();
             _controller = controller;
-                   
+            ShowPipleList();
             UpdateForm += OnUpdateForm;
-            //_controller.PropertyChanged += _controller_PropertyChanged;
         }
 
         private void OnUpdateForm(object sender, EventArgs e)
@@ -42,6 +41,7 @@ namespace OOPlaba2
         {
             if (_controller.PipleList != null)
             {
+                listBoxPiple.Items.Clear();
                 foreach (var fio in _controller.PipleList)
                     listBoxPiple.Items.Add(fio);
             }
@@ -50,40 +50,37 @@ namespace OOPlaba2
         
         private void buttonAddPiple_Click(object sender, EventArgs e)
         {
-            listBoxPiple.Items.Add(textBoxFIO.Text);
-            _controller.AddPiple(textBoxFIO.Text);
-            UpdateForm?.Invoke(this, e);
-            // textBoxFIO.Clear();                         
+            errorProvider2.Clear();
+            if (string.IsNullOrEmpty(textBoxFIO.Text))
+                errorProvider2.SetError(textBoxFIO, "Не указано имя");
+            else
+            {
+                listBoxPiple.Items.Add(textBoxFIO.Text);
+                _controller.AddPiple(textBoxFIO.Text);
+            }        
+            UpdateForm?.Invoke(this, e);                        
         }           
 
         private void buttonRemovePiple_Click(object sender, EventArgs e)
-        {            
-            //textBoxFIO.Clear();
-            _controller.RemovePiple(listBoxPiple.SelectedIndex);            
-            listBoxPiple.Items.RemoveAt(listBoxPiple.SelectedIndex);
-            //listBoxPiple.SelectedItem = null;
-            UpdateForm?.Invoke(this, e);
+        {
+            errorProvider2.Clear();
+            if (listBoxPiple.Items.Count == 0)
+                errorProvider2.SetError(listBoxPiple, "Список пуст");
+            else
+            {
+                _controller.RemovePiple(listBoxPiple.SelectedIndex);
+                listBoxPiple.Items.RemoveAt(listBoxPiple.SelectedIndex);
+                UpdateForm?.Invoke(this, e);
+            }
         }
 
 
         private void buttonMakePipleList_Click(object sender, EventArgs e)
-        {
-            //_controller.FIO = _newPipleList.FIO;
+        {          
             DialogResult = DialogResult.OK;
             Close();           
         }       
-        /*
-        private void _controller_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(_controller.CanSave))
-                buttonMakePipleList.Enabled = _controller.CanSave;           
-
-           
-
-            if (e.PropertyName == nameof(_controller.CanRemovePiple))
-                buttonRemovePiple.Enabled = _controller.CanRemovePiple;
-        }
-        */
+        
         private void listBoxPiple_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listBoxPiple.SelectedItem != null)
@@ -91,16 +88,6 @@ namespace OOPlaba2
                 textBoxFIO.Text = listBoxPiple.SelectedItem.ToString();
             }                
         }
-
-        private void textBoxFIO_TextChanged(object sender, EventArgs e)
-        {
-            listBoxPiple.SelectedItem = textBoxFIO.Text;
-        }
-
-        private void buttonInit_Click(object sender, EventArgs e)
-        {
-            _controller.InitializeIndustry();
-            UpdateForm?.Invoke(this, e);
-        }
+       
     }
 }

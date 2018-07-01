@@ -68,9 +68,8 @@
     </Compile>
     <Compile Include="CreatePipleListController.cs" />
     <Compile Include="CreateProductionController.cs" />
-    <Compile Include="CreateSecondaryProductionController.cs" />
+    <Compile Include="CreateReportController.cs" />
     <Compile Include="Department.cs" />
-    <Compile Include="FinalProduction.cs" />
     <Compile Include="CreateProduction.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,14 +84,12 @@
       <DependentUpon>Info.cs</DependentUpon>
     </Compile>
     <Compile Include="InitIndustry.cs" />
-    <Compile Include="PrimaryProduction.cs" />
     <Compile Include="ProcessingDepartment.cs" />
     <Compile Include="Production.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Report.cs" />
     <Compile Include="RobotMachine.cs" />
-    <Compile Include="SecondaryProduction.cs" />
     <Compile Include="Size.cs" />
     <Compile Include="StorageDepartment.cs" />
     <Compile Include="TypeDepartment.cs" />
